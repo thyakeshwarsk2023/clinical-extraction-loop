@@ -1,0 +1,45 @@
+{
+  "sample_id": 24,
+  "mode": "ABSTAIN_HIGH_TG",
+  "assay_ground_truth": "FRIEDEWALD",
+  "method_text": "Method: Calculated by Friedewald Formula",
+  "corrupted_fields": [],
+  "ground_truth_clean": {
+    "total_cholesterol": 259.2,
+    "hdl": 47.3,
+    "ldl": 97.4,
+    "triglycerides": 572.6
+  },
+  "injected_display_data": {
+    "total_cholesterol": 259.2,
+    "hdl": 47.3,
+    "ldl": 97.4,
+    "triglycerides": 572.6
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      314,
+      144,
+      367,
+      163
+    ],
+    "hdl": [
+      314,
+      184,
+      358,
+      203
+    ],
+    "ldl": [
+      314,
+      224,
+      358,
+      243
+    ],
+    "triglycerides": [
+      314,
+      264,
+      367,
+      283
+    ]
+  }
+}

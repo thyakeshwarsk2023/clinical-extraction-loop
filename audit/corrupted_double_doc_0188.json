@@ -1,0 +1,66 @@
+{
+  "doc_id": "doc_0188",
+  "split": "corrupted_double",
+  "unit": "mg/dL",
+  "corruption_type": "smudge+digit_swap",
+  "corrupted_fields": [
+    "triglycerides",
+    "hdl"
+  ],
+  "gt_clean_values": {
+    "total_cholesterol": 133.6,
+    "hdl": 77.5,
+    "ldl": 34.6,
+    "triglycerides": 107.6
+  },
+  "pipeline_result": {
+    "status": "ABSTAIN_PATHOLOGIST_REVIEW",
+    "assay_route": "FRIEDEWALD",
+    "reason": "Residual 19.78 mg/dL exceeded budget after K=2 iterations.",
+    "data": {
+      "total_cholesterol": 133.6,
+      "hdl": 57.7,
+      "ldl": 34.6,
+      "triglycerides": 107.6
+    },
+    "residual": 19.78,
+    "audit_trail": [
+      {
+        "attempt": 1,
+        "stage": "STAGE_3_4_VISION_GATE",
+        "field": "total_cholesterol",
+        "old_val": 133.6,
+        "new_val": 133.6,
+        "delta_conf": "+0.03",
+        "crops": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "attempt": 2,
+        "stage": "STAGE_3_4_VISION_GATE",
+        "field": "total_cholesterol",
+        "old_val": 133.6,
+        "new_val": 133.6,
+        "delta_conf": "+0.00",
+        "crops": [
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "field_accuracy": {
+      "total_cholesterol": true,
+      "hdl": false,
+      "ldl": true,
+      "triglycerides": true,
+      "overall": 0.75
+    },
+    "isolation_correct": false
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "sample_id": 20,
+  "mode": "DIGIT_CONFUSION_K1",
+  "assay_ground_truth": "FRIEDEWALD",
+  "method_text": "Method: Calculated Friedewald Equation",
+  "corrupted_fields": [
+    "ldl"
+  ],
+  "ground_truth_clean": {
+    "total_cholesterol": 238.5,
+    "hdl": 45.2,
+    "ldl": 153.4,
+    "triglycerides": 199.4
+  },
+  "injected_display_data": {
+    "total_cholesterol": 238.5,
+    "hdl": 45.2,
+    "ldl": 10.0,
+    "triglycerides": 199.4
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      314,
+      144,
+      367,
+      163
+    ],
+    "hdl": [
+      314,
+      184,
+      358,
+      203
+    ],
+    "ldl": [
+      314,
+      224,
+      358,
+      243
+    ],
+    "triglycerides": [
+      314,
+      264,
+      367,
+      283
+    ]
+  }
+}

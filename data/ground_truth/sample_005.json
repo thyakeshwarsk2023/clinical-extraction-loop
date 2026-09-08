@@ -1,0 +1,45 @@
+{
+  "sample_id": 5,
+  "mode": "DIRECT_ASSAY_CLEAN",
+  "assay_ground_truth": "DIRECT_MEASURED",
+  "method_text": "Method: Direct Immunoinhibition Assay (Direct LDL-C)",
+  "corrupted_fields": [],
+  "ground_truth_clean": {
+    "total_cholesterol": 237.7,
+    "hdl": 63.8,
+    "ldl": 141.1,
+    "triglycerides": 164.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 237.7,
+    "hdl": 63.8,
+    "ldl": 141.1,
+    "triglycerides": 164.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      314,
+      144,
+      367,
+      163
+    ],
+    "hdl": [
+      314,
+      184,
+      358,
+      203
+    ],
+    "ldl": [
+      314,
+      224,
+      367,
+      243
+    ],
+    "triglycerides": [
+      314,
+      264,
+      367,
+      283
+    ]
+  }
+}

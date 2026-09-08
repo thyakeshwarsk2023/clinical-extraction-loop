@@ -1,0 +1,48 @@
+{
+  "sample_id": 10,
+  "mode": "DOUBLE_ERROR_K2",
+  "assay_ground_truth": "FRIEDEWALD",
+  "method_text": "Calculated Panel (TC - HDL - TRIG/5)",
+  "corrupted_fields": [
+    "ldl",
+    "triglycerides"
+  ],
+  "ground_truth_clean": {
+    "total_cholesterol": 229.9,
+    "hdl": 50.6,
+    "ldl": 141.7,
+    "triglycerides": 187.8
+  },
+  "injected_display_data": {
+    "total_cholesterol": 229.9,
+    "hdl": 50.6,
+    "ldl": 10.0,
+    "triglycerides": 237.8
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      314,
+      144,
+      367,
+      163
+    ],
+    "hdl": [
+      314,
+      184,
+      358,
+      203
+    ],
+    "ldl": [
+      314,
+      224,
+      358,
+      243
+    ],
+    "triglycerides": [
+      314,
+      264,
+      367,
+      283
+    ]
+  }
+}

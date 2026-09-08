@@ -1,0 +1,45 @@
+{
+  "sample_id": 13,
+  "mode": "CLEAN",
+  "assay_ground_truth": "AMBIGUOUS_FALLBACK",
+  "method_text": "Method: Enzymatic Colorimetric Assay",
+  "corrupted_fields": [],
+  "ground_truth_clean": {
+    "total_cholesterol": 192.2,
+    "hdl": 60.3,
+    "ldl": 114.0,
+    "triglycerides": 89.6
+  },
+  "injected_display_data": {
+    "total_cholesterol": 192.2,
+    "hdl": 60.3,
+    "ldl": 114.0,
+    "triglycerides": 89.6
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      314,
+      144,
+      367,
+      163
+    ],
+    "hdl": [
+      314,
+      184,
+      358,
+      203
+    ],
+    "ldl": [
+      314,
+      224,
+      367,
+      243
+    ],
+    "triglycerides": [
+      314,
+      264,
+      358,
+      283
+    ]
+  }
+}

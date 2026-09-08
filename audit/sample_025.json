@@ -1,0 +1,35 @@
+{
+  "sample_id": 25,
+  "mode": "CLEAN",
+  "corrupted_fields": [],
+  "gt_clean": {
+    "total_cholesterol": 250.8,
+    "hdl": 56.8,
+    "ldl": 156.0,
+    "triglycerides": 190.2
+  },
+  "pipeline_result": {
+    "status": "CONVERGED",
+    "assay_route": "AMBIGUOUS_FALLBACK",
+    "attempts": 0,
+    "data": {
+      "total_cholesterol": 250.8,
+      "hdl": 56.8,
+      "ldl": 156.0,
+      "triglycerides": 190.2
+    },
+    "residual": 0.04,
+    "relative_error": 0.0002,
+    "audit_trail": []
+  },
+  "metrics": {
+    "field_accuracy": {
+      "total_cholesterol": true,
+      "hdl": true,
+      "ldl": true,
+      "triglycerides": true,
+      "overall": 1.0
+    },
+    "isolation_correct": null
+  }
+}

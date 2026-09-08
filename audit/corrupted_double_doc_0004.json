@@ -1,0 +1,56 @@
+{
+  "doc_id": "doc_0004",
+  "split": "corrupted_double",
+  "unit": "mmol/L",
+  "corruption_type": "smudge+decimal_shift",
+  "corrupted_fields": [
+    "total_cholesterol",
+    "hdl"
+  ],
+  "gt_clean_values": {
+    "total_cholesterol": 181.0,
+    "hdl": 59.9,
+    "ldl": 78.9,
+    "triglycerides": 211.7
+  },
+  "pipeline_result": {
+    "status": "ABSTAIN_CLINICAL_ANOMALY",
+    "assay_route": "FRIEDEWALD",
+    "reason": "Serum Triglycerides > 400 mg/dL invalidate the Friedewald equation.",
+    "data": {
+      "total_cholesterol": 181.0,
+      "hdl": 7.7,
+      "ldl": 7.9,
+      "triglycerides": 911.7
+    },
+    "residual": 0.0,
+    "audit_trail": [
+      {
+        "attempt": 1,
+        "stage": "STAGE_2.5_K2_DISCRETE_PAIR",
+        "modifications": [
+          {
+            "field": "ldl",
+            "old_val": 78.9,
+            "new_val": 7.9
+          },
+          {
+            "field": "triglycerides",
+            "old_val": 211.7,
+            "new_val": 911.7
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "field_accuracy": {
+      "total_cholesterol": true,
+      "hdl": false,
+      "ldl": false,
+      "triglycerides": false,
+      "overall": 0.25
+    },
+    "isolation_correct": false
+  }
+}

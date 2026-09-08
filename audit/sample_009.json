@@ -1,0 +1,38 @@
+{
+  "sample_id": 9,
+  "mode": "DECIMAL_SHIFT_K1",
+  "corrupted_fields": [
+    "hdl"
+  ],
+  "gt_clean": {
+    "total_cholesterol": 195.6,
+    "hdl": 51.9,
+    "ldl": 101.1,
+    "triglycerides": 212.8
+  },
+  "pipeline_result": {
+    "status": "ABSTAIN_AMBIGUOUS_HEADER_BOUNDS_VIOLATION",
+    "assay_route": "AMBIGUOUS_FALLBACK",
+    "data": {
+      "total_cholesterol": 195.6,
+      "hdl": 519.0,
+      "ldl": 101.1,
+      "triglycerides": 212.8
+    },
+    "audit_trail": [
+      {
+        "reason": "BOUND_VIOLATION_HDL_EXCEEDS_TOTAL"
+      }
+    ]
+  },
+  "metrics": {
+    "field_accuracy": {
+      "total_cholesterol": true,
+      "hdl": false,
+      "ldl": true,
+      "triglycerides": true,
+      "overall": 0.75
+    },
+    "isolation_correct": false
+  }
+}

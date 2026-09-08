@@ -1,0 +1,38 @@
+system:
+  max_iterations: 2
+  default_tolerance_epsilon: 0.10
+
+assay_routes:
+  friedewald:
+    type: "deterministic_equality"
+    formula: "total_cholesterol - (hdl + ldl + (triglycerides / 5.0))"
+    tolerance: 0.10
+    validity_bounds:
+      triglycerides_max: 400.0
+      abstain_label: "ABSTAIN_CLINICAL_ANOMALY"
+
+  direct_measured:
+    type: "plausibility_bounds"
+    rules:
+      - "ldl < total_cholesterol"
+      - "hdl < total_cholesterol"
+      - "total_cholesterol > (hdl + ldl)"
+      - "ldl >= 0.0"
+      - "hdl >= 0.0"
+      - "triglycerides >= 0.0"
+
+  ambiguous_fallback:
+    type: "plausibility_bounds"
+    note: "Routes to bounding inequalities when header method text is missing or unverified"
+    rules:
+      - "ldl < total_cholesterol"
+      - "hdl < total_cholesterol"
+      - "total_cholesterol > 0.0"
+
+hierarchical_search:
+  k1_max_edit_distance: 2
+  k2_discrete_candidate_limit: 15
+  learned_weights:
+    alpha_edit: 0.48
+    beta_conf: 0.22
+    gamma_mag: 0.30

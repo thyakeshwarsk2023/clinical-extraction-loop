@@ -1,0 +1,40 @@
+{
+  "doc_id": "doc_0022",
+  "split": "corrupted_double",
+  "unit": "mmol/L",
+  "corruption_type": "smudge+smudge",
+  "corrupted_fields": [
+    "hdl",
+    "total_cholesterol"
+  ],
+  "gt_clean_values": {
+    "total_cholesterol": 143.1,
+    "hdl": 78.9,
+    "ldl": 51.4,
+    "triglycerides": 65.5
+  },
+  "pipeline_result": {
+    "status": "CONVERGED",
+    "assay_route": "FRIEDEWALD",
+    "attempts": 0,
+    "data": {
+      "total_cholesterol": 143.1,
+      "hdl": 78.9,
+      "ldl": 51.4,
+      "triglycerides": 65.5
+    },
+    "residual": 0.3,
+    "relative_error": 0.0021,
+    "audit_trail": []
+  },
+  "metrics": {
+    "field_accuracy": {
+      "total_cholesterol": true,
+      "hdl": true,
+      "ldl": true,
+      "triglycerides": true,
+      "overall": 1.0
+    },
+    "isolation_correct": false
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "sample_id": 35,
+  "mode": "DIRECT_ASSAY_CLEAN",
+  "corrupted_fields": [],
+  "gt_clean": {
+    "total_cholesterol": 216.7,
+    "hdl": 44.4,
+    "ldl": 141.8,
+    "triglycerides": 152.7
+  },
+  "pipeline_result": {
+    "status": "CONVERGED_DIRECT_ASSAY",
+    "assay_route": "DIRECT_MEASURED",
+    "attempts": 0,
+    "data": {
+      "total_cholesterol": 216.7,
+      "hdl": 44.4,
+      "ldl": 141.8,
+      "triglycerides": 152.7
+    },
+    "unit": "mg/dL",
+    "audit_trail": [
+      {
+        "stage": "STAGE_0_DIRECT_GATE",
+        "action": "BYPASSED_EQUALITY_CHECK",
+        "plausibility_check": "BOUNDS_SATISFIED"
+      }
+    ]
+  },
+  "metrics": {
+    "field_accuracy": {
+      "total_cholesterol": true,
+      "hdl": true,
+      "ldl": true,
+      "triglycerides": true,
+      "overall": 1.0
+    },
+    "isolation_correct": null
+  }
+}
