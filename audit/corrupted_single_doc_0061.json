@@ -31,10 +31,16 @@
         "old_val": 129.6,
         "new_val": 129.6,
         "delta_conf": "+0.03",
+        "vision_metrics": {
+          "tenengrad": 24029.23,
+          "contrast_ratio": 0.6,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.71
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       },
       {
@@ -44,10 +50,16 @@
         "old_val": 129.6,
         "new_val": 129.6,
         "delta_conf": "+0.00",
+        "vision_metrics": {
+          "tenengrad": 24029.23,
+          "contrast_ratio": 0.6,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.71
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       }
     ]

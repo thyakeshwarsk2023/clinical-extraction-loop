@@ -32,11 +32,17 @@
         "field": "total_cholesterol",
         "old_val": 25.6,
         "new_val": 256.0,
-        "delta_conf": "+0.38",
+        "delta_conf": "+0.27",
+        "vision_metrics": {
+          "tenengrad": 13086.96,
+          "contrast_ratio": 0.522,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.683
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       }
     ]

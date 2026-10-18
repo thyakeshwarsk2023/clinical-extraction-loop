@@ -31,11 +31,17 @@
         "field": "triglycerides",
         "old_val": 372.0,
         "new_val": 208.1,
-        "delta_conf": "+0.38",
+        "delta_conf": "+0.27",
+        "vision_metrics": {
+          "tenengrad": 12608.55,
+          "contrast_ratio": 0.511,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.679
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       },
       {

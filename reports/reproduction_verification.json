@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-10-18 17:35:51",
+  "dataset_a": {
+    "total_documents": 400,
+    "false_trigger_rate_pct": 0.0,
+    "clean_control_docs": 30,
+    "false_triggers": 0,
+    "corrupted_single_post_fa": 83.54,
+    "execution_time_sec": 12.67
+  },
+  "dataset_b": {
+    "total_documents": 180,
+    "execution_time_sec": 3.67
+  },
+  "ablation_study": {
+    "n_corrupted": 170,
+    "arm0_baseline_mean_fa": 80.59,
+    "arm0_latency_ms": 0.023,
+    "arm1_symbolic_mean_fa": 81.03,
+    "arm1_latency_ms": 1.212,
+    "arm2_full_arch_mean_fa": 82.5,
+    "arm2_latency_ms": 9.532,
+    "compute_reduction_vs_vlm_pct": 98.4,
+    "execution_time_sec": 3.9
+  },
+  "verification_checks": {
+    "false_trigger_rate_zero": true,
+    "ablation_accuracy_gain": true,
+    "compute_reduction_exceeds_80pct": true,
+    "all_figures_generated": true
+  }
+}

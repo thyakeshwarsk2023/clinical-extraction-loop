@@ -352,7 +352,7 @@ def run_eval(verbose=False):
                     'field_accuracy':    fa,
                     'isolation_correct': iso,
                 },
-            }, fh, indent=2)
+            }, fh, indent=2, default=str)
 
         if verbose:
             iso_str = {True: 'OK', False: 'MISS', None: 'N/A'}.get(iso, '?')

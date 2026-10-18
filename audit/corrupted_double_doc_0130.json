@@ -31,11 +31,17 @@
         "field": "hdl",
         "old_val": 3.9,
         "new_val": 40.6,
-        "delta_conf": "+0.38",
+        "delta_conf": "+0.27",
+        "vision_metrics": {
+          "tenengrad": 12073.52,
+          "contrast_ratio": 0.504,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.676
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       },
       {
@@ -44,11 +50,17 @@
         "field": "triglycerides",
         "old_val": 17.7,
         "new_val": 180.7,
-        "delta_conf": "+0.38",
+        "delta_conf": "+0.27",
+        "vision_metrics": {
+          "tenengrad": 12569.99,
+          "contrast_ratio": 0.534,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.687
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       }
     ]

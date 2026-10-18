@@ -1,0 +1,15 @@
+[2026-10-18 17:36:07] INFO  ========================================================================
+[2026-10-18 17:36:07] INFO    TRACK 2 FINAL ABLATION STUDY - 3-WAY COMPARATIVE BENCHMARK
+[2026-10-18 17:36:07] INFO    Started at 2026-10-18T17:36:07.511698
+[2026-10-18 17:36:07] INFO  ========================================================================
+[2026-10-18 17:36:07] INFO  Loaded 170 corrupted records for ablation.
+[2026-10-18 17:36:08] INFO    Progress: 20 / 170 docs processed.
+[2026-10-18 17:36:08] INFO    Progress: 40 / 170 docs processed.
+[2026-10-18 17:36:09] INFO    Progress: 60 / 170 docs processed.
+[2026-10-18 17:36:09] INFO    Progress: 80 / 170 docs processed.
+[2026-10-18 17:36:10] INFO    Progress: 100 / 170 docs processed.
+[2026-10-18 17:36:10] INFO    Progress: 120 / 170 docs processed.
+[2026-10-18 17:36:10] INFO    Progress: 140 / 170 docs processed.
+[2026-10-18 17:36:11] INFO    Progress: 160 / 170 docs processed.
+[2026-10-18 17:36:11] INFO    Progress: 170 / 170 docs processed.
+[2026-10-18 17:36:16] INFO  [Plot] Pareto curve saved to: C:\Users\welcome\Downloads\clinical-extraction-loop\figures\pareto_latency_accuracy.png

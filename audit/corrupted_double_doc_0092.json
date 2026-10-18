@@ -31,11 +31,17 @@
         "field": "total_cholesterol",
         "old_val": 243.4,
         "new_val": 243.4,
-        "delta_conf": "+0.38",
+        "delta_conf": "+0.26",
+        "vision_metrics": {
+          "tenengrad": 8999.32,
+          "contrast_ratio": 0.429,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.65
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       },
       {
@@ -44,11 +50,17 @@
         "field": "total_cholesterol",
         "old_val": 243.4,
         "new_val": 243.4,
-        "delta_conf": "+0.03",
+        "delta_conf": "+0.15",
+        "vision_metrics": {
+          "tenengrad": 8999.32,
+          "contrast_ratio": 0.429,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.65
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       }
     ]

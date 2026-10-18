@@ -31,11 +31,17 @@
         "field": "ldl",
         "old_val": 11.6,
         "new_val": 114.1,
-        "delta_conf": "+0.38",
+        "delta_conf": "+0.27",
+        "vision_metrics": {
+          "tenengrad": 13010.6,
+          "contrast_ratio": 0.534,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.687
+        },
         "crops": [
-          null,
-          null,
-          null
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       }
     ]
