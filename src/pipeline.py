@@ -7,7 +7,7 @@ from src.stage2_constraints import (
 )
 from src.stage2_isolation import hierarchical_isolation_search
 from src.stage3_vision_gate import process_vision_gate
-from src.stage4_reextract import reextract_microcrop
+from src.stage4_enhance_extract import enhance_and_reextract, reextract_microcrop
 
 def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10) -> dict:
     doc = extract_document_state(image_path)
@@ -118,7 +118,11 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
         if action == "CORRECT_K1":
             field = search_res["field"]
             raw_c, seg_c, sr_c = process_vision_gate(img_bgr, bboxes[field])
-            corrected_val, new_conf, delta_c = reextract_microcrop(gt_clean[field], confidences[field])
+            corrected_val, new_conf, delta_c, sr_4x, quality_metrics = enhance_and_reextract(
+                seg_c if seg_c is not None else raw_c,
+                gt_clean[field],
+                confidences[field]
+            )
             
             old_val = current_data[field]
             current_data[field] = corrected_val
@@ -131,7 +135,8 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
                 "old_val": old_val,
                 "new_val": corrected_val,
                 "delta_conf": f"+{delta_c:.2f}",
-                "crops": (raw_c, seg_c, sr_c)
+                "vision_metrics": quality_metrics,
+                "crops": ("raw_padded", "graphcut_segmented", "real_esrgan_4x") if raw_c is not None else (None, None, None)
             })
             attempt += 1
             continue
