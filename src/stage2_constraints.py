@@ -53,3 +53,37 @@ def evaluate_friedewald_invariant(panel: dict, tolerance: float = 0.10) -> tuple
         return "CONVERGED", residual, relative_residual
         
     return "VIOLATION", residual, relative_residual
+
+def calculate_sampson_ldl(tc: float, hdl: float, tg: float) -> float:
+    """Calculates LDL using the Sampson (2020) equation."""
+    # LDL = TC/1.19 + HDL/1.1 - TG/3.98 - (TG * (TC - HDL)) / 8.2 - 0.17
+    non_hdl = tc - hdl
+    ldl = (tc / 1.19) + (hdl / 1.1) - (tg / 3.98) - ((tg * non_hdl) / 8.2) - 0.17
+    return round(ldl, 1)
+
+def evaluate_sampson_invariant(panel: dict, tol: float = 0.10) -> tuple[str, float]:
+    """
+    Evaluates Sampson equation for patients with high triglycerides (400 < TG <= 800 mg/dL).
+    """
+    tc = panel.get("total_cholesterol", 0.0)
+    hdl = panel.get("hdl", 0.0)
+    ldl_raw = panel.get("ldl", 0.0)
+    tg = panel.get("triglycerides", 0.0)
+
+    if tg > 800.0:
+        return "ABSTAIN_TG800", 1.0
+
+    if tc <= 0 or hdl <= 0:
+        return "VIOLATION", 1.0
+
+    ldl_calc = calculate_sampson_ldl(tc, hdl, tg)
+    denom = abs(ldl_raw) if ldl_raw != 0 else 1.0
+    rel_residual = abs(ldl_raw - ldl_calc) / denom
+
+    if rel_residual <= tol:
+        return "CONVERGED", rel_residual
+
+    if ldl_raw <= 0:
+        return "VIOLATION", 1.0
+
+    return "VIOLATION", rel_residual
