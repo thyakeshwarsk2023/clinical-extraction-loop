@@ -75,7 +75,7 @@ def apply_graphcut_segmentation(crop_bgr: np.ndarray, border_margin: int = 2) ->
     fgd_model = np.zeros((1, 65), np.float64)
 
     try:
-        cv2.grabCut(enhanced_bgr, mask, None, bgd_model, fgd_model, iterCount=4, mode=cv2.GC_INIT_WITH_MASK)
+        cv2.grabCut(enhanced_bgr, mask, None, bgd_model, fgd_model, iterCount=2, mode=cv2.GC_INIT_WITH_MASK)
         fg_mask = np.where((mask == cv2.GC_FGD) | (mask == cv2.GC_PR_FGD), 255, 0).astype(np.uint8)
     except Exception:
         # Fallback to adaptive Otsu if GrabCut encounters degenerate GMM singular matrix

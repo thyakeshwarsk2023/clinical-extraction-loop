@@ -106,7 +106,7 @@ def apply_real_esrgan_4x(crop_bgr: np.ndarray, weights_path: str = None) -> np.n
     img_rgb = cv2.cvtColor(crop_bgr, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
     tensor = torch.from_numpy(img_rgb).permute(2, 0, 1).unsqueeze(0)
 
-    with torch.no_grad():
+    with torch.inference_mode():
         sr_tensor = model(tensor)
         # Residual blend with bicubic anchor for high character fidelity
         bicubic_tensor = nn.functional.interpolate(tensor, scale_factor=4, mode="bicubic", align_corners=False)
