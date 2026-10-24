@@ -702,11 +702,11 @@ with col_right:
 # Lower Section: Physical Micro-Crop Inspection & Diagnostic Tabs
 # ---------------------------------------------------------------------------
 st.markdown("---")
-tab_crops, tab_xai, tab_fhir, tab_benchmarks = st.tabs(
+tab_crops, tab_xai, tab_samd, tab_benchmarks = st.tabs(
     [
         "Physical Vision Gate (Micro-Crops)",
         "Counterfactual XAI & Invariants",
-        "HL7 FHIR R4 Interoperability",
+        "SaMD Audit Trail & FHIR Export",
         "20-Case Verification Benchmark",
     ]
 )
@@ -823,40 +823,58 @@ with tab_xai:
         """
     )
 
-# 3. HL7 FHIR R4 Interoperability
-with tab_fhir:
-    st.markdown("#### Standard HL7 FHIR Release 4 Export")
-    st.caption("Standardized clinical laboratory packaging with LOINC-coded DiagnosticReports and Observations.")
+# Set up contextual references for SaMD audit log lookups
+doc_id = active_doc_id if active_doc_id else os.path.splitext(os.path.basename(active_doc.get("image_path", "doc_0051")))[0]
+current_case = active_doc_id if active_doc_id else doc_id
+gt_data = current_data if 'current_data' in locals() else active_doc.get("ground_truth_clean", {})
 
-    fhir_bundle_json = generate_fhir_r4_bundle(
-        panel=current_data,
-        patient_id="PATIENT-001",
-        raw_panel=active_doc["extracted_values"],
-        status_label=final_status,
-        active_equation=active_equation,
-    )
+# Safely search for audit path
+audit_path = ""
+if os.path.exists(os.path.join(ROOT, "audit")):
+    for f_name in os.listdir(os.path.join(ROOT, "audit")):
+        if f_name.endswith(f"{doc_id}.json"):
+            audit_path = os.path.join(ROOT, "audit", f_name)
+            break
 
-    f1, f2 = st.columns([1, 1])
-    with f1:
-        st.markdown(
-            """
-            **Official LOINC Interoperability Codes:**
-            - **Lipid Panel (DiagnosticReport):** `24331-1`
-            - **Total Cholesterol (Observation):** `2093-3`
-            - **HDL Cholesterol (Observation):** `2085-9`
-            - **Calculated LDL Cholesterol (Observation):** `13457-7`
-            - **Serum Triglycerides (Observation):** `2571-8`
-            """
-        )
-    with f2:
-        st.download_button(
-            "Download FHIR R4 Lipid Bundle (JSON)",
-            data=fhir_bundle_json,
-            file_name="fhir_r4_lipid_bundle.json",
-            mime="application/json",
-        )
+# =============================================================================
+# TAB 3: SAMD AUDIT TRAIL & FHIR EXPORT
+# =============================================================================
+with tab_samd:
+    st.markdown("### FDA SaMD-Aligned JSON-LD Audit Trail")
+    st.caption("Immutable cryptographic log recording state transitions, bounding box geometry, and convergence residuals.")
 
-    st.code(fhir_bundle_json, language="json")
+    # Safely fallback if variables are uninitialized in the global scope
+    current_doc = doc_id if 'doc_id' in locals() else "UNKNOWN_DOC"
+    local_audit = audit_path if 'audit_path' in locals() else ""
+    local_gt = gt_data if 'gt_data' in locals() else {}
+
+    if 'current_case' in locals() and current_case and os.path.exists(local_audit):
+        try:
+            with open(local_audit, "r", encoding="utf-8") as af:
+                audit_json = json.load(af)
+                st.json(audit_json)
+        except Exception as e:
+            st.error(f"Failed to load audit trail: {e}")
+    else:
+        st.info("Select a valid benchmark case from Tab 1 to view its audit record.")
+
+    st.markdown("---")
+    st.markdown("### Export Clinical Data (EHR Integration)")
+    
+    if local_gt:
+        try:
+            from src.clinical_impact import generate_fhir_r4_bundle
+            fhir_payload = generate_fhir_r4_bundle(local_gt, patient_id=f"PATIENT-{current_doc}")
+            st.download_button(
+                label="🏥 Download HL7 FHIR R4 DiagnosticReport",
+                data=fhir_payload,
+                file_name=f"fhir_bundle_{current_doc}.json",
+                mime="application/json"
+            )
+        except ImportError:
+            st.error("Could not load FHIR generator from src.clinical_impact.")
+    else:
+        st.warning("No verified Ground Truth data available to generate FHIR bundle.")
 
 # 4. 20-Case Verification Benchmark
 with tab_benchmarks:
