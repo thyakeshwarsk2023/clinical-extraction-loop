@@ -5,7 +5,8 @@ from src.stage2_constraints import (
     verify_physiological_bounds,
     evaluate_friedewald_invariant,
     evaluate_sampson_invariant,
-    calculate_sampson_ldl
+    calculate_sampson_ldl,
+    evaluate_martin_hopkins_invariant,
 )
 
 from src.stage2_isolation import (
@@ -60,14 +61,18 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
                 "audit_trail": [{"reason": reason}]
             }
 
-    # Calculated Panel Closed Loop (Dynamic Routing: Friedewald vs Sampson)
+    # Calculated Panel Closed Loop (Dynamic Routing: Friedewald vs Sampson vs Martin-Hopkins)
     attempt = 0
     current_data = canonical_data.copy()
     
     while attempt < max_attempts:
         raw_tg = current_data.get("triglycerides", 0.0)
         
-        if raw_tg > 800.0:
+        if route == "MARTIN_HOPKINS":
+            status, rel_err = evaluate_martin_hopkins_invariant(current_data, tolerance)
+            residual = rel_err
+            active_equation = "MARTIN_HOPKINS"
+        elif raw_tg > 800.0:
             return {
                 "status": "ABSTAIN_TG800",
                 "assay_route": route,
@@ -117,7 +122,12 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             }
             
         # Stage 2.5: Hierarchical Isolation Search (k=1 vs k=2)
-        search_res = hierarchical_isolation_search(current_data, confidences, tol=tolerance)
+        search_res = hierarchical_isolation_search(
+            current_data,
+            confidences,
+            tol=tolerance,
+            method="MARTIN_HOPKINS" if route == "MARTIN_HOPKINS" else None
+        )
         action = search_res.get("action")
         
         if action == "ABSTAIN_TG800":

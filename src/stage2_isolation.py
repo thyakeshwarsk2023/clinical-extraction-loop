@@ -1,7 +1,30 @@
 import itertools
 import Levenshtein
-from src.stage2_constraints import calculate_sampson_ldl, evaluate_sampson_invariant
+from src.stage2_constraints import (
+    calculate_sampson_ldl,
+    evaluate_sampson_invariant,
+    get_martin_hopkins_divisor,
+    calculate_martin_hopkins_ldl,
+    evaluate_martin_hopkins_invariant,
+)
 
+def invert_martin_hopkins(panel: dict, target_field: str) -> float | None:
+    tc = panel.get("total_cholesterol", 0.0)
+    hdl = panel.get("hdl", 0.0)
+    ldl = panel.get("ldl", 0.0)
+    tg = panel.get("triglycerides", 0.0)
+    non_hdl = max(tc - hdl, 1.0)
+    f = get_martin_hopkins_divisor(tg, non_hdl)
+    
+    if target_field == "ldl":
+        return round(tc - hdl - (tg / f), 1)
+    elif target_field == "total_cholesterol":
+        return round(ldl + hdl + (tg / f), 1)
+    elif target_field == "hdl":
+        return round(tc - ldl - (tg / f), 1)
+    elif target_field == "triglycerides":
+        return round((tc - hdl - ldl) * f, 1)
+    return None
 def evaluate_plausibility_bounds(panel: dict) -> tuple:
     tc, hdl, ldl, tg = panel["total_cholesterol"], panel["hdl"], panel["ldl"], panel["triglycerides"]
     if ldl >= tc or hdl >= tc:
@@ -96,8 +119,12 @@ def is_adjacent_digit_swap(orig_val: float, target_val: float, field: str = "hdl
 # Backward compatibility alias
 is_digit_transposition_match = is_adjacent_digit_swap
 
-def solve_field_closed_form(field: str, panel: dict) -> float:
-    """Solves for the exact Friedewald or Sampson value of field in O(1) closed-form."""
+def solve_field_closed_form(field: str, panel: dict, method: str = None) -> float:
+    """Solves for the exact Friedewald, Sampson, or Martin-Hopkins value of field in O(1) closed-form."""
+    if method == "MARTIN_HOPKINS":
+        inv = invert_martin_hopkins(panel, field)
+        return round(inv, 1) if inv is not None else 0.0
+
     tc = panel.get("total_cholesterol", 0.0)
     hdl = panel.get("hdl", 0.0)
     ldl = panel.get("ldl", 0.0)
@@ -286,19 +313,31 @@ def compute_candidate_cost(
     }
     return cost, metadata
 
-def hierarchical_isolation_search(panel: dict, confidences: dict, tol: float = 0.10) -> dict:
-    tc, hdl, ldl, tg = panel["total_cholesterol"], panel["hdl"], panel["ldl"], panel["triglycerides"]
-    
+def hierarchical_isolation_search(panel: dict, confidences: dict = None, tol: float = 0.10, method: str = None) -> dict:
+    if confidences is None:
+        confidences = {f: 0.85 for f in panel}
+
+    tc = panel.get("total_cholesterol", 0.0)
+    hdl = panel.get("hdl", 0.0)
+    ldl = panel.get("ldl", 0.0)
+    tg = panel.get("triglycerides", 0.0)
+
+    is_martin = (method == "MARTIN_HOPKINS")
+
     # Step 0: Biological validity boundary for Sampson
-    if tg > 800.0:
+    if tg > 800.0 and not is_martin:
         return {
             "action": "ABSTAIN_TG800",
             "reason": "Serum Triglycerides > 800 mg/dL exceed Sampson validity threshold."
         }
         
     # Step 1: Check Invariant (Dynamic Equation Routing)
-    is_sampson = (400.0 < tg <= 800.0)
-    if is_sampson:
+    is_sampson = (400.0 < tg <= 800.0) and not is_martin
+    if is_martin:
+        status, rel_err = evaluate_martin_hopkins_invariant(panel, tol)
+        if status == "CONVERGED":
+            return {"action": "CONVERGED", "fields": [], "residual": rel_err, "equation": "MARTIN_HOPKINS"}
+    elif is_sampson:
         ldl_calc = calculate_sampson_ldl(tc, hdl, tg)
         denom = abs(ldl) if ldl != 0 else 1.0
         residual = abs(ldl - ldl_calc) / denom
@@ -312,7 +351,12 @@ def hierarchical_isolation_search(panel: dict, confidences: dict, tol: float = 0
         
     # Step 2: k=1 Single-Field Algebraic Counterfactual Search
     single_candidates = {}
-    if is_sampson:
+    if is_martin:
+        single_candidates["ldl"] = invert_martin_hopkins(panel, "ldl")
+        single_candidates["total_cholesterol"] = invert_martin_hopkins(panel, "total_cholesterol")
+        single_candidates["hdl"] = invert_martin_hopkins(panel, "hdl")
+        single_candidates["triglycerides"] = invert_martin_hopkins(panel, "triglycerides")
+    elif is_sampson:
         # Sampson closed-form inversions
         single_candidates["ldl"] = calculate_sampson_ldl(tc, hdl, tg)
         
@@ -340,13 +384,13 @@ def hierarchical_isolation_search(panel: dict, confidences: dict, tol: float = 0
         # Bounds check: ensure target does not violate physiological bounds
         if field != "ldl" and target <= 0:
             continue
-        if not is_sampson and target <= 0:
+        if not is_sampson and not is_martin and target <= 0:
             continue
         if target > 2000.0 or target < -20000.0:
             continue
-        if field == "triglycerides" and target > 800.0:
+        if field == "triglycerides" and target > 800.0 and not is_martin:
             continue
-        if field == "triglycerides" and not is_sampson and target > 400.0 and panel["triglycerides"] <= 400.0:
+        if field == "triglycerides" and not is_sampson and not is_martin and target > 400.0 and panel["triglycerides"] <= 400.0:
             denom_tg = -(1.0 / 3.98) - ((tc - hdl) / 8.2)
             if abs(denom_tg) > 1e-6:
                 target_s = (ldl - (tc / 1.19) - (hdl / 1.1) + 0.17) / denom_tg
@@ -361,7 +405,7 @@ def hierarchical_isolation_search(panel: dict, confidences: dict, tol: float = 0
         test_panel[field] = target
         if test_panel["hdl"] >= test_panel["total_cholesterol"]:
             continue
-        if not is_sampson and test_panel["ldl"] >= test_panel["total_cholesterol"]:
+        if not is_sampson and not is_martin and test_panel["ldl"] >= test_panel["total_cholesterol"]:
             continue
 
         cost, meta = compute_candidate_cost(panel[field], target, confidences.get(field, 0.8), field)
@@ -406,17 +450,19 @@ def hierarchical_isolation_search(panel: dict, confidences: dict, tol: float = 0
             test_panel = panel.copy()
             test_panel[f1] = cand1
             
-            cand2 = solve_field_closed_form(f2, test_panel)
+            cand2 = solve_field_closed_form(f2, test_panel, method=method)
             if cand2 == 0.0 or cand2 >= 2000.0:
                 continue
             cand2 = round(cand2, 1)
             test_panel[f2] = cand2
             
-            is_sampson_pair = (400.0 < test_panel["triglycerides"] <= 800.0)
+            is_sampson_pair = (400.0 < test_panel["triglycerides"] <= 800.0) and not is_martin
             # Check biological plausibility
-            if test_panel["triglycerides"] > 800.0 or test_panel["hdl"] >= test_panel["total_cholesterol"]:
+            if not is_martin and test_panel["triglycerides"] > 800.0:
                 continue
-            if not is_sampson_pair and test_panel["ldl"] >= test_panel["total_cholesterol"]:
+            if test_panel["hdl"] >= test_panel["total_cholesterol"]:
+                continue
+            if not is_sampson_pair and not is_martin and test_panel["ldl"] >= test_panel["total_cholesterol"]:
                 continue
             if cand2 <= 0.0 and (not is_sampson_pair or f2 != "ldl"):
                 continue
@@ -435,7 +481,9 @@ def hierarchical_isolation_search(panel: dict, confidences: dict, tol: float = 0
                 if d_other > 2:
                     continue
 
-            if is_sampson_pair:
+            if is_martin:
+                st, res = evaluate_martin_hopkins_invariant(test_panel, tol)
+            elif is_sampson_pair:
                 ldl_calc = calculate_sampson_ldl(test_panel["total_cholesterol"], test_panel["hdl"], test_panel["triglycerides"])
                 denom = abs(test_panel["ldl"]) if test_panel["ldl"] != 0 else 1.0
                 res = abs(test_panel["ldl"] - ldl_calc) / denom
@@ -467,4 +515,100 @@ def hierarchical_isolation_search(panel: dict, confidences: dict, tol: float = 0
     return {
         "action": "ABSTAIN_ALGEBRAIC_INDETERMINATE",
         "reason": "Invariant violated; no 1-field or discrete 2-field edit permutation resolved residual."
-    }
+    }
+
+
+def explain_counterfactual(
+    panel: dict,
+    confidences: dict = None,
+    tol: float = 0.10,
+    method: str = None
+) -> dict:
+    """
+    Computes Counterfactual Explainable AI (XAI) diagnostics for a clinical panel.
+    Returns:
+      - active_equation: FRIEDEWALD, SAMPSON, or MARTIN_HOPKINS
+      - is_converged: bool
+      - residual: float
+      - field_counterfactuals: dict of each field's target, absolute delta, relative delta,
+        Damerau-Levenshtein distance, OCR penalty, decimal shift bonus, transposition bonus,
+        and net anomaly score.
+      - isolated_field: suspect field (if any)
+      - clinical_explanation: human-interpretable clinical explanation narrative.
+    """
+    if confidences is None:
+        confidences = {f: 0.85 for f in panel}
+
+    tg = panel.get("triglycerides", 0.0)
+    if method == "MARTIN_HOPKINS":
+        eq_name = "MARTIN_HOPKINS"
+        status, res = evaluate_martin_hopkins_invariant(panel, tol)
+    elif tg > 400.0:
+        eq_name = "SAMPSON"
+        status, res = evaluate_sampson_invariant(panel, tol)
+    else:
+        eq_name = "FRIEDEWALD"
+        expected_tc = panel.get("hdl", 0.0) + panel.get("ldl", 0.0) + (tg / 5.0)
+        tc = panel.get("total_cholesterol", 0.0)
+        res = abs(tc - expected_tc) / tc if tc > 0 else 1.0
+        status = "CONVERGED" if res <= tol else "VIOLATION"
+
+    fields = ["total_cholesterol", "hdl", "ldl", "triglycerides"]
+    diagnostics = {}
+    for f in fields:
+        raw_val = panel.get(f, 0.0)
+        target = solve_field_closed_form(f, panel, method=method)
+        cost, meta = compute_candidate_cost(raw_val, target, confidences.get(f, 0.85), f)
+        delta_abs = abs(raw_val - target)
+        delta_pct = (delta_abs / max(raw_val, 1e-3)) * 100.0
+
+        diagnostics[f] = {
+            "raw_value": round(raw_val, 1),
+            "counterfactual_target": round(target, 1),
+            "delta_abs": round(delta_abs, 1),
+            "delta_pct": round(delta_pct, 1),
+            "edit_distance": meta["raw_dist"],
+            "is_decimal_shift": meta["is_decimal_shift"],
+            "is_transposition": meta["is_transposition"],
+            "confidence_penalty": round(meta.get("conf_penalty", 0.0), 3),
+            "composite_anomaly_score": round(cost, 3),
+        }
+
+    sorted_fields = sorted(fields, key=lambda f: diagnostics[f]["composite_anomaly_score"])
+    best_f = sorted_fields[0]
+    best_meta = diagnostics[best_f]
+
+    if status == "CONVERGED":
+        explanation = (
+            f"Lipid panel is internally consistent under {eq_name} "
+            f"(residual: {res*100:.1f}% <= {tol*100:.0f}% tol). All subfractions are in physiological equilibrium."
+        )
+    else:
+        f_title = best_f.replace("_", " ").title()
+        if best_meta["is_decimal_shift"]:
+            explanation = (
+                f"Isolated root cause: {f_title} exhibits an order-of-magnitude decimal point shift "
+                f"({best_meta['raw_value']} vs. {best_meta['counterfactual_target']} mg/dL). "
+                f"Counterfactual restoration resolves invariant under {eq_name}."
+            )
+        elif best_meta["is_transposition"]:
+            explanation = (
+                f"Isolated root cause: {f_title} exhibits an adjacent digit transposition "
+                f"({best_meta['raw_value']} vs. {best_meta['counterfactual_target']} mg/dL, Levenshtein distance {best_meta['edit_distance']}). "
+                f"Classic transcription typographic error."
+            )
+        else:
+            explanation = (
+                f"Isolated suspect analyte: {f_title} with lowest composite anomaly penalty "
+                f"({best_meta['composite_anomaly_score']:.2f}). Counterfactual target {best_meta['counterfactual_target']} mg/dL "
+                f"achieves physiological consistency under {eq_name}."
+            )
+
+    return {
+        "active_equation": eq_name,
+        "is_converged": (status == "CONVERGED"),
+        "residual": round(res, 4),
+        "field_counterfactuals": diagnostics,
+        "isolated_field": best_f if status != "CONVERGED" else None,
+        "clinical_explanation": explanation,
+    }

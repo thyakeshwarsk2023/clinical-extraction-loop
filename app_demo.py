@@ -26,6 +26,9 @@ from src.stage2_constraints import (
     evaluate_friedewald_invariant,
     evaluate_sampson_invariant,
     calculate_sampson_ldl,
+    get_martin_hopkins_divisor,
+    calculate_martin_hopkins_ldl,
+    evaluate_martin_hopkins_invariant,
 )
 from src.stage2_isolation import (
     hierarchical_isolation_search,
@@ -34,9 +37,19 @@ from src.stage2_isolation import (
     damerau_levenshtein_distance,
     is_decimal_shift,
     is_adjacent_digit_swap,
+    explain_counterfactual,
 )
 from src.stage3_vision_gate import process_vision_gate, apply_graphcut_segmentation
 from src.stage4_enhance_extract import enhance_and_reextract, compute_visual_grounding_metrics
+from src.clinical_impact import (
+    evaluate_atp3_risk_category,
+    evaluate_clinical_risk_flip,
+    generate_fhir_r4_bundle,
+)
+from src.adversarial import (
+    inject_adversarial_corruption,
+    ADVERSARIAL_MODES,
+)
 from src.pipeline import run_pipeline
 from evals.metrics import field_accuracy
 from evals.run_final_ablation import (
@@ -267,8 +280,25 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("### Pipeline Controls")
+    eq_routing_pref = st.selectbox(
+        "Dynamic Invariant Equation:",
+        ["Auto-Route (Friedewald / Sampson)", "Martin-Hopkins Equation", "Sampson Equation", "Friedewald Equation"],
+        index=0,
+    )
     max_k_iter = st.slider("Maximum Iterations (K):", 1, 3, 2)
     tolerance = st.slider("Residual Tolerance (%):", 5, 20, 10) / 100.0
+
+    st.markdown("---")
+    st.markdown("### Adversarial Testing")
+    with st.expander("Inject Controlled Corruption", expanded=False):
+        enable_adv = st.checkbox("Enable Adversarial Injection", value=False)
+        adv_field = st.selectbox("Target Analyte:", ["total_cholesterol", "hdl", "ldl", "triglycerides"])
+        adv_type = st.selectbox(
+            "Corruption Modality:",
+            list(ADVERSARIAL_MODES.keys()),
+            format_func=lambda k: ADVERSARIAL_MODES[k],
+        )
+
 
 
 # ---------------------------------------------------------------------------
@@ -406,6 +436,17 @@ def resolve_document_input():
 
 active_doc = resolve_document_input()
 
+# Apply Adversarial Perturbation if enabled
+adv_meta = None
+if enable_adv:
+    active_doc["extracted_values"], active_doc["confidences"], adv_meta = inject_adversarial_corruption(
+        active_doc["extracted_values"], adv_field, adv_type, active_doc.get("confidences")
+    )
+    if adv_field not in active_doc.get("corrupted_fields", []):
+        active_doc["corrupted_fields"] = list(active_doc.get("corrupted_fields", [])) + [adv_field]
+    active_doc["corruption_type"] = f"Adversarial: {adv_type}"
+    st.sidebar.info(f"Adversarial Perturbation active: {adv_meta.get('description', '')}")
+
 # ---------------------------------------------------------------------------
 # Pipeline Execution
 # ---------------------------------------------------------------------------
@@ -414,6 +455,14 @@ t_start = time.perf_counter()
 # Stage 0: Assay routing
 assay_routing = AssayClassifier.classify(active_doc["method_text"])
 route = assay_routing["route"]
+if eq_routing_pref == "Martin-Hopkins Equation":
+    route = "MARTIN_HOPKINS"
+elif eq_routing_pref == "Sampson Equation":
+    route = "SAMPSON_FORCED"
+elif eq_routing_pref == "Friedewald Equation":
+    route = "FRIEDEWALD_FORCED"
+
+method_param = "MARTIN_HOPKINS" if route == "MARTIN_HOPKINS" else None
 
 # Stage 1: Unit normalization to canonical mg/dL
 canonical_data = normalize_to_mgdl(active_doc["extracted_values"], active_doc["unit"])
@@ -437,15 +486,21 @@ else:
     while attempt < max_k_iter:
         raw_tg = current_data.get("triglycerides", 0.0)
 
-        # Dynamic Equation Routing based on TG
-        if raw_tg > 800.0:
-            final_status = "ABSTAIN_TG800"
-            active_equation = "TG > 800 mg/dL (Abstain)"
-            break
-        elif raw_tg > 400.0:
+        # Dynamic Equation Routing
+        if route == "MARTIN_HOPKINS":
+            status, rel_err = evaluate_martin_hopkins_invariant(current_data, tolerance)
+            non_hdl = max(current_data.get("total_cholesterol", 0.0) - current_data.get("hdl", 0.0), 1.0)
+            divisor_f = get_martin_hopkins_divisor(raw_tg, non_hdl)
+            active_equation = f"Martin-Hopkins Equation (VLDL Divisor f={divisor_f:.1f})"
+            curr_residual = rel_err
+        elif route == "SAMPSON_FORCED" or (raw_tg > 400.0 and raw_tg <= 800.0 and route != "FRIEDEWALD_FORCED"):
             status, rel_err = evaluate_sampson_invariant(current_data, tolerance)
             active_equation = "Sampson Equation (400 < TG <= 800 mg/dL)"
             curr_residual = rel_err
+        elif raw_tg > 800.0 and route != "MARTIN_HOPKINS":
+            final_status = "ABSTAIN_TG800"
+            active_equation = "TG > 800 mg/dL (Abstain)"
+            break
         else:
             status, res_abs, rel_err = evaluate_friedewald_invariant(current_data, tolerance)
             active_equation = "Friedewald Equation (TG <= 400 mg/dL)"
@@ -459,7 +514,9 @@ else:
             break
 
         # Stage 2.5: Isolation Search
-        search_res = hierarchical_isolation_search(current_data, confidences, tol=tolerance)
+        search_res = hierarchical_isolation_search(
+            current_data, confidences, tol=tolerance, method=method_param
+        )
         action = search_res.get("action")
 
         if action in ["ABSTAIN_TG800", "ABSTAIN_ALGEBRAIC_INDETERMINATE"]:
@@ -584,6 +641,37 @@ with col_right:
     )
     st.markdown('</div>', unsafe_allow_html=True)
 
+    # Clinical Risk Flip & ATP-III Card
+    raw_ldl = active_doc["extracted_values"].get("ldl", 0.0)
+    ver_ldl = current_data.get("ldl", 0.0)
+    risk_flip = evaluate_clinical_risk_flip(raw_ldl, ver_ldl)
+
+    if risk_flip["has_risk_flip"]:
+        if risk_flip["direction"] == "FALSE_ESCALATION":
+            rf_pill = '<span class="pill pill-red">[RISK FLIP: FALSE ESCALATION]</span>'
+        else:
+            rf_pill = '<span class="pill pill-amber">[RISK FLIP: FALSE REASSURANCE]</span>'
+    else:
+        rf_pill = '<span class="pill pill-green">[CONCORDANT: ZERO RISK SHIFT]</span>'
+
+    st.markdown(
+        f"""
+        <div class="card-panel">
+            <div class="card-title">Cardiovascular Clinical Impact (NCEP ATP-III Guidelines)</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div><b>Risk Status:</b> {rf_pill}</div>
+                <div><b>Severity:</b> <span class="pill pill-purple">{risk_flip.get('severity', 'NEGLIGIBLE')}</span></div>
+            </div>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.7;">
+                <b>Raw Extracted Risk Tier:</b> <span class="pill pill-amber">{risk_flip['raw_category']} ({raw_ldl:.1f} mg/dL)</span><br>
+                <b>Verified True Risk Tier:</b> <span class="pill pill-green">{risk_flip['verified_category']} ({ver_ldl:.1f} mg/dL)</span><br>
+                <div style="margin-top:6px; color:#94a3b8; font-size:0.82rem;">{risk_flip['clinical_narrative']}</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     # Analyte Comparison Table
     st.markdown('<div class="card-panel"><div class="card-title">Clinical Panel Values</div>', unsafe_allow_html=True)
     table_rows = []
@@ -614,8 +702,13 @@ with col_right:
 # Lower Section: Physical Micro-Crop Inspection & Diagnostic Tabs
 # ---------------------------------------------------------------------------
 st.markdown("---")
-tab_crops, tab_invariants, tab_benchmarks = st.tabs(
-    ["Physical Vision Gate (Micro-Crops)", "Mathematical Invariant Solver", "20-Case Verification Benchmark"]
+tab_crops, tab_xai, tab_fhir, tab_benchmarks = st.tabs(
+    [
+        "Physical Vision Gate (Micro-Crops)",
+        "Counterfactual XAI & Invariants",
+        "HL7 FHIR R4 Interoperability",
+        "20-Case Verification Benchmark",
+    ]
 )
 
 # 1. Micro-Crop Inspection
@@ -673,35 +766,99 @@ with tab_crops:
     else:
         st.info("No bounding box coordinates associated with this document.")
 
-# 2. Mathematical Invariant Solver
-with tab_invariants:
-    st.markdown("#### Closed-Form Algebraic Counterfactuals")
-    st.caption("Calculates the exact value each field would need to take to restore equality under the active invariant.")
+# 2. Counterfactual XAI & Invariants
+with tab_xai:
+    st.markdown("#### Counterfactual Explainable AI (XAI) Diagnostics")
+    cf_diag = explain_counterfactual(current_data, confidences, tol=tolerance, method=method_param)
+
+    st.markdown(
+        f"""
+        <div class="card-panel" style="margin-bottom:16px;">
+            <div class="card-title">Root Cause Clinical Narrative</div>
+            <div style="font-size:0.90rem; color:#cbd5e1; line-height:1.6;">
+                {cf_diag['clinical_explanation']}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     targets = {}
     for f in ["total_cholesterol", "hdl", "ldl", "triglycerides"]:
-        targets[f] = solve_field_closed_form(f, current_data)
+        targets[f] = solve_field_closed_form(f, current_data, method=method_param)
 
     tc1, tc2, tc3, tc4 = st.columns(4)
     with tc1:
-        st.metric("TC* Target", f"{targets['total_cholesterol']:.1f} mg/dL")
+        st.metric("TC* Counterfactual", f"{targets['total_cholesterol']:.1f} mg/dL")
     with tc2:
-        st.metric("HDL* Target", f"{targets['hdl']:.1f} mg/dL")
+        st.metric("HDL* Counterfactual", f"{targets['hdl']:.1f} mg/dL")
     with tc3:
-        st.metric("LDL* Target", f"{targets['ldl']:.1f} mg/dL")
+        st.metric("LDL* Counterfactual", f"{targets['ldl']:.1f} mg/dL")
     with tc4:
-        st.metric("TG* Target", f"{targets['triglycerides']:.1f} mg/dL")
+        st.metric("TG* Counterfactual", f"{targets['triglycerides']:.1f} mg/dL")
+
+    # Diagnostic Table
+    cf_rows = []
+    for f_name, d_info in cf_diag["field_counterfactuals"].items():
+        cf_rows.append({
+            "Analyte": f_name.replace("_", " ").title(),
+            "Raw Value": f"{d_info['raw_value']:.1f} mg/dL",
+            "Target (X*)": f"{d_info['counterfactual_target']:.1f} mg/dL",
+            "Delta (mg/dL)": f"{d_info['delta_abs']:.1f}",
+            "Delta (%)": f"{d_info['delta_pct']:.1f}%",
+            "Levenshtein Dist": d_info['edit_distance'],
+            "Decimal Shift": "Yes" if d_info['is_decimal_shift'] else "No",
+            "Digit Swap": "Yes" if d_info['is_transposition'] else "No",
+            "Anomaly Cost": f"{d_info['composite_anomaly_score']:.2f}",
+        })
+    st.dataframe(cf_rows)
 
     st.markdown(
         """
-        **Equation References:**
+        **Clinical Invariant Specifications:**
         - **Friedewald Invariant (TG <= 400 mg/dL):** `TC = HDL + LDL + (TG / 5.0)`
+        - **Martin-Hopkins Invariant (Personalized Divisor):** `LDL = TC - HDL - (TG / f)`, where dynamic divisor `f` is stratified across 180 strata based on Triglycerides and non-HDL cholesterol.
         - **Sampson Invariant (400 < TG <= 800 mg/dL):** `LDL = TC/1.19 + HDL/1.1 - TG/3.98 - (TG * (TC - HDL))/8.2 - 0.17`
-        - **Abstention Boundary (TG > 800 mg/dL):** `ABSTAIN_TG800`
+        - **Principled Abstention Boundary (TG > 800 mg/dL):** `ABSTAIN_TG800`
         """
     )
 
-# 3. 20-Case Verification Benchmark
+# 3. HL7 FHIR R4 Interoperability
+with tab_fhir:
+    st.markdown("#### Standard HL7 FHIR Release 4 Export")
+    st.caption("Standardized clinical laboratory packaging with LOINC-coded DiagnosticReports and Observations.")
+
+    fhir_bundle_json = generate_fhir_r4_bundle(
+        panel=current_data,
+        patient_id="PATIENT-001",
+        raw_panel=active_doc["extracted_values"],
+        status_label=final_status,
+        active_equation=active_equation,
+    )
+
+    f1, f2 = st.columns([1, 1])
+    with f1:
+        st.markdown(
+            """
+            **Official LOINC Interoperability Codes:**
+            - **Lipid Panel (DiagnosticReport):** `24331-1`
+            - **Total Cholesterol (Observation):** `2093-3`
+            - **HDL Cholesterol (Observation):** `2085-9`
+            - **Calculated LDL Cholesterol (Observation):** `13457-7`
+            - **Serum Triglycerides (Observation):** `2571-8`
+            """
+        )
+    with f2:
+        st.download_button(
+            "Download FHIR R4 Lipid Bundle (JSON)",
+            data=fhir_bundle_json,
+            file_name="fhir_r4_lipid_bundle.json",
+            mime="application/json",
+        )
+
+    st.code(fhir_bundle_json, language="json")
+
+# 4. 20-Case Verification Benchmark
 with tab_benchmarks:
     st.markdown("#### Empirical Verification Benchmark (20 Clinical Documents)")
     eval_path = os.path.join(ROOT, "reports", "twenty_test_cases_evaluation.json")

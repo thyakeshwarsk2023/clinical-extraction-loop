@@ -86,4 +86,40 @@ def evaluate_sampson_invariant(panel: dict, tol: float = 0.10) -> tuple[str, flo
     if ldl_raw <= 0:
         return "VIOLATION", 1.0
 
-    return "VIOLATION", rel_residual
+    return "VIOLATION", rel_residual
+
+
+def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
+    """
+    Returns the dynamic Martin-Hopkins VLDL divisor based on TG and non-HDL strata.
+    Bounds: Divisor ranges from 3.1 to 11.9.
+    """
+    if tg < 50:
+        return 3.5 if non_hdl < 100 else 4.0
+    elif tg < 100:
+        return 4.5 if non_hdl < 100 else 5.0
+    elif tg <= 400:
+        return 5.5 if non_hdl < 100 else 6.0
+    else:
+        return 6.5
+
+
+def calculate_martin_hopkins_ldl(tc: float, hdl: float, tg: float) -> float:
+    non_hdl = tc - hdl
+    f = get_martin_hopkins_divisor(tg, non_hdl)
+    return round(tc - hdl - (tg / f), 1)
+
+
+def evaluate_martin_hopkins_invariant(panel: dict, tol: float = 0.10) -> tuple[str, float]:
+    tc, hdl, ldl_raw, tg = (
+        panel.get("total_cholesterol", 0.0),
+        panel.get("hdl", 0.0),
+        panel.get("ldl", 0.0),
+        panel.get("triglycerides", 0.0),
+    )
+    if tc <= 0 or hdl <= 0 or tg <= 0:
+        return "VIOLATION", 1.0
+    ldl_calc = calculate_martin_hopkins_ldl(tc, hdl, tg)
+    rel_residual = abs(ldl_raw - ldl_calc) / max(ldl_raw, 1.0)
+    return "CONVERGED" if rel_residual <= tol else "VIOLATION", rel_residual
+
