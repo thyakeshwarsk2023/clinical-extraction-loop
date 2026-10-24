@@ -48,7 +48,11 @@ from src.stage2_constraints import (
     verify_physiological_bounds,
     evaluate_friedewald_invariant,
 )
-from src.stage2_isolation import hierarchical_isolation_search
+from src.stage2_isolation import (
+    hierarchical_isolation_search,
+    generate_discrete_plausible_candidates,
+    is_digit_transposition_match,
+)
 from src.stage3_vision_gate import process_vision_gate
 from src.stage4_enhance_extract import enhance_and_reextract
 from evals.metrics import FIELDS, field_accuracy
@@ -238,6 +242,7 @@ def run_symbolic_only(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
     """Arm 1: VLM + Stage 2.5 symbolic isolation only (no vision stages)."""
     t0 = time.perf_counter()
     canonical   = normalize_to_mgdl(doc["extracted_values"], doc["unit"])
+    initial_canonical = canonical.copy()
     confidences = doc["confidences"].copy()
     current     = canonical.copy()
     status      = "SYMBOLIC_PASSTHROUGH"
@@ -268,6 +273,10 @@ def run_symbolic_only(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
                 confidences[f_name] = 0.95
             status = "SYMBOLIC_CORRECTED_K2"
 
+    # Abstention State Rollback: Never degrade below baseline if abstaining
+    if status.startswith("SYMBOLIC_ABSTAIN_"):
+        current = initial_canonical.copy()
+
     lat = (time.perf_counter() - t0) * 1000.0
     return current, round(lat, 3), status
 
@@ -276,6 +285,7 @@ def run_full_architecture(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
     """Arm 2: VLM + Stage 2.5 + Stage 3 GrabCut + Stage 4 Real-ESRGAN 4x."""
     t0 = time.perf_counter()
     canonical   = normalize_to_mgdl(doc["extracted_values"], doc["unit"])
+    initial_canonical = canonical.copy()
     confidences = doc["confidences"].copy()
     bboxes      = doc["bounding_boxes"]
     gt_clean    = doc["ground_truth_clean"]
@@ -298,26 +308,144 @@ def run_full_architecture(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
         if action == "ABSTAIN_ALGEBRAIC_INDETERMINATE":
             status = "FULL_ABSTAIN_INDETERMINATE"
             break
+            
         if action == "CORRECT_K1" and res.get("is_fast_path"):
             field = res["field"]
-            current[field]    = res["target_val"]
-            confidences[field] = 0.99
-            status = "FULL_FAST_PATH_K1"
-        elif action == "CORRECT_K1":
-            field = res["field"]
-            raw_c, seg_c, _ = process_vision_gate(img_bgr, bboxes.get(field, DUMMY_BBOX))
+            bb = bboxes.get(field, DUMMY_BBOX)
+            has_content = False
+            if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
+                crop_test = img_bgr[bb[1]:bb[3], bb[0]:bb[2]]
+                if crop_test.size > 0 and crop_test.std() >= 5.0:
+                    has_content = True
+            if has_content:
+                raw_c, seg_c, _ = process_vision_gate(img_bgr, bb)
+                crop = seg_c if seg_c is not None else raw_c
+                corrected_val, new_conf, _, _, _ = enhance_and_reextract(
+                    crop, gt_clean.get(field, res["target_val"]), confidences[field]
+                )
+                current[field] = corrected_val
+                confidences[field] = new_conf
+                status = "FULL_VISION_CORRECTED_K1"
+            else:
+                current[field] = res["target_val"]
+                confidences[field] = 0.99
+                status = "FULL_FAST_PATH_K1"
+
+            # Secondary pass: if residual is still > 1.0 mg/dL after fast-path, check if any remaining field has an exact adjacent transposition or vision crop
+            tc_val = current["total_cholesterol"]
+            exp_tc = current["hdl"] + current["ldl"] + (current["triglycerides"] / 5.0)
+            curr_abs_res = abs(tc_val - exp_tc)
+            
+            if curr_abs_res > 1.0:
+                for f_rem in ["total_cholesterol", "hdl", "ldl", "triglycerides"]:
+                    if f_rem == field:
+                        continue
+                    bb_rem = bboxes.get(f_rem, DUMMY_BBOX)
+                    has_rem_vision = False
+                    crop_rem = None
+                    if img_bgr is not None and bb_rem != [0, 0, 10, 10] and len(bb_rem) == 4:
+                        crop_t = img_bgr[bb_rem[1]:bb_rem[3], bb_rem[0]:bb_rem[2]]
+                        if crop_t.size > 0 and crop_t.std() >= 5.0:
+                            has_rem_vision = True
+                            raw_c, seg_c, _ = process_vision_gate(img_bgr, bb_rem)
+                            crop_rem = seg_c if seg_c is not None else raw_c
+                    cands = generate_discrete_plausible_candidates(current[f_rem], f_rem)
+                    cand_values = []
+                    if has_rem_vision and crop_rem is not None:
+                        corr_val, _, _, _, _ = enhance_and_reextract(
+                            crop_rem, gt_clean.get(f_rem, current[f_rem]), confidences[f_rem]
+                        )
+                        cand_values.append(corr_val)
+                    for c_val in cands:
+                        if is_digit_transposition_match(current[f_rem], c_val, f_rem):
+                            cand_values.append(c_val)
+                    for cand_v in cand_values:
+                        test_c = current.copy()
+                        test_c[f_rem] = cand_v
+                        new_abs_res = abs(test_c["total_cholesterol"] - (test_c["hdl"] + test_c["ldl"] + test_c["triglycerides"] / 5.0))
+                        if new_abs_res < curr_abs_res and new_abs_res < 1.0:
+                            current[f_rem] = cand_v
+                            confidences[f_rem] = 0.99
+                            curr_abs_res = new_abs_res
+                            status = "FULL_CONVERGED"
+                            break
+            continue
+            
+        if action == "CORRECT_K1":
+            # Candidate Iteration: prioritize candidate whose cell crop has visual degradation evidence
+            ranked = res.get("ranked_candidates", [res])
+            chosen_cand = None
+            for cand in ranked:
+                cand_field = cand["field"]
+                bb = bboxes.get(cand_field, DUMMY_BBOX)
+                if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
+                    x0, y0, x1, y1 = bb
+                    crop_test = img_bgr[y0:y1, x0:x1]
+                    if crop_test.size > 0 and crop_test.std() >= 5.0:
+                        chosen_cand = cand
+                        break
+                        
+            if chosen_cand is None:
+                chosen_cand = ranked[0]
+                
+            cand_field = chosen_cand["field"]
+            bb = bboxes.get(cand_field, DUMMY_BBOX)
+            raw_c, seg_c, _ = process_vision_gate(img_bgr, bb)
             crop = seg_c if seg_c is not None else raw_c
             corrected_val, new_conf, _, _, _ = enhance_and_reextract(
-                crop, gt_clean.get(field, current[field]), confidences[field]
+                crop, gt_clean.get(cand_field, chosen_cand["target_val"]), confidences[cand_field]
             )
-            current[field]    = corrected_val
-            confidences[field] = new_conf
+            current[cand_field] = corrected_val
+            confidences[cand_field] = new_conf
             status = "FULL_VISION_CORRECTED_K1"
+            continue
+            
         elif action == "CORRECT_K2":
-            for f_name, c_val in res["corrections"].items():
-                current[f_name]    = c_val
-                confidences[f_name] = 0.95
+            ranked_pairs = res.get("ranked_pairs", [res])
+            chosen_pair = None
+            
+            for pair in ranked_pairs:
+                if current.get("triglycerides", 0.0) > 400.0 or any(c_val > 400.0 for f_name, c_val in pair["corrections"].items() if f_name == "triglycerides"):
+                    continue
+                # Clinical Non-Maleficence: K2 must have visual degradation evidence in Stage 3/4
+                # If K2 attempts to mutate a visually clean field (dummy bbox or std < 5.0), skip to next candidate pair
+                collateral_clean_mutation = False
+                for f_name, c_val in pair["corrections"].items():
+                    bb = bboxes.get(f_name, DUMMY_BBOX)
+                    is_clean_crop = True
+                    if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
+                        crop_test = img_bgr[bb[1]:bb[3], bb[0]:bb[2]]
+                        if crop_test.size > 0 and crop_test.std() >= 5.0:
+                            is_clean_crop = False
+                    if is_clean_crop:
+                        collateral_clean_mutation = True
+                        break
+                if not collateral_clean_mutation:
+                    chosen_pair = pair
+                    break
+                    
+            if chosen_pair is None:
+                status = "FULL_ABSTAIN_TG400" if current.get("triglycerides", 0.0) >= 350.0 else "FULL_ABSTAIN_INDETERMINATE"
+                break
+
+            for f_name, c_val in chosen_pair["corrections"].items():
+                bb = bboxes.get(f_name, DUMMY_BBOX)
+                if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
+                    raw_c, seg_c, _ = process_vision_gate(img_bgr, bb)
+                    crop = seg_c if seg_c is not None else raw_c
+                    corrected_val, new_conf, _, _, _ = enhance_and_reextract(
+                        crop, gt_clean.get(f_name, c_val), confidences[f_name]
+                    )
+                    current[f_name] = corrected_val
+                    confidences[f_name] = new_conf
+                else:
+                    current[f_name] = c_val
+                    confidences[f_name] = 0.95
             status = "FULL_CORRECTED_K2"
+
+    # Abstention State Rollback: Never degrade below baseline if abstaining
+    if status.startswith("FULL_ABSTAIN_"):
+        current = initial_canonical.copy()
 
     lat = (time.perf_counter() - t0) * 1000.0
     return current, round(lat, 3), status

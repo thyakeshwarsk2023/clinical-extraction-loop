@@ -13,43 +13,64 @@
     "triglycerides": 153.2
   },
   "pipeline_result": {
-    "status": "CONVERGED",
+    "status": "ABSTAIN_PATHOLOGIST_REVIEW",
     "assay_route": "FRIEDEWALD",
-    "attempts": 1,
+    "reason": "Residual 33.66 mg/dL exceeded budget after K=2 iterations.",
     "data": {
-      "total_cholesterol": 135.7,
-      "hdl": 4.5,
+      "total_cholesterol": 195.7,
+      "hdl": 42.5,
       "ldl": 88.9,
       "triglycerides": 153.2
     },
-    "residual": 11.66,
-    "relative_error": 0.0859,
+    "residual": 33.66,
     "audit_trail": [
       {
         "attempt": 1,
-        "stage": "STAGE_2.5_K2_DISCRETE_PAIR",
-        "modifications": [
-          {
-            "field": "total_cholesterol",
-            "old_val": 195.7,
-            "new_val": 135.7
-          },
-          {
-            "field": "hdl",
-            "old_val": 42.5,
-            "new_val": 4.5
-          }
+        "stage": "STAGE_3_4_VISION_GATE",
+        "field": "triglycerides",
+        "old_val": 153.2,
+        "new_val": 153.2,
+        "delta_conf": "+0.03",
+        "vision_metrics": {
+          "tenengrad": 14564.94,
+          "contrast_ratio": 0.124,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.683
+        },
+        "crops": [
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
+        ]
+      },
+      {
+        "attempt": 2,
+        "stage": "STAGE_3_4_VISION_GATE",
+        "field": "triglycerides",
+        "old_val": 153.2,
+        "new_val": 153.2,
+        "delta_conf": "+0.00",
+        "vision_metrics": {
+          "tenengrad": 14564.94,
+          "contrast_ratio": 0.124,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.683
+        },
+        "crops": [
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
       }
     ]
   },
   "metrics": {
     "field_accuracy": {
-      "total_cholesterol": false,
-      "hdl": false,
+      "total_cholesterol": true,
+      "hdl": true,
       "ldl": false,
       "triglycerides": true,
-      "overall": 0.25
+      "overall": 0.75
     },
     "isolation_correct": false
   }

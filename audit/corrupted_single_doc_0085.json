@@ -27,22 +27,12 @@
     "audit_trail": [
       {
         "attempt": 1,
-        "stage": "STAGE_3_4_VISION_GATE",
+        "stage": "STAGE_2.5_FAST_PATH",
         "field": "ldl",
         "old_val": 12.6,
         "new_val": 125.6,
-        "delta_conf": "+0.28",
-        "vision_metrics": {
-          "tenengrad": 13174.61,
-          "contrast_ratio": 0.557,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.695
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
       }
     ]
   },

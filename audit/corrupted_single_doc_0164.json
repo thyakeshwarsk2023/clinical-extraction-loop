@@ -17,40 +17,33 @@
     "assay_route": "FRIEDEWALD",
     "attempts": 1,
     "data": {
-      "total_cholesterol": 110.4,
-      "hdl": 44.2,
-      "ldl": 7.7,
+      "total_cholesterol": 210.4,
+      "hdl": 74.2,
+      "ldl": 79.2,
       "triglycerides": 285.2
     },
-    "residual": 1.46,
-    "relative_error": 0.0132,
+    "residual": 0.04,
+    "relative_error": 0.0002,
     "audit_trail": [
       {
         "attempt": 1,
-        "stage": "STAGE_2.5_K2_DISCRETE_PAIR",
-        "modifications": [
-          {
-            "field": "total_cholesterol",
-            "old_val": 210.4,
-            "new_val": 110.4
-          },
-          {
-            "field": "hdl",
-            "old_val": 74.2,
-            "new_val": 44.2
-          }
-        ]
+        "stage": "STAGE_2.5_FAST_PATH",
+        "field": "ldl",
+        "old_val": 7.7,
+        "new_val": 79.2,
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
       }
     ]
   },
   "metrics": {
     "field_accuracy": {
-      "total_cholesterol": false,
-      "hdl": false,
-      "ldl": false,
+      "total_cholesterol": true,
+      "hdl": true,
+      "ldl": true,
       "triglycerides": true,
-      "overall": 0.25
+      "overall": 1.0
     },
-    "isolation_correct": false
+    "isolation_correct": true
   }
 }

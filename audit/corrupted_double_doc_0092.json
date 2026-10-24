@@ -14,48 +14,30 @@
     "triglycerides": 327.8
   },
   "pipeline_result": {
-    "status": "ABSTAIN_PATHOLOGIST_REVIEW",
+    "status": "CONVERGED",
     "assay_route": "FRIEDEWALD",
-    "reason": "Residual 29.74 mg/dL exceeded budget after K=2 iterations.",
+    "attempts": 1,
     "data": {
       "total_cholesterol": 243.4,
-      "hdl": 58.8,
+      "hdl": 88.5,
       "ldl": 89.3,
       "triglycerides": 327.8
     },
-    "residual": 29.74,
+    "residual": 0.04,
+    "relative_error": 0.0002,
     "audit_trail": [
       {
         "attempt": 1,
         "stage": "STAGE_3_4_VISION_GATE",
-        "field": "total_cholesterol",
-        "old_val": 243.4,
-        "new_val": 243.4,
-        "delta_conf": "+0.26",
+        "field": "hdl",
+        "old_val": 58.8,
+        "new_val": 88.5,
+        "delta_conf": "+0.27",
         "vision_metrics": {
-          "tenengrad": 8999.32,
-          "contrast_ratio": 0.429,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.65
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
-      },
-      {
-        "attempt": 2,
-        "stage": "STAGE_3_4_VISION_GATE",
-        "field": "total_cholesterol",
-        "old_val": 243.4,
-        "new_val": 243.4,
-        "delta_conf": "+0.15",
-        "vision_metrics": {
-          "tenengrad": 8999.32,
-          "contrast_ratio": 0.429,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.65
+          "tenengrad": 14673.11,
+          "contrast_ratio": 0.085,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.67
         },
         "crops": [
           "raw_padded",
@@ -68,10 +50,10 @@
   "metrics": {
     "field_accuracy": {
       "total_cholesterol": true,
-      "hdl": false,
+      "hdl": true,
       "ldl": true,
       "triglycerides": true,
-      "overall": 0.75
+      "overall": 1.0
     },
     "isolation_correct": false
   }

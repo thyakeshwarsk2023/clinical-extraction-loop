@@ -13,54 +13,26 @@
     "triglycerides": 112.3
   },
   "pipeline_result": {
-    "status": "ABSTAIN_PATHOLOGIST_REVIEW",
+    "status": "CONVERGED",
     "assay_route": "FRIEDEWALD",
-    "reason": "Residual 99.04 mg/dL exceeded budget after K=2 iterations.",
+    "attempts": 1,
     "data": {
       "total_cholesterol": 196.9,
       "hdl": 74.4,
-      "ldl": 1.0,
+      "ldl": 100.0,
       "triglycerides": 112.3
     },
-    "residual": 99.04,
+    "residual": 0.04,
+    "relative_error": 0.0002,
     "audit_trail": [
       {
         "attempt": 1,
-        "stage": "STAGE_3_4_VISION_GATE",
-        "field": "total_cholesterol",
-        "old_val": 196.9,
-        "new_val": 196.9,
-        "delta_conf": "+0.03",
-        "vision_metrics": {
-          "tenengrad": 24029.23,
-          "contrast_ratio": 0.6,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.71
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
-      },
-      {
-        "attempt": 2,
-        "stage": "STAGE_3_4_VISION_GATE",
-        "field": "total_cholesterol",
-        "old_val": 196.9,
-        "new_val": 196.9,
-        "delta_conf": "+0.00",
-        "vision_metrics": {
-          "tenengrad": 24029.23,
-          "contrast_ratio": 0.6,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.71
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
+        "stage": "STAGE_2.5_FAST_PATH",
+        "field": "ldl",
+        "old_val": 1.0,
+        "new_val": 100.0,
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
       }
     ]
   },
@@ -68,10 +40,10 @@
     "field_accuracy": {
       "total_cholesterol": true,
       "hdl": true,
-      "ldl": false,
+      "ldl": true,
       "triglycerides": true,
-      "overall": 0.75
+      "overall": 1.0
     },
-    "isolation_correct": false
+    "isolation_correct": true
   }
 }

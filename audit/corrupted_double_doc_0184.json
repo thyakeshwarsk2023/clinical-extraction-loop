@@ -18,13 +18,13 @@
     "assay_route": "FRIEDEWALD",
     "attempts": 1,
     "data": {
-      "total_cholesterol": 21.9,
+      "total_cholesterol": 11.9,
       "hdl": 7.7,
-      "ldl": 9.4,
+      "ldl": 1.0,
       "triglycerides": 17.7
     },
-    "residual": 1.26,
-    "relative_error": 0.0575,
+    "residual": 0.34,
+    "relative_error": 0.0286,
     "audit_trail": [
       {
         "attempt": 1,
@@ -33,12 +33,12 @@
           {
             "field": "total_cholesterol",
             "old_val": 211.9,
-            "new_val": 21.9
+            "new_val": 11.9
           },
           {
             "field": "ldl",
             "old_val": 99.4,
-            "new_val": 9.4
+            "new_val": 1.0
           }
         ]
       }

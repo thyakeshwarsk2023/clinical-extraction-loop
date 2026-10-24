@@ -32,10 +32,10 @@
         "new_val": 85.5,
         "delta_conf": "+0.03",
         "vision_metrics": {
-          "tenengrad": 24029.23,
-          "contrast_ratio": 0.6,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.71
+          "tenengrad": 14564.94,
+          "contrast_ratio": 0.124,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.683
         },
         "crops": [
           "raw_padded",
@@ -51,10 +51,10 @@
         "new_val": 85.5,
         "delta_conf": "+0.00",
         "vision_metrics": {
-          "tenengrad": 24029.23,
-          "contrast_ratio": 0.6,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.71
+          "tenengrad": 14564.94,
+          "contrast_ratio": 0.124,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.683
         },
         "crops": [
           "raw_padded",

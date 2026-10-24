@@ -21,7 +21,7 @@
       "total_cholesterol": 213.8,
       "hdl": 40.6,
       "ldl": 137.3,
-      "triglycerides": 180.7
+      "triglycerides": 179.5
     },
     "residual": 32.36,
     "audit_trail": [
@@ -33,10 +33,10 @@
         "new_val": 40.6,
         "delta_conf": "+0.27",
         "vision_metrics": {
-          "tenengrad": 12073.52,
-          "contrast_ratio": 0.504,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.676
+          "tenengrad": 10887.36,
+          "contrast_ratio": 0.085,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.67
         },
         "crops": [
           "raw_padded",
@@ -46,22 +46,12 @@
       },
       {
         "attempt": 2,
-        "stage": "STAGE_3_4_VISION_GATE",
+        "stage": "STAGE_2.5_FAST_PATH",
         "field": "triglycerides",
         "old_val": 17.7,
-        "new_val": 180.7,
-        "delta_conf": "+0.27",
-        "vision_metrics": {
-          "tenengrad": 12569.99,
-          "contrast_ratio": 0.534,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.687
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
+        "new_val": 179.5,
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
       }
     ]
   },
@@ -70,8 +60,8 @@
       "total_cholesterol": true,
       "hdl": true,
       "ldl": true,
-      "triglycerides": true,
-      "overall": 1.0
+      "triglycerides": false,
+      "overall": 0.75
     },
     "isolation_correct": true
   }

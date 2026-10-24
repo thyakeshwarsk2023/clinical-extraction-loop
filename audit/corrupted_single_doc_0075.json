@@ -27,22 +27,12 @@
     "audit_trail": [
       {
         "attempt": 1,
-        "stage": "STAGE_3_4_VISION_GATE",
+        "stage": "STAGE_2.5_FAST_PATH",
         "field": "total_cholesterol",
         "old_val": 23.1,
         "new_val": 231.4,
-        "delta_conf": "+0.27",
-        "vision_metrics": {
-          "tenengrad": 14555.72,
-          "contrast_ratio": 0.533,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.686
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
       }
     ]
   },

@@ -18,12 +18,12 @@
     "attempts": 1,
     "data": {
       "total_cholesterol": 88.9,
-      "hdl": 5.2,
-      "ldl": 64.9,
+      "hdl": 0.6,
+      "ldl": 74.9,
       "triglycerides": 68.2
     },
-    "residual": 5.16,
-    "relative_error": 0.058,
+    "residual": 0.24,
+    "relative_error": 0.0027,
     "audit_trail": [
       {
         "attempt": 1,
@@ -32,12 +32,12 @@
           {
             "field": "hdl",
             "old_val": 57.2,
-            "new_val": 5.2
+            "new_val": 0.6
           },
           {
             "field": "ldl",
             "old_val": 54.9,
-            "new_val": 64.9
+            "new_val": 74.9
           }
         ]
       }

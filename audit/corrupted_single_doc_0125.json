@@ -19,30 +19,20 @@
     "data": {
       "total_cholesterol": 164.3,
       "hdl": 39.8,
-      "ldl": 114.1,
+      "ldl": 114.2,
       "triglycerides": 51.4
     },
-    "residual": 0.12,
-    "relative_error": 0.0007,
+    "residual": 0.02,
+    "relative_error": 0.0001,
     "audit_trail": [
       {
         "attempt": 1,
-        "stage": "STAGE_3_4_VISION_GATE",
+        "stage": "STAGE_2.5_FAST_PATH",
         "field": "ldl",
         "old_val": 11.6,
-        "new_val": 114.1,
-        "delta_conf": "+0.27",
-        "vision_metrics": {
-          "tenengrad": 13010.6,
-          "contrast_ratio": 0.534,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.687
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
+        "new_val": 114.2,
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
       }
     ]
   },

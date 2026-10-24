@@ -18,8 +18,8 @@
     "assay_route": "FRIEDEWALD",
     "reason": "Residual 114.18 mg/dL exceeded budget after K=2 iterations.",
     "data": {
-      "total_cholesterol": 129.7,
-      "hdl": 64.3,
+      "total_cholesterol": 729.7,
+      "hdl": 623.0,
       "ldl": 11.6,
       "triglycerides": 208.1
     },
@@ -33,10 +33,10 @@
         "new_val": 208.1,
         "delta_conf": "+0.27",
         "vision_metrics": {
-          "tenengrad": 12608.55,
-          "contrast_ratio": 0.511,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.679
+          "tenengrad": 12622.63,
+          "contrast_ratio": 0.075,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.666
         },
         "crops": [
           "raw_padded",
@@ -51,12 +51,12 @@
           {
             "field": "total_cholesterol",
             "old_val": 229.7,
-            "new_val": 129.7
+            "new_val": 729.7
           },
           {
             "field": "hdl",
             "old_val": 62.3,
-            "new_val": 64.3
+            "new_val": 623.0
           }
         ]
       }

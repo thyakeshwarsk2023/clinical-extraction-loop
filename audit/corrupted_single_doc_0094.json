@@ -13,48 +13,30 @@
     "triglycerides": 150.7
   },
   "pipeline_result": {
-    "status": "ABSTAIN_PATHOLOGIST_REVIEW",
+    "status": "CONVERGED",
     "assay_route": "FRIEDEWALD",
-    "reason": "Residual 90.04 mg/dL exceeded budget after K=2 iterations.",
+    "attempts": 1,
     "data": {
-      "total_cholesterol": 124.8,
+      "total_cholesterol": 214.8,
       "hdl": 26.7,
       "ldl": 158.0,
       "triglycerides": 150.7
     },
-    "residual": 90.04,
+    "residual": 0.04,
+    "relative_error": 0.0002,
     "audit_trail": [
       {
         "attempt": 1,
         "stage": "STAGE_3_4_VISION_GATE",
-        "field": "ldl",
-        "old_val": 158.0,
-        "new_val": 158.0,
-        "delta_conf": "+0.03",
+        "field": "total_cholesterol",
+        "old_val": 124.8,
+        "new_val": 214.8,
+        "delta_conf": "+0.27",
         "vision_metrics": {
-          "tenengrad": 24029.23,
-          "contrast_ratio": 0.6,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.71
-        },
-        "crops": [
-          "raw_padded",
-          "graphcut_segmented",
-          "real_esrgan_4x"
-        ]
-      },
-      {
-        "attempt": 2,
-        "stage": "STAGE_3_4_VISION_GATE",
-        "field": "ldl",
-        "old_val": 158.0,
-        "new_val": 158.0,
-        "delta_conf": "+0.00",
-        "vision_metrics": {
-          "tenengrad": 24029.23,
-          "contrast_ratio": 0.6,
-          "has_isolated_decimal": false,
-          "stroke_clarity": 0.71
+          "tenengrad": 13663.3,
+          "contrast_ratio": 0.088,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.671
         },
         "crops": [
           "raw_padded",
@@ -66,12 +48,12 @@
   },
   "metrics": {
     "field_accuracy": {
-      "total_cholesterol": false,
+      "total_cholesterol": true,
       "hdl": true,
       "ldl": true,
       "triglycerides": true,
-      "overall": 0.75
+      "overall": 1.0
     },
-    "isolation_correct": false
+    "isolation_correct": true
   }
 }

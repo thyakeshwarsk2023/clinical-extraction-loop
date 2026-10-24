@@ -14,43 +14,55 @@
     "triglycerides": 147.9
   },
   "pipeline_result": {
-    "status": "ABSTAIN_CLINICAL_ANOMALY",
+    "status": "ABSTAIN_PATHOLOGIST_REVIEW",
     "assay_route": "FRIEDEWALD",
-    "reason": "Serum Triglycerides > 400 mg/dL invalidate the Friedewald equation.",
+    "reason": "Residual 1511.08 mg/dL exceeded budget after K=2 iterations.",
     "data": {
-      "total_cholesterol": 952.1,
+      "total_cholesterol": 259.1,
       "hdl": 61.6,
-      "ldl": 679.0,
-      "triglycerides": 647.9
+      "ldl": 167.9,
+      "triglycerides": 147.9
     },
-    "residual": 0.0,
+    "residual": 1511.08,
     "audit_trail": [
       {
         "attempt": 1,
-        "stage": "STAGE_2.5_K2_DISCRETE_PAIR",
-        "modifications": [
-          {
-            "field": "ldl",
-            "old_val": 1679.0,
-            "new_val": 679.0
-          },
-          {
-            "field": "triglycerides",
-            "old_val": 147.9,
-            "new_val": 647.9
-          }
+        "stage": "STAGE_3_4_VISION_GATE",
+        "field": "total_cholesterol",
+        "old_val": 952.1,
+        "new_val": 259.1,
+        "delta_conf": "+0.27",
+        "vision_metrics": {
+          "tenengrad": 14414.34,
+          "contrast_ratio": 0.088,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.671
+        },
+        "crops": [
+          "raw_padded",
+          "graphcut_segmented",
+          "real_esrgan_4x"
         ]
+      },
+      {
+        "attempt": 2,
+        "stage": "STAGE_2.5_FAST_PATH",
+        "field": "ldl",
+        "old_val": 1679.0,
+        "new_val": 167.9,
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
       }
     ]
   },
   "metrics": {
     "field_accuracy": {
-      "total_cholesterol": false,
+      "total_cholesterol": true,
       "hdl": true,
-      "ldl": false,
-      "triglycerides": false,
-      "overall": 0.25
+      "ldl": true,
+      "triglycerides": true,
+      "overall": 1.0
     },
-    "isolation_correct": false
+    "isolation_correct": true
   }
 }
