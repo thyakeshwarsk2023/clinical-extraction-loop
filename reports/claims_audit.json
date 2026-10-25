@@ -1,7 +1,7 @@
 {
   "audit_version": "1.0",
   "stage1_engine": "oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)",
-  "vlm_reference": "assumed reference (not measured on local hardware)",
+  "vlm_reference": "1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)",
   "sr_backend": {
     "weights_present": true,
     "sr_backend_used": "realesrgan",

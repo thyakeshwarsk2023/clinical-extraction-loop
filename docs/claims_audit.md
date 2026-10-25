@@ -1,7 +1,7 @@
 # BioTrace Claims-vs-Code Truth Table & Audit Report
 
 > **Global Compliance Rule:** No claim is marked "Fulfilled" without an executable test or eval path.
-> **Baseline Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)` | **VLM 750ms Latency:** `assumed reference (not measured on local hardware)`
+> **Baseline Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)` | **VLM 750ms Latency:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 
 ## 1. Deep Verification Items
 
@@ -50,8 +50,8 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 ### e) Stage 1 Engine Attribution
 - **Active Stage 1 Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`. Values and confidences are ingested from ground truth / injected corruption annotation sidecars.
 
-### f) 750 ms Baseline Latency Attribution
-- **Attribution:** `assumed reference (not measured on local hardware)`. This is an assumed cloud VLM latency reference, not measured on local hardware.
+### f) Full-Page Baseline Latency Reference
+- **Attribution:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`. Measured across 20 clinical reports (`reports/baseline_latency_benchmark.json`).
 
 ### g) Fine-Grained Ink Ablation & Non-Monotonic Damage Mechanism
 - **Empirical Finding:** Re-evaluation at 5% damage steps (N=200 per level, 4,000 total evaluations, 95% Wilson CIs, `reports/ink_ablation_curve.json`, `reports/ink_ablation_curve_fine.png`) demonstrates that committed-wrong rate peaks non-monotonically in the 25%-45% damage zone (~13-14%) before declining to 0.0% at >=80% damage, while safe abstention transitions to 100%.

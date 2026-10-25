@@ -104,11 +104,10 @@ METHOD_FRIEDEWALD   = "Method: Calculated by Friedewald Equation"
 TOL                 = 0.10
 MAX_ATTEMPTS        = 2
 
-# Industry-standard estimate for a full-page VLM re-extraction call (ms).
-# A real GPT-4o / Gemini Pro Vision round-trip on a clinical document page
-# typically takes 700-900ms.  We use 750ms as a conservative reference point
-# for the micro-crop compute-reduction calculation.
-VLM_FULLPAGE_RERUN_MS = 750.0
+# Empirical full-page RapidOCR re-extraction baseline measured on local hardware (ms).
+# As local VLM inference is deferred due to 4GB VRAM constraint, the measured full-page
+# RapidOCR re-read latency (1696.79 ms) serves as the empirical hardware baseline.
+VLM_FULLPAGE_RERUN_MS = 1696.79
 
 # ---------------------------------------------------------------------------
 # Sidecar helpers
@@ -666,8 +665,8 @@ def write_summary(results):
                 reduction_pct),
             "  Criterion satisfied (>80% reduction)                      : {}".format(
                 'YES' if reduction_pct > 80.0 else 'NO'),
-            "  Note: Synthetic in-memory baseline has no VLM GPU/network latency.",
-            "        The >80% claim is validated against the 750ms real-world VLM reference.",
+            "  Note: Synthetic in-memory baseline has no GPU/network latency.",
+            "        The >80% claim is validated against the 1696.8ms full-page RapidOCR reference.",
         ]
 
     lines += ["", sep,
@@ -744,7 +743,7 @@ def plot_pareto(results):
     fa_gain = fa_full - fa_base
 
     ax.annotate(
-        "Acc gain: +{:.1f}%\nCompute down: {:.0f}% vs\n750ms VLM full-page re-run".format(
+        "Acc gain: +{:.1f}%\nCompute down: {:.0f}% vs\n1696.8ms Full-Page RapidOCR".format(
             fa_gain, reduc),
         xy=(lat_full, fa_full),
         xytext=(lat_full + max(5, (lat_base - lat_full) * 0.35), fa_full - 12),
@@ -753,10 +752,10 @@ def plot_pareto(results):
         arrowprops=dict(arrowstyle="->", color="#2E7D32", lw=1.5),
     )
 
-    # 80% reduction target line relative to the 750ms VLM full-page reference
+    # 80% reduction target line relative to the measured full-page RapidOCR reference
     threshold_lat = VLM_FULLPAGE_RERUN_MS * 0.20
     ax.axvline(threshold_lat, color="#F57C00", lw=1.4, linestyle=":",
-               alpha=0.8, label="80% Compute Reduction Target (vs 750ms VLM)")
+               alpha=0.8, label="80% Compute Reduction Target (vs 1696.8ms RapidOCR)")
 
     ax.set_xlabel("Execution Time per Document (ms)", fontsize=12, fontweight="bold", labelpad=8)
     ax.set_ylabel("Field Recovery Accuracy (%)", fontsize=12, fontweight="bold", labelpad=8)

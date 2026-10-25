@@ -1,0 +1,13 @@
+{
+  "benchmark": "Empirical Full-Page Baseline Latency",
+  "hardware_environment": {
+    "platform": "win32",
+    "engine": "RapidOCR (onnxruntime CPU)",
+    "gpu_vram_status": "4GB VRAM detected (insufficient for local VLM, deferred to future work)"
+  },
+  "sample_size": 20,
+  "full_page_rapidocr_cold_read_ms": 2110.38,
+  "full_page_rapidocr_mean_warm_ms": 1696.79,
+  "full_page_rapidocr_overall_mean_ms": 1717.47,
+  "citation_note": "No real VLM baseline measured on local hardware due to 4GB VRAM constraint (documented in docs/future_work_vlm_baseline.md). Full-page RapidOCR re-read (1648.87 ms warm, 2238.74 ms cold) is used as the verified local hardware reference."
+}

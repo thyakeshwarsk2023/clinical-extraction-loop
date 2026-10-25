@@ -127,7 +127,7 @@ Clinical diagnostic document extraction (e.g., lipid panels, comprehensive metab
 | **False-Trigger Rate (Clean)** | 0.0% | 0.0% | **0.0% (Zero Harm)** | Guaranteed non-maleficence | $0.0\%$ |
 | **Sampson High-TG Routing** | N/A (Failed) | N/A | **100% Correct Routing** | Resolves TG > 400 limitation | Yes |
 
-*Note: Baseline 750 ms VLM reference is an assumed cloud VLM reference, not measured on local hardware. Active Stage 1 engine: `oracle_sidecar`.*
+*Note: No real VLM baseline measured on local hardware due to 4GB VRAM constraint (see docs/future_work_vlm_baseline.md). Full-page RapidOCR re-read latency measured on local hardware across 20 clinical reports (1696.8 ms warm mean, 2110.4 ms cold read; reports/baseline_latency_benchmark.json) serves as the empirical full-page hardware baseline. Active Stage 1 engines: oracle_sidecar and rapidocr (dual-mode supported).*
 
 ### B. 170-Document 3-Way Comparative Ablation Study (`evals/run_final_ablation.py`)
 

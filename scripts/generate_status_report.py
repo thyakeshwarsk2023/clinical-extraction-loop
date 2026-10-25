@@ -71,7 +71,7 @@ def main():
         "",
         f"> **Generated at Git Commit:** `{commit_hash}`",
         f"> **Stage 1 Extractor Engine:** `{stage1_engine}`",
-        f"> **750ms VLM Latency Benchmark:** `{vlm_ref}`",
+        f"> **Full-Page Baseline Latency Reference:** `{vlm_ref}`",
         f"> **Super-Resolution Backend:** `{sr_backend}` (Weights Present on Disk: `{weights_present}`)",
         f"> **FHIR R4 SHA-256 Integrity Seal:** `{sha256_active}`",
         "",

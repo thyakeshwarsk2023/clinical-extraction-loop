@@ -210,8 +210,8 @@ def inspect_codebase_details():
     # e) Stage 1 engine
     stage1_engine = "oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)"
 
-    # f) 750 ms VLM reference
-    vlm_reference_status = "assumed reference (not measured on local hardware)"
+    # f) Baseline Latency Reference
+    vlm_reference_status = "1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)"
 
     return {
         "weights_present": weights_present,
@@ -290,8 +290,8 @@ def main():
         f.write("### e) Stage 1 Engine Attribution\n")
         f.write(f"- **Active Stage 1 Engine:** `{details['stage1_engine']}`. Values and confidences are ingested from ground truth / injected corruption annotation sidecars.\n\n")
 
-        f.write("### f) 750 ms Baseline Latency Attribution\n")
-        f.write(f"- **Attribution:** `{details['vlm_reference_status']}`. This is an assumed cloud VLM latency reference, not measured on local hardware.\n\n")
+        f.write("### f) Full-Page Baseline Latency Reference\n")
+        f.write(f"- **Attribution:** `{details['vlm_reference_status']}`. Measured across 20 clinical reports (`reports/baseline_latency_benchmark.json`).\n\n")
 
         f.write("### g) Fine-Grained Ink Ablation & Non-Monotonic Damage Mechanism\n")
         f.write("- **Empirical Finding:** Re-evaluation at 5% damage steps (N=200 per level, 4,000 total evaluations, 95% Wilson CIs, `reports/ink_ablation_curve.json`, `reports/ink_ablation_curve_fine.png`) demonstrates that committed-wrong rate peaks non-monotonically in the 25%-45% damage zone (~13-14%) before declining to 0.0% at >=80% damage, while safe abstention transitions to 100%.\n")

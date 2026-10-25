@@ -216,7 +216,7 @@ k1, k2, k3, k4 = st.columns(4)
 with k1:
     st.markdown('<div class="stat-box"><div class="stat-val">95.0%</div><div class="stat-lbl">Full Architecture Accuracy</div></div>', unsafe_allow_html=True)
 with k2:
-    st.markdown('<div class="stat-box"><div class="stat-val">97.2%</div><div class="stat-lbl">Compute Reduction vs 750ms VLM</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-box"><div class="stat-val">1696.8 ms</div><div class="stat-lbl">Full-Page RapidOCR Baseline Latency</div></div>', unsafe_allow_html=True)
 with k3:
     st.markdown('<div class="stat-box"><div class="stat-val">20.7 ms</div><div class="stat-lbl">Mean Targeted Repair Latency</div></div>', unsafe_allow_html=True)
 with k4:
@@ -661,7 +661,7 @@ with col_right:
         </div>
         <div style="font-size:0.85rem; color:#94a3b8;">
             <b>Execution Latency:</b> <code style="color:#38bdf8;">{elapsed_ms:.2f} ms</code> 
-            <span>({(1.0 - elapsed_ms/750.0)*100.0:.1f}% faster than 750ms VLM re-run)</span>
+            <span>({(1.0 - elapsed_ms/1696.79)*100.0:.1f}% faster than 1696.8ms full-page RapidOCR baseline)</span>
         </div>
         """,
         unsafe_allow_html=True,
