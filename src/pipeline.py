@@ -91,7 +91,8 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             shift_hyp = check_tg_decimal_shift_hypothesis(current_data, tolerance, declared_route=None)
             if shift_hyp:
                 return {
-                    "status": "possible_TG_decimal_shift",
+                    "status": "ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT",
+                    "advisory_flag": "possible_TG_decimal_shift",
                     "assay_route": route,
                     "hypothesis_tg": shift_hyp["hypothesis_tg"],
                     "original_tg": raw_tg,
@@ -133,7 +134,8 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             shift_hyp = check_tg_decimal_shift_hypothesis(current_data, tolerance, declared_route=route if route in ["FRIEDEWALD", "SAMPSON", "MARTIN_HOPKINS"] else None)
             if shift_hyp:
                 return {
-                    "status": "possible_TG_decimal_shift",
+                    "status": "ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT",
+                    "advisory_flag": "possible_TG_decimal_shift",
                     "assay_route": route,
                     "hypothesis_tg": shift_hyp["hypothesis_tg"],
                     "original_tg": raw_tg,
@@ -156,7 +158,8 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             shift_hyp = check_tg_decimal_shift_hypothesis(current_data, tolerance, declared_route="FRIEDEWALD")
             if shift_hyp:
                 return {
-                    "status": "possible_TG_decimal_shift",
+                    "status": "ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT",
+                    "advisory_flag": "possible_TG_decimal_shift",
                     "assay_route": route,
                     "hypothesis_tg": shift_hyp["hypothesis_tg"],
                     "original_tg": raw_tg,

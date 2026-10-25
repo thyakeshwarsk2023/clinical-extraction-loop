@@ -44,7 +44,7 @@
     {
       "id": "CLAIM-03",
       "category": "Fault Localization",
-      "claim_text": "O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling moved from 0% wrong/100% abstain to 6.0% wrong/86.0% correct/8.0% abstain; of the committed-wrong cases, 0 (0.0%) caused a clinical risk-category flip; remains correctly indeterminate and abstains when neither independent source is available.",
+      "claim_text": "O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling resolves 86.0% (43/50) of dual-fault cases via independent evidence; 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was an unresolved advisory state, now reclassified; remains correctly indeterminate and abstains when neither independent source is available.",
       "status": "implemented-and-tested",
       "file_function": "src/stage2_isolation.py:solve_field_closed_form, solve_k2_augmented_closed_form; src/stage4_enhance_extract.py:verify_dual_blind_reread",
       "test_or_eval": "tests/test_candidate_scoring.py, tests/test_k2_augmented_isolation.py, tests/test_dual_blind_reread.py, reports/k2_ablation_evaluation.json",

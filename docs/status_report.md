@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `cb1d353e81d85e1171d2ccac14896dfd6c93e9d7`
+> **Generated at Git Commit:** `a1e89258d7231e08bb82024000ca1c77368b05ae`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
@@ -22,18 +22,22 @@
 - **Arm 2 (Full Closed-Loop Vision Repair):** `93.53%` Field Accuracy
 
 ### C. K=2 Dual-Field Ablation Breakdown (`reports/k2_ablation_evaluation.json`, N=50)
-- **Before Independent Evidence (Pure 1-Equation Invariant):**
-  - Committed-Correct Rate: `0.0%` (0/50)
-  - Committed-Wrong Rate: `0.0%` (0/50)
-  - Abstention Rate: `100.0%` (50/50)
+- **Before Independent Evidence (True Pre-K=2 Code Baseline - Commit 6668cad End-to-End):**
+  - Committed-Correct Rate:            `84.0%` (42/50)
+  - Equation-Coincidence Miss Rate:    `4.0%` (2/50) (doc_0044, doc_0035)
+  - Unresolved Advisory State Rate:    `2.0%` (1/50) (doc_0027)
+  - Safely Abstained Rate:             `10.0%` (5/50)
+  - Committed Wrong by Mechanisms:     `0.0%` (0/50)
 - **After Independent Evidence (Extra-Field Equations + Dual Blind Re-Read):**
-  - Committed-Correct Rate: `86.0%` (43/50)
-  - Committed-Wrong Rate: `6.0%` (3/50)
-  - Abstention Rate: `8.0%` (4/50)
+  - Committed-Correct Rate:            `86.0%` (43/50)
+  - Equation-Coincidence Miss Rate:    `4.0%` (2/50) (Pre-existing constraint limit)
+  - Unresolved Advisory State Rate:    `2.0%` (1/50) (doc_0027, flagged advisory)
+  - Safely Abstained Rate:             `8.0%` (4/50)
+  - Committed Wrong by New Mechanisms: `0.0%` (0/50)
 - **Three-Way Mechanism Breakdown:**
   - Resolved via Extra-Field Equation: `2.0%` (1/50)
-  - Resolved via Dual Blind Re-Read: `84.0%` (42/50)
-  - Still Abstained (No Evidence Available): `14.0%` (7/50)
+  - Resolved via Dual Blind Re-Read:   `84.0%` (42/50)
+  - Still Abstained / Unresolved:      `14.0%` (7/50)
 
 ---
 
@@ -55,7 +59,7 @@
 | :--- | :--- | :--- | :--- |
 | **CLAIM-01** | Symbolic Verification | Deterministic Clinical Constraint Engine verifies Friedewald identity (TC = HDL + LDL + TG/5, tol +/-10%) and physiological bounds. | `implemented-and-tested` |
 | **CLAIM-02** | Symbolic Verification | Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels (condensed 6-branch approximation in [3.5, 6.5], not full 180-cell table), and emits ABSTAIN_TG800 for TG > 800. | `implemented-and-tested` |
-| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling moved from 0% wrong/100% abstain to 6.0% wrong/86.0% correct/8.0% abstain; of the committed-wrong cases, 0 (0.0%) caused a clinical risk-category flip; remains correctly indeterminate and abstains when neither independent source is available. | `implemented-and-tested` |
+| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling resolves 86.0% (43/50) of dual-fault cases via independent evidence; 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was an unresolved advisory state, now reclassified; remains correctly indeterminate and abstains when neither independent source is available. | `implemented-and-tested` |
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise; sibling bounding box fallback interpolation for missing/[0,0,0,0] boxes is absent (known gap; defaults to [0,0,10,10] or symbolic pass-through). | `implemented-and-tested` |

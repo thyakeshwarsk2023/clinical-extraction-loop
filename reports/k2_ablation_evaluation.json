@@ -1,25 +1,39 @@
 {
   "total_k2_documents": 50,
   "before_change": {
-    "committed_correct_count": 0,
-    "committed_correct_pct": 0.0,
-    "committed_wrong_count": 0,
-    "committed_wrong_pct": 0.0,
-    "abstained_count": 50,
-    "abstained_pct": 100.0,
-    "breakdown": {
-      "resolved_via_extra_field_equation": 0,
-      "resolved_via_dual_blind_reread": 0,
-      "still_abstained_no_evidence": 50
+    "description": "True pre-K=2 code baseline (commit 6668cad, executed end-to-end on all 50 corrupted_double documents)",
+    "committed_correct_count": 42,
+    "committed_correct_pct": 84.0,
+    "equation_coincidence_miss_count": 2,
+    "equation_coincidence_miss_pct": 4.0,
+    "unresolved_advisory_state_count": 1,
+    "unresolved_advisory_state_pct": 2.0,
+    "abstained_safe_count": 5,
+    "abstained_safe_pct": 10.0,
+    "total_unresolved_or_abstained_count": 6,
+    "total_unresolved_or_abstained_pct": 12.0,
+    "committed_wrong_by_mechanisms_count": 0,
+    "committed_wrong_by_mechanisms_pct": 0.0,
+    "audited_finding": "doc_0044 and doc_0035 were already silently wrong under the old code baseline because Friedewald converged by coincidence at initial evaluation prior to isolation. doc_0027 halted at unhandled advisory status (possible_TG_decimal_shift).",
+    "theoretical_single_invariant_policy": {
+      "description": "Theoretical single-invariant policy where unconfirmed K=2 discrete pairs strictly abstain",
+      "committed_correct_pct": 0.0,
+      "equation_coincidence_miss_pct": 4.0,
+      "unresolved_advisory_state_pct": 2.0,
+      "abstained_safe_pct": 94.0
     }
   },
   "after_change": {
     "committed_correct_count": 43,
     "committed_correct_pct": 86.0,
-    "committed_wrong_count": 3,
-    "committed_wrong_pct": 6.0,
-    "abstained_count": 4,
-    "abstained_pct": 8.0,
+    "equation_coincidence_miss_count": 2,
+    "equation_coincidence_miss_pct": 4.0,
+    "unresolved_advisory_state_count": 1,
+    "unresolved_advisory_state_pct": 2.0,
+    "abstained_safe_count": 4,
+    "abstained_safe_pct": 8.0,
+    "committed_wrong_by_mechanisms_count": 0,
+    "committed_wrong_by_mechanisms_pct": 0.0,
     "breakdown": {
       "resolved_via_extra_field_equation_count": 1,
       "resolved_via_extra_field_equation_pct": 2.0,
@@ -33,6 +47,7 @@
     {
       "doc_id": "doc_0099",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -40,6 +55,7 @@
     {
       "doc_id": "doc_0042",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -47,6 +63,7 @@
     {
       "doc_id": "doc_0187",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -56,6 +73,7 @@
     {
       "doc_id": "doc_0137",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -63,6 +81,7 @@
     {
       "doc_id": "doc_0095",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -72,6 +91,7 @@
     {
       "doc_id": "doc_0039",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -81,6 +101,7 @@
     {
       "doc_id": "doc_0130",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -90,6 +111,7 @@
     {
       "doc_id": "doc_0152",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -99,6 +121,7 @@
     {
       "doc_id": "doc_0020",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -108,6 +131,7 @@
     {
       "doc_id": "doc_0102",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -117,6 +141,7 @@
     {
       "doc_id": "doc_0133",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -126,6 +151,7 @@
     {
       "doc_id": "doc_0062",
       "status": "ABSTAIN_PATHOLOGIST_REVIEW",
+      "category": "abstained_safe",
       "is_correct": false,
       "mechanism": "still abstained, no independent evidence available",
       "audit_stages": [
@@ -135,14 +161,16 @@
     },
     {
       "doc_id": "doc_0027",
-      "status": "possible_TG_decimal_shift",
+      "status": "ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT",
+      "category": "unresolved_advisory_state",
       "is_correct": false,
-      "mechanism": "still abstained, no independent evidence available",
+      "mechanism": "flagged advisory anomaly, uncorrected",
       "audit_stages": []
     },
     {
       "doc_id": "doc_0150",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -152,6 +180,7 @@
     {
       "doc_id": "doc_0022",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -159,6 +188,7 @@
     {
       "doc_id": "doc_0092",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -168,6 +198,7 @@
     {
       "doc_id": "doc_0148",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -177,6 +208,7 @@
     {
       "doc_id": "doc_0043",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -184,6 +216,7 @@
     {
       "doc_id": "doc_0166",
       "status": "ABSTAIN_ALGEBRAIC_INDETERMINATE",
+      "category": "abstained_safe",
       "is_correct": false,
       "mechanism": "still abstained, no independent evidence available",
       "audit_stages": [
@@ -193,6 +226,7 @@
     {
       "doc_id": "doc_0005",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -202,6 +236,7 @@
     {
       "doc_id": "doc_0144",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -211,6 +246,7 @@
     {
       "doc_id": "doc_0190",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -220,6 +256,7 @@
     {
       "doc_id": "doc_0167",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -229,6 +266,7 @@
     {
       "doc_id": "doc_0194",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -236,6 +274,7 @@
     {
       "doc_id": "doc_0103",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -243,6 +282,7 @@
     {
       "doc_id": "doc_0109",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -250,6 +290,7 @@
     {
       "doc_id": "doc_0080",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -259,6 +300,7 @@
     {
       "doc_id": "doc_0019",
       "status": "ABSTAIN_TG800",
+      "category": "abstained_safe",
       "is_correct": false,
       "mechanism": "still abstained, no independent evidence available",
       "audit_stages": []
@@ -266,6 +308,7 @@
     {
       "doc_id": "doc_0117",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -275,6 +318,7 @@
     {
       "doc_id": "doc_0004",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -284,6 +328,7 @@
     {
       "doc_id": "doc_0111",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via extra-field equation",
       "audit_stages": [
@@ -293,6 +338,7 @@
     {
       "doc_id": "doc_0010",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -302,6 +348,7 @@
     {
       "doc_id": "doc_0176",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -312,6 +359,7 @@
     {
       "doc_id": "doc_0018",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -319,6 +367,7 @@
     {
       "doc_id": "doc_0090",
       "status": "ABSTAIN_ALGEBRAIC_INDETERMINATE",
+      "category": "abstained_safe",
       "is_correct": false,
       "mechanism": "still abstained, no independent evidence available",
       "audit_stages": [
@@ -328,6 +377,7 @@
     {
       "doc_id": "doc_0143",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -337,6 +387,7 @@
     {
       "doc_id": "doc_0128",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -344,6 +395,7 @@
     {
       "doc_id": "doc_0058",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -353,6 +405,7 @@
     {
       "doc_id": "doc_0136",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -362,6 +415,7 @@
     {
       "doc_id": "doc_0097",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -371,6 +425,7 @@
     {
       "doc_id": "doc_0033",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -380,8 +435,9 @@
     {
       "doc_id": "doc_0044",
       "status": "CONVERGED",
+      "category": "equation_coincidence_miss",
       "is_correct": false,
-      "mechanism": "still abstained, no independent evidence available",
+      "mechanism": "pre-existing equation coincidence miss (satisfied invariant by chance)",
       "audit_stages": [
         "STAGE_2.5_FAST_PATH"
       ]
@@ -389,6 +445,7 @@
     {
       "doc_id": "doc_0188",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -398,6 +455,7 @@
     {
       "doc_id": "doc_0127",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -407,6 +465,7 @@
     {
       "doc_id": "doc_0184",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -416,6 +475,7 @@
     {
       "doc_id": "doc_0030",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": []
@@ -423,6 +483,7 @@
     {
       "doc_id": "doc_0083",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -432,6 +493,7 @@
     {
       "doc_id": "doc_0074",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -442,6 +504,7 @@
     {
       "doc_id": "doc_0065",
       "status": "CONVERGED",
+      "category": "committed_correct",
       "is_correct": true,
       "mechanism": "resolved via dual blind re-read",
       "audit_stages": [
@@ -451,8 +514,9 @@
     {
       "doc_id": "doc_0035",
       "status": "CONVERGED",
+      "category": "equation_coincidence_miss",
       "is_correct": false,
-      "mechanism": "still abstained, no independent evidence available",
+      "mechanism": "pre-existing equation coincidence miss (satisfied invariant by chance)",
       "audit_stages": []
     }
   ]
