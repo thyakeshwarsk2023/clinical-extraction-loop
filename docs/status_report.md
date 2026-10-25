@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `5968c3dac670344a9628c6ac4e8a6ac752cd0701`
+> **Generated at Git Commit:** `0d8660a148a4c1c9b0326aee1ed0188d2a388de2`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
@@ -47,7 +47,7 @@
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE. | `implemented-and-tested` |
 | **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops; trained backend achieves 100.0% accuracy over committed cases with 100.0% commit rate (200/200 committed, 0 abstained). | `implemented-and-tested` |
 | **CLAIM-08** | Compute Routing | Risk-routed dual-model re-extraction concentrates expensive compute on high-criticality fields (>= 4/5) using a larger secondary model. | `config-only, not evaluated` |
-| **CLAIM-09** | Visual Grounding | Token-level confidence delta (Delta-conf) logged between initial read and enhanced crop read to quantify visual grounding gain. | `simulated` |
+| **CLAIM-09** | Visual Grounding | Token-level confidence delta (Delta-conf) logged between initial read and enhanced crop read; uses stroke-clarity/contrast heuristic proxy (Tenengrad, Otsu decimal isolation, contrast percentile) regardless of engine, rather than native RapidOCR token scores. | `simulated` |
 | **CLAIM-10** | Clinical Impact | NCEP ATP-III Cardiovascular Risk Stratification quantifies diagnostic risk flips (e.g. false statin escalation). | `implemented-and-tested` |
 | **CLAIM-11** | Clinical Interoperability | HL7 FHIR Release 4 Collection Bundle export with LOINC codes and cryptographic SHA-256 integrity seal. | `implemented-and-tested` |
 | **CLAIM-12** | Testing & Robustness | Adversarial clinical corruption injector tests decimal shifts, digit transpositions, visual smudges, and severe hypertriglyceridemia. | `implemented-and-tested` |
