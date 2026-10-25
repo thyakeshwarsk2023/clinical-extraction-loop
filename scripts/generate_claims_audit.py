@@ -208,7 +208,7 @@ def inspect_codebase_details():
     martin_src = inspect.getsource(get_martin_hopkins_divisor).strip()
 
     # e) Stage 1 engine
-    stage1_engine = "oracle_sidecar"
+    stage1_engine = "oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)"
 
     # f) 750 ms VLM reference
     vlm_reference_status = "assumed reference (not measured on local hardware)"

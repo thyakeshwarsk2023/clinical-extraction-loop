@@ -1,6 +1,6 @@
 {
   "audit_version": "1.0",
-  "stage1_engine": "oracle_sidecar",
+  "stage1_engine": "oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)",
   "vlm_reference": "assumed reference (not measured on local hardware)",
   "sr_backend": {
     "weights_present": true,

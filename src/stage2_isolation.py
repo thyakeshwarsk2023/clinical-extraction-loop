@@ -350,6 +350,19 @@ def hierarchical_isolation_search(
     if confidences is None:
         confidences = {f: 0.85 for f in panel}
 
+    required = ["total_cholesterol", "hdl", "ldl", "triglycerides"]
+    missing = [f for f in required if f not in panel or panel[f] is None]
+    if missing:
+        return {
+            "action": "ABSTAIN_MISSING_ANALYTE",
+            "field": missing[0],
+            "target_val": None,
+            "residual": 0.0,
+            "cost": 999.0,
+            "reason": f"Cannot execute invariant isolation: missing analytes {missing}",
+            "message": f"Cannot execute invariant isolation: missing analytes {missing}"
+        }
+
     tc = panel.get("total_cholesterol", 0.0)
     hdl = panel.get("hdl", 0.0)
     ldl = panel.get("ldl", 0.0)
@@ -468,13 +481,13 @@ def hierarchical_isolation_search(
             cand2 = round(cand2, 1)
             test_panel[f2] = cand2
             
-            is_sampson_pair = (400.0 < test_panel["triglycerides"] <= 800.0) and not is_martin
+            is_sampson_pair = (400.0 < test_panel.get("triglycerides", 0.0) <= 800.0) and not is_martin
             # Check biological plausibility
-            if not is_martin and test_panel["triglycerides"] > 800.0:
+            if not is_martin and test_panel.get("triglycerides", 0.0) > 800.0:
                 continue
-            if test_panel["hdl"] >= test_panel["total_cholesterol"]:
+            if test_panel.get("hdl", 0.0) >= test_panel.get("total_cholesterol", 0.0):
                 continue
-            if not is_sampson_pair and not is_martin and test_panel["ldl"] >= test_panel["total_cholesterol"]:
+            if not is_sampson_pair and not is_martin and test_panel.get("ldl", 0.0) >= test_panel.get("total_cholesterol", 0.0):
                 continue
             if cand2 <= 0.0 and (not is_sampson_pair or f2 != "ldl"):
                 continue

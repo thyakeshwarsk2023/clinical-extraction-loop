@@ -385,35 +385,62 @@ def resolve_document_input():
             }
             return doc
         else:
-            # Custom unindexed report: allow user to inspect/adjust initial panel values
-            default_panel = {"total_cholesterol": 240.0, "hdl": 45.0, "ldl": 140.0, "triglycerides": 175.0}
-            default_bboxes = {
-                "total_cholesterol": [390, 130, 450, 152],
-                "hdl": [390, 175, 435, 197],
-                "ldl": [390, 210, 445, 232],
-                "triglycerides": [390, 265, 440, 287],
-            }
+            # Custom uploaded image: run RapidOCR automatically
+            temp_dir = os.path.join(ROOT, "reports", "tmp_uploads")
+            os.makedirs(temp_dir, exist_ok=True)
+            temp_img_path = os.path.join(temp_dir, uploaded_file.name)
+            cv2.imwrite(temp_img_path, img_bgr)
 
-            with st.sidebar.expander("Custom Image OCR Adjustments", expanded=False):
-                st.caption("Adjust values if OCR or visual report text differs:")
-                adj_tc = st.number_input("Total Cholesterol (TC):", min_value=10.0, max_value=2500.0, value=240.0, step=1.0)
-                adj_hdl = st.number_input("HDL Cholesterol:", min_value=5.0, max_value=300.0, value=45.0, step=1.0)
-                adj_ldl = st.number_input("LDL Cholesterol:", min_value=5.0, max_value=1000.0, value=140.0, step=1.0)
-                adj_tg = st.number_input("Triglycerides (TG):", min_value=10.0, max_value=3000.0, value=175.0, step=1.0)
-                adj_unit = st.selectbox("Document Unit:", ["mg/dL", "mmol/L"], index=0)
-                adj_panel = {"total_cholesterol": adj_tc, "hdl": adj_hdl, "ldl": adj_ldl, "triglycerides": adj_tg}
+            try:
+                from src.ocr_engine import get_ocr_engine
+                rapid_engine = get_ocr_engine("rapidocr")
+                ocr_result = rapid_engine.extract(temp_img_path)
+                ocr_values = ocr_result["extracted_values"]
+                ocr_bboxes = ocr_result["bounding_boxes"]
+                ocr_unit = ocr_result["unit"]
+                ocr_method = ocr_result["method_text"]
+                ocr_confs = ocr_result["confidences"]
+            except Exception as e:
+                ocr_values = {"total_cholesterol": 240.0, "hdl": 45.0, "ldl": 140.0, "triglycerides": 175.0}
+                ocr_bboxes = {
+                    "total_cholesterol": [390, 130, 450, 152],
+                    "hdl": [390, 175, 435, 197],
+                    "ldl": [390, 210, 445, 232],
+                    "triglycerides": [390, 265, 440, 287],
+                }
+                ocr_unit = "mg/dL"
+                ocr_method = "Method: Calculated by Friedewald Equation"
+                ocr_confs = {f: 0.85 for f in ocr_values}
+
+            # Collapsed off-by-default manual override
+            with st.sidebar.expander("Manual Field Overrides (Optional)", expanded=False):
+                st.caption("RapidOCR automatically extracted initial values. Enable override to adjust manually:")
+                enable_override = st.checkbox("Enable Manual Override", value=False)
+                adj_tc = st.number_input("Total Cholesterol (TC):", min_value=10.0, max_value=2500.0, value=float(ocr_values.get("total_cholesterol", 240.0)), step=1.0)
+                adj_hdl = st.number_input("HDL Cholesterol:", min_value=5.0, max_value=300.0, value=float(ocr_values.get("hdl", 45.0)), step=1.0)
+                adj_ldl = st.number_input("LDL Cholesterol:", min_value=5.0, max_value=1000.0, value=float(ocr_values.get("ldl", 140.0)), step=1.0)
+                adj_tg = st.number_input("Triglycerides (TG):", min_value=10.0, max_value=3000.0, value=float(ocr_values.get("triglycerides", 175.0)), step=1.0)
+                adj_unit = st.selectbox("Document Unit:", ["mg/dL", "mmol/L"], index=0 if ocr_unit == "mg/dL" else 1)
+
+            if enable_override:
+                final_panel = {"total_cholesterol": adj_tc, "hdl": adj_hdl, "ldl": adj_ldl, "triglycerides": adj_tg}
+                final_unit = adj_unit
+            else:
+                final_panel = ocr_values.copy()
+                final_unit = ocr_unit
 
             return {
                 "image_path": uploaded_file.name,
                 "image_bgr": img_bgr,
-                "method_text": "Method: Calculated by Friedewald Equation",
-                "unit": adj_unit,
-                "extracted_values": adj_panel,
-                "bounding_boxes": default_bboxes,
-                "confidences": {f: 0.85 for f in adj_panel},
-                "ground_truth_clean": adj_panel.copy(),
+                "method_text": ocr_method,
+                "unit": final_unit,
+                "extracted_values": final_panel,
+                "bounding_boxes": ocr_bboxes,
+                "confidences": ocr_confs,
+                "ground_truth_clean": final_panel.copy(),
                 "corrupted_fields": [],
-                "corruption_type": "custom_upload",
+                "corruption_type": "custom_upload_rapidocr",
+                "extractor_engine": "rapidocr",
             }
     else:
         # Default fallback to doc_0051

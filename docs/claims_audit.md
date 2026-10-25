@@ -1,7 +1,7 @@
 # BioTrace Claims-vs-Code Truth Table & Audit Report
 
 > **Global Compliance Rule:** No claim is marked "Fulfilled" without an executable test or eval path.
-> **Baseline Engine:** `oracle_sidecar` | **VLM 750ms Latency:** `assumed reference (not measured on local hardware)`
+> **Baseline Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)` | **VLM 750ms Latency:** `assumed reference (not measured on local hardware)`
 
 ## 1. Deep Verification Items
 
@@ -48,7 +48,7 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 ```
 
 ### e) Stage 1 Engine Attribution
-- **Active Stage 1 Engine:** `oracle_sidecar`. Values and confidences are ingested from ground truth / injected corruption annotation sidecars.
+- **Active Stage 1 Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`. Values and confidences are ingested from ground truth / injected corruption annotation sidecars.
 
 ### f) 750 ms Baseline Latency Attribution
 - **Attribution:** `assumed reference (not measured on local hardware)`. This is an assumed cloud VLM latency reference, not measured on local hardware.

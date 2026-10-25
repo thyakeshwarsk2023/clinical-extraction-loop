@@ -1,7 +1,7 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `c793eb5536182eea589fc4053649dc985b87feaa`
-> **Stage 1 Extractor Engine:** `oracle_sidecar`
+> **Generated at Git Commit:** `50db60726db01603fb5805d9da8b2280bf373cb1`
+> **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **750ms VLM Latency Benchmark:** `assumed reference (not measured on local hardware)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
 > **FHIR R4 SHA-256 Integrity Seal:** `True`
@@ -14,7 +14,7 @@
 - **Baseline Pass-through Accuracy:** `76.25%`
 - **Symbolic Only (Stage 2) Accuracy:** `86.25%`
 - **Full Architecture Accuracy:** `95.00%`
-- **Mean Pipeline Execution Latency:** `24.53 ms`
+- **Mean Pipeline Execution Latency:** `1359.23 ms`
 
 ### B. 170-Document 3-Way Ablation Suite (`reports/ablation_results.json`)
 - **Arm 0 (Baseline Feed-Forward):** `80.59%` Field Accuracy

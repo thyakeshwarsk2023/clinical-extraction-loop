@@ -259,8 +259,8 @@ def run_symbolic_only(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
         res = hierarchical_isolation_search(current, confidences, tol=tolerance)
         action = res.get("action", "")
 
-        if action == "ABSTAIN_ALGEBRAIC_INDETERMINATE":
-            status = "SYMBOLIC_ABSTAIN_INDETERMINATE"
+        if "ABSTAIN" in action:
+            status = f"SYMBOLIC_{action}"
             break
         if action in ("CORRECT_K1",):
             field = res["field"]
@@ -305,8 +305,8 @@ def run_full_architecture(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
         res = hierarchical_isolation_search(current, confidences, tol=tolerance)
         action = res.get("action", "")
 
-        if action == "ABSTAIN_ALGEBRAIC_INDETERMINATE":
-            status = "FULL_ABSTAIN_INDETERMINATE"
+        if "ABSTAIN" in action:
+            status = f"FULL_{action}"
             break
             
         if action == "CORRECT_K1" and res.get("is_fast_path"):
