@@ -339,6 +339,207 @@ def compute_candidate_cost(
     }
     return cost, metadata
 
+
+def solve_k2_augmented_closed_form(
+    panel: dict,
+    confidences: dict = None,
+    tol: float = 0.10,
+    method: str = None,
+    extra_field_threshold: float = 0.80
+) -> dict | None:
+    """
+    Augments the K=2 dual-field fault search with extra independent linear equations:
+        non_hdl = total_cholesterol - hdl
+        vldl    = triglycerides / 5.0 (or tg / f_mh under Martin-Hopkins)
+    
+    When a K=2 candidate search would otherwise be underdetermined, this checks whether
+    high-confidence extra fields make the system exactly or over-determined.
+    If so, solves for the candidate pair in closed form using all available equations.
+    Extra fields with confidence below extra_field_threshold are discarded as untrusted.
+    """
+    if confidences is None:
+      confidences = {}
+
+    # 1. Extract extra fields
+    non_hdl_val = panel.get("non_hdl_cholesterol", panel.get("non_hdl"))
+    vldl_val = panel.get("vldl", panel.get("vldl_cholesterol"))
+
+    # 2. Check confidence thresholds
+    non_hdl_conf = confidences.get(
+        "non_hdl_cholesterol", confidences.get("non_hdl", 0.0)
+    )
+    vldl_conf = confidences.get(
+        "vldl", confidences.get("vldl_cholesterol", 0.0)
+    )
+
+    has_non_hdl = (
+        non_hdl_val is not None
+        and float(non_hdl_val) > 0.0
+        and non_hdl_conf >= extra_field_threshold
+    )
+    has_vldl = (
+        vldl_val is not None
+        and float(vldl_val) > 0.0
+        and vldl_conf >= extra_field_threshold
+    )
+
+    if not has_non_hdl and not has_vldl:
+      return None
+
+    non_hdl = float(non_hdl_val) if has_non_hdl else None
+    vldl = float(vldl_val) if has_vldl else None
+
+    tc_raw = float(panel.get("total_cholesterol", 0.0))
+    hdl_raw = float(panel.get("hdl", 0.0))
+    ldl_raw = float(panel.get("ldl", 0.0))
+    tg_raw = float(panel.get("triglycerides", 0.0))
+
+    is_martin = method == "MARTIN_HOPKINS"
+    f_mh = 5.0
+    if is_martin:
+      non_hdl_ref = (
+          non_hdl if non_hdl is not None else max(tc_raw - hdl_raw, 1.0)
+      )
+      f_mh = get_martin_hopkins_divisor(tg_raw, non_hdl_ref)
+
+    core_fields = ["total_cholesterol", "hdl", "ldl", "triglycerides"]
+    candidate_solutions = []
+
+    # 3. Test each pair of suspect fields (f1, f2)
+    for f1, f2 in itertools.combinations(core_fields, 2):
+      pair_set = {f1, f2}
+      c1, c2 = None, None
+      equations_used = []
+      extra_used = []
+
+      if pair_set == {"total_cholesterol", "ldl"}:
+        if has_non_hdl:
+          # TC = non_hdl + HDL, LDL = non_hdl - (TG / f)
+          c_tc = non_hdl + hdl_raw
+          c_ldl = non_hdl - (tg_raw / f_mh)
+          c1, c2 = (c_tc, c_ldl) if f1 == "total_cholesterol" else (c_ldl, c_tc)
+          equations_used = ["non_hdl = tc - hdl", "primary_identity"]
+          extra_used = ["non_hdl_cholesterol"]
+
+      elif pair_set == {"hdl", "ldl"}:
+        if has_non_hdl:
+          # HDL = TC - non_hdl, LDL = non_hdl - (TG / f)
+          c_hdl = tc_raw - non_hdl
+          c_ldl = non_hdl - (tg_raw / f_mh)
+          c1, c2 = (c_hdl, c_ldl) if f1 == "hdl" else (c_ldl, c_hdl)
+          equations_used = ["non_hdl = tc - hdl", "primary_identity"]
+          extra_used = ["non_hdl_cholesterol"]
+
+      elif pair_set == {"total_cholesterol", "triglycerides"}:
+        if has_vldl:
+          c_tg = vldl * f_mh
+          c_tc = hdl_raw + ldl_raw + vldl
+          c1, c2 = (c_tc, c_tg) if f1 == "total_cholesterol" else (c_tg, c_tc)
+          equations_used = ["vldl = tg / 5", "primary_identity"]
+          extra_used = ["vldl"]
+        elif has_non_hdl:
+          c_tc = non_hdl + hdl_raw
+          c_tg = (non_hdl - ldl_raw) * f_mh
+          c1, c2 = (c_tc, c_tg) if f1 == "total_cholesterol" else (c_tg, c_tc)
+          equations_used = ["non_hdl = tc - hdl", "primary_identity"]
+          extra_used = ["non_hdl_cholesterol"]
+
+      elif pair_set == {"hdl", "triglycerides"}:
+        if has_vldl:
+          c_tg = vldl * f_mh
+          c_hdl = tc_raw - ldl_raw - vldl
+          c1, c2 = (c_hdl, c_tg) if f1 == "hdl" else (c_tg, c_hdl)
+          equations_used = ["vldl = tg / 5", "primary_identity"]
+          extra_used = ["vldl"]
+        elif has_non_hdl:
+          c_hdl = tc_raw - non_hdl
+          c_tg = (non_hdl - ldl_raw) * f_mh
+          c1, c2 = (c_hdl, c_tg) if f1 == "hdl" else (c_tg, c_hdl)
+          equations_used = ["non_hdl = tc - hdl", "primary_identity"]
+          extra_used = ["non_hdl_cholesterol"]
+
+      elif pair_set == {"ldl", "triglycerides"}:
+        if has_vldl:
+          c_tg = vldl * f_mh
+          c_ldl = tc_raw - hdl_raw - vldl
+          c1, c2 = (c_ldl, c_tg) if f1 == "ldl" else (c_tg, c_ldl)
+          equations_used = ["vldl = tg / 5", "primary_identity"]
+          extra_used = ["vldl"]
+
+      if c1 is None or c2 is None:
+        continue
+
+      c1 = round(c1, 1)
+      c2 = round(c2, 1)
+
+      # Physiological plausibility checks
+      if c1 <= 0.0 or c2 <= 0.0:
+        continue
+      test_p = panel.copy()
+      test_p[f1] = c1
+      test_p[f2] = c2
+
+      if test_p["hdl"] >= test_p["total_cholesterol"]:
+        continue
+      if test_p["ldl"] >= test_p["total_cholesterol"]:
+        continue
+      if (
+          not (50.0 <= test_p["total_cholesterol"] <= 800.0)
+          or not (10.0 <= test_p["hdl"] <= 200.0)
+          or not (10.0 <= test_p["ldl"] <= 500.0)
+          or not (10.0 <= test_p["triglycerides"] <= 800.0)
+      ):
+        continue
+      if test_p["triglycerides"] > 800.0 or (
+          not is_martin and test_p["triglycerides"] > 400.0
+      ):
+        continue
+
+      # Validate residual vs primary equation
+      if is_martin:
+        st, res = evaluate_martin_hopkins_invariant(test_p, tol)
+      else:
+        exp_tc = test_p["hdl"] + test_p["ldl"] + (test_p["triglycerides"] / 5.0)
+        res = (
+            abs(test_p["total_cholesterol"] - exp_tc)
+            / test_p["total_cholesterol"]
+            if test_p["total_cholesterol"] > 0
+            else 1.0
+        )
+        st = "CONVERGED" if res <= tol else "VIOLATION"
+
+      if st != "CONVERGED":
+        continue
+
+      # Score candidate cost using Levenshtein distance and confidence weighting
+      cost1, meta1 = compute_candidate_cost(
+          panel[f1], c1, confidences.get(f1, 0.8), f1
+      )
+      cost2, meta2 = compute_candidate_cost(
+          panel[f2], c2, confidences.get(f2, 0.8), f2
+      )
+      total_penalty = round(cost1 + cost2, 3)
+
+      candidate_solutions.append({
+          "action": "CORRECT_K2",
+          "resolution_mechanism": "extra_field_equation",
+          "equations_used": equations_used,
+          "extra_fields_used": extra_used,
+          "corrections": {f1: c1, f2: c2},
+          "penalty": total_penalty,
+          "residual": round(res, 4),
+          "metadata": {f1: meta1, f2: meta2},
+      })
+
+    if not candidate_solutions:
+      return None
+
+    candidate_solutions.sort(key=lambda x: x["penalty"])
+    best = candidate_solutions[0].copy()
+    best["ranked_pairs"] = candidate_solutions
+    return best
+
+
 def hierarchical_isolation_search(
     panel: dict,
     confidences: dict = None,
@@ -432,6 +633,23 @@ def hierarchical_isolation_search(
         if not is_sampson and not is_martin and test_panel["ldl"] >= test_panel["total_cholesterol"]:
             continue
 
+        # Consistency with trusted extra-field equations (if present and high-confidence)
+        extra_thresh = 0.80
+        nh_val = panel.get("non_hdl_cholesterol", panel.get("non_hdl"))
+        nh_conf = confidences.get("non_hdl_cholesterol", confidences.get("non_hdl", 0.0))
+        if nh_val is not None and float(nh_val) > 0.0 and nh_conf >= extra_thresh:
+            if abs(test_panel["total_cholesterol"] - test_panel["hdl"] - float(nh_val)) / float(nh_val) > tol:
+                continue
+
+        vl_val = panel.get("vldl", panel.get("vldl_cholesterol"))
+        vl_conf = confidences.get("vldl", confidences.get("vldl_cholesterol", 0.0))
+        if vl_val is not None and float(vl_val) > 0.0 and vl_conf >= extra_thresh:
+            f_div = 5.0
+            if is_martin:
+                f_div = get_martin_hopkins_divisor(test_panel["triglycerides"], test_panel["total_cholesterol"] - test_panel["hdl"])
+            if abs(test_panel["triglycerides"] / f_div - float(vl_val)) / float(vl_val) > tol:
+                continue
+
         cost, meta = compute_candidate_cost(panel[field], target, confidences.get(field, 0.8), field)
         
         is_fast_path = meta["is_decimal_shift"]
@@ -464,6 +682,17 @@ def hierarchical_isolation_search(
             "score": best_k1["score"],
             "ranked_candidates": plausible_k1
         }
+
+    # Step 2.5: k=2 Extra-Field Equation Augmentation (Closed-form multi-equation resolution)
+    k2_augmented = solve_k2_augmented_closed_form(
+        panel,
+        confidences=confidences,
+        tol=tol,
+        method=active_method,
+        extra_field_threshold=0.80
+    )
+    if k2_augmented is not None:
+        return k2_augmented
 
     # Step 3: k=2 Fast 1D-to-Algebraic Closed-Form Search with Clinical Non-Maleficence Guardrail
     fields = ["total_cholesterol", "hdl", "ldl", "triglycerides"]
@@ -553,7 +782,8 @@ def hierarchical_isolation_search(
     # Step 4: Bounded Abstention
     return {
         "action": "ABSTAIN_ALGEBRAIC_INDETERMINATE",
-        "reason": "Invariant violated; no 1-field or discrete 2-field edit permutation resolved residual."
+        "reason": "Invariant violated; no 1-field or discrete 2-field edit permutation resolved residual.",
+        "ranked_pairs": []
     }
 
 
