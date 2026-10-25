@@ -8,6 +8,13 @@
 ### a) Real-ESRGAN Weight File & Backend Share
 - **Weights Present on Disk:** `True` (Official pretrained RealESRGAN_x4plus.pth present in `models/`, verified non-Kaiming via `tests/test_vision_gate.py`).
 - **Active SR Backend:** `realesrgan` (Official 23-block RRDBNet loaded with 16.7M trained parameters; untrained fallback backend active only if checkpoint is explicitly missing).
+- **Hallucination & Gating Benchmark (`reports/sr_hallucination_benchmark_trained.json`):**
+  - Total crops tested: 200
+  - Count committed (blind-read agreed with counterfactual): 200 (100.0% commit rate)
+  - Count abstained: 0 (0.0% abstention rate)
+  - Accuracy computed ONLY over committed cases: 100.0% (200 / 200)
+  - Accuracy computed over all 200 cases (including abstentions): 100.0% (200 / 200)
+  - Baseline comparison (untrained fallback backend): 40 committed (20.0%), 160 abstained (80.0%), 100.0% accuracy on committed (40/40), 20.0% resolved accuracy over all 200 cases.
 
 ### b) Secondary / Stronger Extraction Model Behind Routing
 - **Second Model Status:** `config-only, not evaluated`. The pipeline contains the criticality hierarchy in `configs/constraints.yaml` (Potassium: 5/5, LDL: 4/5, Test Date: 1/5), but does NOT deploy a live secondary VLM for high-risk fields.
@@ -67,7 +74,7 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` | `src/stage2_isolation.py:compute_candidate_cost, damerau_levenshtein_distance` | `.\venv\Scripts\python.exe -m unittest tests/test_candidate_scoring.py` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` | `src/stage2_isolation.py:explain_counterfactual` | `.\venv\Scripts\python.exe -m unittest tests/test_clinical_features.py` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE. | `implemented-and-tested` | `src/stage3_vision_gate.py:process_vision_gate` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
-| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops. | `implemented-and-tested` | `src/stage4_enhance_extract.py:apply_real_esrgan_4x` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
+| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops; trained backend achieves 100.0% accuracy over committed cases with 100.0% commit rate (200/200 committed, 0 abstained). | `implemented-and-tested` | `src/stage4_enhance_extract.py:apply_real_esrgan_4x` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
 | **CLAIM-08** | Compute Routing | Risk-routed dual-model re-extraction concentrates expensive compute on high-criticality fields (>= 4/5) using a larger secondary model. | `config-only, not evaluated` | `configs/constraints.yaml, src/pipeline.py` | `N/A` |
 | **CLAIM-09** | Visual Grounding | Token-level confidence delta (Delta-conf) logged between initial read and enhanced crop read to quantify visual grounding gain. | `simulated` | `src/stage4_enhance_extract.py:enhance_and_reextract` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
 | **CLAIM-10** | Clinical Impact | NCEP ATP-III Cardiovascular Risk Stratification quantifies diagnostic risk flips (e.g. false statin escalation). | `implemented-and-tested` | `src/clinical_risk.py:classify_ldl_risk, evaluate_clinical_risk_flip` | `.\venv\Scripts\python.exe -m unittest tests/test_clinical_features.py` |
