@@ -6,8 +6,8 @@
 ## 1. Deep Verification Items
 
 ### a) Real-ESRGAN Weight File & Backend Share
-- **Weights Present on Disk:** `True` (Pretrained `.pth` weights are absent from project repository).
-- **Active SR Backend:** `realesrgan` (100% share of micro-crops run Compact Real-ESRGAN architecture with random Kaiming weights blended 65/35 with bicubic interpolation).
+- **Weights Present on Disk:** `True` (Official pretrained RealESRGAN_x4plus.pth present in `models/`, verified non-Kaiming via `tests/test_vision_gate.py`).
+- **Active SR Backend:** `realesrgan` (Official 23-block RRDBNet loaded with 16.7M trained parameters; untrained fallback backend active only if checkpoint is explicitly missing).
 
 ### b) Secondary / Stronger Extraction Model Behind Routing
 - **Second Model Status:** `config-only, not evaluated`. The pipeline contains the criticality hierarchy in `configs/constraints.yaml` (Potassium: 5/5, LDL: 4/5, Test Date: 1/5), but does NOT deploy a live secondary VLM for high-risk fields.
@@ -52,6 +52,10 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 
 ### f) 750 ms Baseline Latency Attribution
 - **Attribution:** `assumed reference (not measured on local hardware)`. This is an assumed cloud VLM latency reference, not measured on local hardware.
+
+### g) Fine-Grained Ink Ablation & Non-Monotonic Damage Mechanism
+- **Empirical Finding:** Re-evaluation at 5% damage steps (N=200 per level, 4,000 total evaluations, 95% Wilson CIs, `reports/ink_ablation_curve.json`, `reports/ink_ablation_curve_fine.png`) demonstrates that committed-wrong rate peaks non-monotonically in the 25%-45% damage zone (~13-14%) before declining to 0.0% at >=80% damage, while safe abstention transitions to 100%.
+- **Physical Mechanism:** Partial ink degradation creates plausible digit confusions (e.g. 8->3, 9->4) that preserve physiological bounds (TC > HDL + LDL) while presenting competing invariant inversions that can mislead candidate scoring. In contrast, catastrophic damage (>=60%) causes overt boundary failures (non-positive or subfractions exceeding total) or insurmountable residuals, unambiguously triggering deterministic clinical abstention.
 
 ## 2. Exhaustive Claims Truth Table
 

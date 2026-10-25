@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `5626ed1b7c2cb5110409854730d0db84ed47926b`
+> **Generated at Git Commit:** `c793eb5536182eea589fc4053649dc985b87feaa`
 > **Stage 1 Extractor Engine:** `oracle_sidecar`
 > **750ms VLM Latency Benchmark:** `assumed reference (not measured on local hardware)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
