@@ -1,0 +1,31 @@
+{
+  "audit_name": "BioTrace Ground Truth Audit: Martin-Hopkins & Bounding Box Fallback",
+  "audit_timestamp": "2026-10-26T01:06:00Z",
+  "findings": {
+    "martin_hopkins_table": {
+      "item": "Martin-Hopkins VLDL Divisor Implementation",
+      "source_file": "src/stage2_constraints.py",
+      "function_name": "get_martin_hopkins_divisor",
+      "is_condensed_approximation": true,
+      "is_full_empirical_table": false,
+      "active_divisor_range": [3.5, 6.5],
+      "full_literature_range": [3.1, 11.9],
+      "branch_count": 6,
+      "strata_details": "4 TG strata (<50, <100, <=400, >400) split by non-HDL (<100 vs >=100)",
+      "status": "condensed-approximation",
+      "description": "Code implements a condensed 6-branch if/elif heuristic returning discrete divisors {3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5}. It has not been replaced with the full 180-cell empirical lookup matrix published by Martin et al. (JAMA 2013)."
+    },
+    "bounding_box_fallback": {
+      "item": "Missing / Collapsed [0, 0, 0, 0] Bounding Box Fallback & Sibling Interpolation",
+      "source_files": [
+        "src/stage3_vision_gate.py",
+        "src/pipeline.py"
+      ],
+      "sibling_interpolation_present": false,
+      "geometric_row_reconstruction_present": false,
+      "current_behavior": "Missing bounding boxes default to [0, 0, 10, 10]. In src/pipeline.py, crops with std < 5.0 or empty dimensions bypass the vision gate and fall back to purely symbolic candidate selection without image enhancement. In src/stage3_vision_gate.py, coordinates are clamped/padded to at least 1px without inferring geometry from neighboring cells.",
+      "status": "absent (known gap)",
+      "description": "No sibling bounding box interpolation, vertical row height extrapolation, or table column alignment logic exists in the codebase. When a bounding box is absent or [0, 0, 0, 0], visual crop restoration is skipped entirely."
+    }
+  }
+}

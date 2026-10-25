@@ -31,7 +31,7 @@ CLAIMS_DATABASE = [
     {
         "id": "CLAIM-02",
         "category": "Symbolic Verification",
-        "claim_text": "Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels, and emits ABSTAIN_TG800 for TG > 800.",
+        "claim_text": "Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels (condensed 6-branch approximation in [3.5, 6.5], not full 180-cell table), and emits ABSTAIN_TG800 for TG > 800.",
         "status": "implemented-and-tested",
         "file_function": "src/stage2_constraints.py:evaluate_sampson_invariant, evaluate_martin_hopkins_invariant; src/pipeline.py",
         "test_or_eval": "tests/test_sampson_routing.py, tests/test_clinical_features.py",
@@ -67,9 +67,9 @@ CLAIMS_DATABASE = [
     {
         "id": "CLAIM-06",
         "category": "Machine Vision Gate",
-        "claim_text": "OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE.",
+        "claim_text": "OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise; sibling bounding box fallback interpolation for missing/[0,0,0,0] boxes is absent (known gap; defaults to [0,0,10,10] or symbolic pass-through).",
         "status": "implemented-and-tested",
-        "file_function": "src/stage3_vision_gate.py:process_vision_gate",
+        "file_function": "src/stage3_vision_gate.py:process_vision_gate, src/pipeline.py",
         "test_or_eval": "tests/test_vision_gate.py",
         "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_vision_gate.py"
     },
@@ -307,6 +307,14 @@ def main():
         f.write("### g) Fine-Grained Ink Ablation & Non-Monotonic Damage Mechanism\n")
         f.write("- **Empirical Finding:** Re-evaluation at 5% damage steps (N=200 per level, 4,000 total evaluations, 95% Wilson CIs, `reports/ink_ablation_curve.json`, `reports/ink_ablation_curve_fine.png`) demonstrates that committed-wrong rate peaks non-monotonically in the 25%-45% damage zone (~13-14%) before declining to 0.0% at >=80% damage, while safe abstention transitions to 100%.\n")
         f.write("- **Physical Mechanism:** Partial ink degradation creates plausible digit confusions (e.g. 8->3, 9->4) that preserve physiological bounds (TC > HDL + LDL) while presenting competing invariant inversions that can mislead candidate scoring. In contrast, catastrophic damage (>=60%) causes overt boundary failures (non-positive or subfractions exceeding total) or insurmountable residuals, unambiguously triggering deterministic clinical abstention.\n\n")
+
+        f.write("### h) Martin-Hopkins Divisor Table Status\n")
+        f.write("- **Status:** `condensed-approximation` (implemented in `src/stage2_constraints.py:get_martin_hopkins_divisor`).\n")
+        f.write("- **Audit Finding:** The active implementation uses a condensed 6-branch if/elif heuristic returning discrete divisors {3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5} across 4 TG strata (<50, <100, <=400, >400 mg/dL) and non-HDL (<100 vs >=100 mg/dL). It is not the full empirical 180-cell lookup matrix from Martin et al. (JAMA 2013), which spans divisors from 3.1 to 11.9.\n\n")
+
+        f.write("### i) Bounding Box Fallback & Sibling Interpolation Status\n")
+        f.write("- **Status:** `absent (known gap)` in `src/stage3_vision_gate.py` and `src/pipeline.py`.\n")
+        f.write("- **Audit Finding:** No geometric row height or column alignment interpolation from sibling analyte bounding boxes exists. When a bounding box is absent or [0, 0, 0, 0], `src/pipeline.py` defaults to [0, 0, 10, 10], and if image variance is < 5.0, bypasses the vision gate to use purely symbolic candidate selection without visual repair.\n\n")
 
         f.write("## 2. Exhaustive Claims Truth Table\n\n")
         f.write("| ID | Category | Claim Statement | Status | Code Location | Reproduction Command |\n")

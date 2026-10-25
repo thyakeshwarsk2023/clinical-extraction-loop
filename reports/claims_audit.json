@@ -35,7 +35,7 @@
     {
       "id": "CLAIM-02",
       "category": "Symbolic Verification",
-      "claim_text": "Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels, and emits ABSTAIN_TG800 for TG > 800.",
+      "claim_text": "Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels (condensed 6-branch approximation in [3.5, 6.5], not full 180-cell table), and emits ABSTAIN_TG800 for TG > 800.",
       "status": "implemented-and-tested",
       "file_function": "src/stage2_constraints.py:evaluate_sampson_invariant, evaluate_martin_hopkins_invariant; src/pipeline.py",
       "test_or_eval": "tests/test_sampson_routing.py, tests/test_clinical_features.py",
@@ -71,9 +71,9 @@
     {
       "id": "CLAIM-06",
       "category": "Machine Vision Gate",
-      "claim_text": "OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE.",
+      "claim_text": "OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise; sibling bounding box fallback interpolation for missing/[0,0,0,0] boxes is absent (known gap; defaults to [0,0,10,10] or symbolic pass-through).",
       "status": "implemented-and-tested",
-      "file_function": "src/stage3_vision_gate.py:process_vision_gate",
+      "file_function": "src/stage3_vision_gate.py:process_vision_gate, src/pipeline.py",
       "test_or_eval": "tests/test_vision_gate.py",
       "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_vision_gate.py"
     },
