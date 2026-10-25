@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `1ac646a74cd33ad5f41d7ebb76566b418ca54584`
+> **Generated at Git Commit:** `a8d1633dbb74624568ecc2a72c0a403ebb001240`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
@@ -28,7 +28,7 @@
 | Implementation Status | Count | Notes |
 | :--- | :--- | :--- |
 | `config-only, not evaluated` | **1** | Defined in YAML/schema but no live secondary model |
-| `implemented-and-tested` | **13** | Fully verified with executable test or eval |
+| `implemented-and-tested` | **15** | Fully verified with executable test or eval |
 | `not-implemented` | **2** | Deferred / stretch goal |
 | `partial` | **1** | Multi-panel CBC rules |
 | `simulated` | **1** | Approximated via stroke heuristics |
@@ -57,3 +57,5 @@
 | **CLAIM-16** | Evaluation Benchmark | 20-case diverse clinical test suite achieves 95.0% Field Accuracy with low latency. | `implemented-and-tested` |
 | **CLAIM-17** | Ablation Study | 170-document 3-way ablation benchmark comparing Baseline vs Symbolic vs Full Architecture. | `implemented-and-tested` |
 | **CLAIM-18** | User Interface | Interactive clinical inspection dashboard in app_demo.py supporting direct image upload, XAI, and FHIR export. | `implemented-and-tested` |
+| **CLAIM-19** | Multi-Panel Coverage | Clinical Protein Panel verifies Total Protein = Albumin + Globulin with closed-form K=1 inversions; empirically validated against CDC Continuous NHANES 2021-2023 cohort (BIOPRO_L, N=6,364 patients) achieving 100.0% convergence at empirical 2.0% (or 0.10 g/dL) tolerance. | `implemented-and-tested` |
+| **CLAIM-20** | Multi-Panel Coverage | Clinical Electrolyte Panel verifies Anion Gap = Na - (Cl + HCO3) [physiological bounds 8-16 mEq/L, optional with_k] with closed-form K=1 inversions (91.35% normal, 99.98% bounds-concordant across N=6,325 NHANES patients), and evaluates Osmolar Gap (2*Na + Glucose/18 + BUN/2.8 vs measured osmolality) as a non-repairing ADVISORY soft flag. | `implemented-and-tested` |

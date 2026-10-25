@@ -76,6 +76,40 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 - **Status:** `absent (known gap)` in `src/stage3_vision_gate.py` and `src/pipeline.py`.
 - **Audit Finding:** No geometric row height or column alignment interpolation from sibling analyte bounding boxes exists. When a bounding box is absent or [0, 0, 0, 0], `src/pipeline.py` defaults to [0, 0, 10, 10], and if image variance is < 5.0, bypasses the vision gate to use purely symbolic candidate selection without visual repair.
 
+### j) NHANES-Validated Clinical Identities (Multi-Panel Expansion)
+- **Protein Panel (`Total Protein = Albumin + Globulin`):**
+  - **Dataset:** CDC Continuous NHANES August 2021-August 2023 (`BIOPRO_L.xpt`, N = 6,364 complete records).
+  - **Convergence Rate:** `100.0%` (6,364 / 6,364) at empirical tolerance 0.02 (2.0%) or <= 0.10 g/dL absolute roundoff delta.
+  - **Residual Statistics:** Mean = 0.0000 g/dL, Median = 0.0000 g/dL, Std = 0.0039 g/dL, Min = 0.0000 g/dL, Max = 0.1000 g/dL, 95th percentile = 0.0000 g/dL, 99th percentile = 0.0000 g/dL.
+  - **Tolerance Reasoning:** Standard laboratory autoanalyzers calculate serum globulin directly as `Total Protein - Albumin`. Setting the operational tolerance to 2.0% (with a 0.10 g/dL boundary) accommodates single-digit reporting precision without tolerating single-digit transcription or OCR swaps.
+
+- **Electrolyte Panel (`Anion Gap = Sodium - (Chloride + Bicarbonate)`):**
+  - **Dataset:** CDC Continuous NHANES August 2021-August 2023 (`BIOPRO_L.xpt`, N = 6,325 complete records).
+  - **Normal Reference Distribution [8.0, 16.0] mEq/L:** `91.35%` (5,778 patients). Broad physiological normal [5.0, 18.0] mEq/L: `97.31%` (6,155 patients).
+  - **Biological Bounds Satisfaction:** `99.98%` (6,324 / 6,325).
+  - **Residual Statistics:** Mean = 13.57 mEq/L, Median = 13.0 mEq/L, Std = 2.44 mEq/L, Min = 0.0 mEq/L, Max = 29.0 mEq/L.
+  - **Operating Tolerance:** 1.0 mEq/L absolute or 5.0% relative error, accommodating integer reporting precision in standard biochemistry panels.
+
+- **Osmolar Gap Advisory Check (`Calculated Osmolality = 2*Na + Glucose/18 + BUN/2.8` vs Measured):**
+  - **Dataset:** CDC Continuous NHANES August 2021-August 2023 (`BIOPRO_L.xpt`, N = 6,322 complete records).
+  - **Calculated Osmolality:** Mean = 289.80 mOsm/kg, Median = 289.04 mOsm/kg, Std = 6.26 mOsm/kg.
+  - **Measured Osmolality:** Mean = 279.28 mOsm/kg, Median = 279.00 mOsm/kg, Std = 6.26 mOsm/kg.
+  - **Osmolar Gap Distribution:** Mean = -10.52 mOsm/kg, Median = -10.51 mOsm/kg, Std = 0.44 mOsm/kg.
+  - **Standard Range Deviation:** 88.45% of real patients fall outside the textbook [-10, +10] mOsm/kg window.
+  - **Design Decision (Soft Advisory vs Hard Trigger):** Real biological osmolar gap variance is clinically meaningful (reflecting unmeasured osmoles such as ketoacids or exogenous toxins) rather than OCR extraction error. Following the `Hct ~ 3*Hb` pattern in Stage 2, osmolar gap deviation emits an ADVISORY soft flag only and does NOT auto-trigger a repair cycle.
+
+### k) Deliberate Scope Exclusions & Rationale
+- **Bilirubin Fractionation (Investigated & Deliberately Excluded):**
+  - Direct and indirect bilirubin fractionation was investigated against live CDC NHANES laboratory components (`BIOPRO_L.htm` / `BIOPRO_L.xpt`).
+  - NHANES measures exclusively Total Bilirubin (`LBXSTB`, 6,325 valid records). Direct (conjugated) and indirect (unconjugated) fractions are NOT measured or reported in CDC NHANES core biochemistry profiles (confirmed and documented in `reports/nhanes_panel_availability.json`).
+  - Total bilirubin alone possesses no cross-checkable mathematical conservation identity. Rather than implementing an untestable or synthetic-only partial formula, bilirubin fractionation was deliberately excluded from the panel implementation.
+- **eGFR (Estimated Glomerular Filtration Rate):**
+  - Excluded from identity engine because eGFR (CKD-EPI 2021) is a nonlinear empirical regression estimating equation dependent on demographic covariates (age, sex) not localized within laboratory analyte bounding boxes, rather than an algebraic conservation law.
+- **AST / ALT (De Ritis) Ratio:**
+  - Excluded from hard identities because the AST/ALT ratio is an empirical diagnostic heuristic with continuous biological variation across healthy and diseased populations, lacking a strict algebraic equality constraint.
+- **HbA1c (Glycated Hemoglobin):**
+  - Excluded because HbA1c reflects average 3-month erythrocyte glycation, biologically decoupled from acute fasting serum glucose at the time of venipuncture, providing no instantaneous cross-checkable identity.
+
 ## 2. Exhaustive Claims Truth Table
 
 | ID | Category | Claim Statement | Status | Code Location | Reproduction Command |
@@ -98,3 +132,5 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 | **CLAIM-16** | Evaluation Benchmark | 20-case diverse clinical test suite achieves 95.0% Field Accuracy with low latency. | `implemented-and-tested` | `evals/eval_twenty_test_cases.py` | `.\venv\Scripts\python.exe evals/eval_twenty_test_cases.py` |
 | **CLAIM-17** | Ablation Study | 170-document 3-way ablation benchmark comparing Baseline vs Symbolic vs Full Architecture. | `implemented-and-tested` | `evals/run_final_ablation.py` | `.\venv\Scripts\python.exe evals/run_final_ablation.py` |
 | **CLAIM-18** | User Interface | Interactive clinical inspection dashboard in app_demo.py supporting direct image upload, XAI, and FHIR export. | `implemented-and-tested` | `app_demo.py` | `.\venv\Scripts\python.exe -m streamlit run app_demo.py --server.port 8501` |
+| **CLAIM-19** | Multi-Panel Coverage | Clinical Protein Panel verifies Total Protein = Albumin + Globulin with closed-form K=1 inversions; empirically validated against CDC Continuous NHANES 2021-2023 cohort (BIOPRO_L, N=6,364 patients) achieving 100.0% convergence at empirical 2.0% (or 0.10 g/dL) tolerance. | `implemented-and-tested` | `src/panels/protein.py:ProteinPanel; src/panel_registry.py` | `.\venv\Scripts\python.exe -m unittest tests/test_protein_panel.py` |
+| **CLAIM-20** | Multi-Panel Coverage | Clinical Electrolyte Panel verifies Anion Gap = Na - (Cl + HCO3) [physiological bounds 8-16 mEq/L, optional with_k] with closed-form K=1 inversions (91.35% normal, 99.98% bounds-concordant across N=6,325 NHANES patients), and evaluates Osmolar Gap (2*Na + Glucose/18 + BUN/2.8 vs measured osmolality) as a non-repairing ADVISORY soft flag. | `implemented-and-tested` | `src/panels/electrolytes.py:ElectrolytePanel; src/panel_registry.py` | `.\venv\Scripts\python.exe -m unittest tests/test_electrolytes_panel.py` |

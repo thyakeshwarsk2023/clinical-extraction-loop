@@ -184,6 +184,24 @@
       "file_function": "app_demo.py",
       "test_or_eval": "Streamlit app execution and zero-emoji compliance",
       "reproduce_command": ".\\venv\\Scripts\\python.exe -m streamlit run app_demo.py --server.port 8501"
+    },
+    {
+      "id": "CLAIM-19",
+      "category": "Multi-Panel Coverage",
+      "claim_text": "Clinical Protein Panel verifies Total Protein = Albumin + Globulin with closed-form K=1 inversions; empirically validated against CDC Continuous NHANES 2021-2023 cohort (BIOPRO_L, N=6,364 patients) achieving 100.0% convergence at empirical 2.0% (or 0.10 g/dL) tolerance.",
+      "status": "implemented-and-tested",
+      "file_function": "src/panels/protein.py:ProteinPanel; src/panel_registry.py",
+      "test_or_eval": "tests/test_protein_panel.py; reports/nhanes_protein_electrolytes_validation.json",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_protein_panel.py"
+    },
+    {
+      "id": "CLAIM-20",
+      "category": "Multi-Panel Coverage",
+      "claim_text": "Clinical Electrolyte Panel verifies Anion Gap = Na - (Cl + HCO3) [physiological bounds 8-16 mEq/L, optional with_k] with closed-form K=1 inversions (91.35% normal, 99.98% bounds-concordant across N=6,325 NHANES patients), and evaluates Osmolar Gap (2*Na + Glucose/18 + BUN/2.8 vs measured osmolality) as a non-repairing ADVISORY soft flag.",
+      "status": "implemented-and-tested",
+      "file_function": "src/panels/electrolytes.py:ElectrolytePanel; src/panel_registry.py",
+      "test_or_eval": "tests/test_electrolytes_panel.py; reports/nhanes_protein_electrolytes_validation.json",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_electrolytes_panel.py"
     }
   ]
 }

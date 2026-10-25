@@ -180,6 +180,24 @@ CLAIMS_DATABASE = [
         "file_function": "app_demo.py",
         "test_or_eval": "Streamlit app execution and zero-emoji compliance",
         "reproduce_command": ".\\venv\\Scripts\\python.exe -m streamlit run app_demo.py --server.port 8501"
+    },
+    {
+        "id": "CLAIM-19",
+        "category": "Multi-Panel Coverage",
+        "claim_text": "Clinical Protein Panel verifies Total Protein = Albumin + Globulin with closed-form K=1 inversions; empirically validated against CDC Continuous NHANES 2021-2023 cohort (BIOPRO_L, N=6,364 patients) achieving 100.0% convergence at empirical 2.0% (or 0.10 g/dL) tolerance.",
+        "status": "implemented-and-tested",
+        "file_function": "src/panels/protein.py:ProteinPanel; src/panel_registry.py",
+        "test_or_eval": "tests/test_protein_panel.py; reports/nhanes_protein_electrolytes_validation.json",
+        "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_protein_panel.py"
+    },
+    {
+        "id": "CLAIM-20",
+        "category": "Multi-Panel Coverage",
+        "claim_text": "Clinical Electrolyte Panel verifies Anion Gap = Na - (Cl + HCO3) [physiological bounds 8-16 mEq/L, optional with_k] with closed-form K=1 inversions (91.35% normal, 99.98% bounds-concordant across N=6,325 NHANES patients), and evaluates Osmolar Gap (2*Na + Glucose/18 + BUN/2.8 vs measured osmolality) as a non-repairing ADVISORY soft flag.",
+        "status": "implemented-and-tested",
+        "file_function": "src/panels/electrolytes.py:ElectrolytePanel; src/panel_registry.py",
+        "test_or_eval": "tests/test_electrolytes_panel.py; reports/nhanes_protein_electrolytes_validation.json",
+        "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_electrolytes_panel.py"
     }
 ]
 
@@ -315,6 +333,38 @@ def main():
         f.write("### i) Bounding Box Fallback & Sibling Interpolation Status\n")
         f.write("- **Status:** `absent (known gap)` in `src/stage3_vision_gate.py` and `src/pipeline.py`.\n")
         f.write("- **Audit Finding:** No geometric row height or column alignment interpolation from sibling analyte bounding boxes exists. When a bounding box is absent or [0, 0, 0, 0], `src/pipeline.py` defaults to [0, 0, 10, 10], and if image variance is < 5.0, bypasses the vision gate to use purely symbolic candidate selection without visual repair.\n\n")
+
+        f.write("### j) NHANES-Validated Clinical Identities (Multi-Panel Expansion)\n")
+        f.write("- **Protein Panel (`Total Protein = Albumin + Globulin`):**\n")
+        f.write("  - **Dataset:** CDC Continuous NHANES August 2021-August 2023 (`BIOPRO_L.xpt`, N = 6,364 complete records).\n")
+        f.write("  - **Convergence Rate:** `100.0%` (6,364 / 6,364) at empirical tolerance 0.02 (2.0%) or <= 0.10 g/dL absolute roundoff delta.\n")
+        f.write("  - **Residual Statistics:** Mean = 0.0000 g/dL, Median = 0.0000 g/dL, Std = 0.0039 g/dL, Min = 0.0000 g/dL, Max = 0.1000 g/dL, 95th percentile = 0.0000 g/dL, 99th percentile = 0.0000 g/dL.\n")
+        f.write("  - **Tolerance Reasoning:** Standard laboratory autoanalyzers calculate serum globulin directly as `Total Protein - Albumin`. Setting the operational tolerance to 2.0% (with a 0.10 g/dL boundary) accommodates single-digit reporting precision without tolerating single-digit transcription or OCR swaps.\n\n")
+        f.write("- **Electrolyte Panel (`Anion Gap = Sodium - (Chloride + Bicarbonate)`):**\n")
+        f.write("  - **Dataset:** CDC Continuous NHANES August 2021-August 2023 (`BIOPRO_L.xpt`, N = 6,325 complete records).\n")
+        f.write("  - **Normal Reference Distribution [8.0, 16.0] mEq/L:** `91.35%` (5,778 patients). Broad physiological normal [5.0, 18.0] mEq/L: `97.31%` (6,155 patients).\n")
+        f.write("  - **Biological Bounds Satisfaction:** `99.98%` (6,324 / 6,325).\n")
+        f.write("  - **Residual Statistics:** Mean = 13.57 mEq/L, Median = 13.0 mEq/L, Std = 2.44 mEq/L, Min = 0.0 mEq/L, Max = 29.0 mEq/L.\n")
+        f.write("  - **Operating Tolerance:** 1.0 mEq/L absolute or 5.0% relative error, accommodating integer reporting precision in standard biochemistry panels.\n\n")
+        f.write("- **Osmolar Gap Advisory Check (`Calculated Osmolality = 2*Na + Glucose/18 + BUN/2.8` vs Measured):**\n")
+        f.write("  - **Dataset:** CDC Continuous NHANES August 2021-August 2023 (`BIOPRO_L.xpt`, N = 6,322 complete records).\n")
+        f.write("  - **Calculated Osmolality:** Mean = 289.80 mOsm/kg, Median = 289.04 mOsm/kg, Std = 6.26 mOsm/kg.\n")
+        f.write("  - **Measured Osmolality:** Mean = 279.28 mOsm/kg, Median = 279.00 mOsm/kg, Std = 6.26 mOsm/kg.\n")
+        f.write("  - **Osmolar Gap Distribution:** Mean = -10.52 mOsm/kg, Median = -10.51 mOsm/kg, Std = 0.44 mOsm/kg.\n")
+        f.write("  - **Standard Range Deviation:** 88.45% of real patients fall outside the textbook [-10, +10] mOsm/kg window.\n")
+        f.write("  - **Design Decision (Soft Advisory vs Hard Trigger):** Real biological osmolar gap variance is clinically meaningful (reflecting unmeasured osmoles such as ketoacids or exogenous toxins) rather than OCR extraction error. Following the `Hct ~ 3*Hb` pattern in Stage 2, osmolar gap deviation emits an ADVISORY soft flag only and does NOT auto-trigger a repair cycle.\n\n")
+
+        f.write("### k) Deliberate Scope Exclusions & Rationale\n")
+        f.write("- **Bilirubin Fractionation (Investigated & Deliberately Excluded):**\n")
+        f.write("  - Direct and indirect bilirubin fractionation was investigated against live CDC NHANES laboratory components (`BIOPRO_L.htm` / `BIOPRO_L.xpt`).\n")
+        f.write("  - NHANES measures exclusively Total Bilirubin (`LBXSTB`, 6,325 valid records). Direct (conjugated) and indirect (unconjugated) fractions are NOT measured or reported in CDC NHANES core biochemistry profiles (confirmed and documented in `reports/nhanes_panel_availability.json`).\n")
+        f.write("  - Total bilirubin alone possesses no cross-checkable mathematical conservation identity. Rather than implementing an untestable or synthetic-only partial formula, bilirubin fractionation was deliberately excluded from the panel implementation.\n")
+        f.write("- **eGFR (Estimated Glomerular Filtration Rate):**\n")
+        f.write("  - Excluded from identity engine because eGFR (CKD-EPI 2021) is a nonlinear empirical regression estimating equation dependent on demographic covariates (age, sex) not localized within laboratory analyte bounding boxes, rather than an algebraic conservation law.\n")
+        f.write("- **AST / ALT (De Ritis) Ratio:**\n")
+        f.write("  - Excluded from hard identities because the AST/ALT ratio is an empirical diagnostic heuristic with continuous biological variation across healthy and diseased populations, lacking a strict algebraic equality constraint.\n")
+        f.write("- **HbA1c (Glycated Hemoglobin):**\n")
+        f.write("  - Excluded because HbA1c reflects average 3-month erythrocyte glycation, biologically decoupled from acute fasting serum glucose at the time of venipuncture, providing no instantaneous cross-checkable identity.\n\n")
 
         f.write("## 2. Exhaustive Claims Truth Table\n\n")
         f.write("| ID | Category | Claim Statement | Status | Code Location | Reproduction Command |\n")
