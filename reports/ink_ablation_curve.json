@@ -1,0 +1,34 @@
+{
+  "benchmark": "Ink Ablation Damage vs Safe Abstention Curve",
+  "description": "Quantifies system behavior under progressive ink erasure (10% to 100%).",
+  "levels": {
+    "10%": {
+      "ablation_fraction": 0.1,
+      "total_trials": 50,
+      "correct_repaired_rate": 1.0,
+      "abstention_rate": 0.0,
+      "committed_wrong_rate": 0.0
+    },
+    "30%": {
+      "ablation_fraction": 0.3,
+      "total_trials": 50,
+      "correct_repaired_rate": 0.74,
+      "abstention_rate": 0.06,
+      "committed_wrong_rate": 0.2
+    },
+    "60%": {
+      "ablation_fraction": 0.6,
+      "total_trials": 50,
+      "correct_repaired_rate": 0.7,
+      "abstention_rate": 0.26,
+      "committed_wrong_rate": 0.04
+    },
+    "100%": {
+      "ablation_fraction": 1.0,
+      "total_trials": 50,
+      "correct_repaired_rate": 0.0,
+      "abstention_rate": 1.0,
+      "committed_wrong_rate": 0.0
+    }
+  }
+}

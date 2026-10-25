@@ -837,11 +837,12 @@ if os.path.exists(os.path.join(ROOT, "audit")):
             break
 
 # =============================================================================
-# TAB 3: SAMD AUDIT TRAIL & FHIR EXPORT
+# =============================================================================
+# TAB 3: AUDIT TRAIL & FHIR EXPORT
 # =============================================================================
 with tab_samd:
-    st.markdown("### FDA SaMD-Aligned JSON-LD Audit Trail")
-    st.caption("Immutable cryptographic log recording state transitions, bounding box geometry, and convergence residuals.")
+    st.markdown("### Cryptographic JSON-LD Audit Trail")
+    st.caption("Audit-trail design informed by software-as-medical-device practices; not validated, not cleared. Research software and extraction quality gate.")
 
     # Safely fallback if variables are uninitialized in the global scope
     current_doc = doc_id if 'doc_id' in locals() else "UNKNOWN_DOC"
@@ -863,16 +864,25 @@ with tab_samd:
     
     if local_gt:
         try:
-            from src.clinical_impact import generate_fhir_r4_bundle
-            fhir_payload = generate_fhir_r4_bundle(local_gt, patient_id=f"PATIENT-{current_doc}")
+            from src.fhir_export import generate_fhir_r4_lipid_bundle
+            bundle = generate_fhir_r4_lipid_bundle(
+                doc_id=current_doc,
+                raw_panel=local_gt,
+                verified_panel=local_gt,
+                unit="mg/dL",
+                pipeline_status="CONVERGED",
+                active_equation="FRIEDEWALD",
+                latency_ms=20.0
+            )
+            fhir_payload = json.dumps(bundle, indent=2)
             st.download_button(
-                label="🏥 Download HL7 FHIR R4 DiagnosticReport",
+                label="Download HL7 FHIR R4 DiagnosticReport",
                 data=fhir_payload,
                 file_name=f"fhir_bundle_{current_doc}.json",
                 mime="application/json"
             )
-        except ImportError:
-            st.error("Could not load FHIR generator from src.clinical_impact.")
+        except Exception as e:
+            st.error(f"Could not generate FHIR bundle: {e}")
     else:
         st.warning("No verified Ground Truth data available to generate FHIR bundle.")
 

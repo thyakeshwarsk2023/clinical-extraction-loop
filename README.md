@@ -3,13 +3,14 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Status](https://img.shields.io/badge/Milestone-Review%203%20Final%20Production-green.svg)]()
 [![Field Accuracy](https://img.shields.io/badge/Field%20Accuracy-95.0%25-brightgreen.svg)]()
-[![Compute Reduction](https://img.shields.io/badge/Compute%20Reduction-97.28%25-blue.svg)]()
-[![Tests](https://img.shields.io/badge/Tests-53%2F53%20Passing-success.svg)]()
+[![K=2 Solver Speedup](https://img.shields.io/badge/K%3D2%20Speedup-11.36x-blue.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-56%2F56%20Passing-success.svg)]()
 [![Interoperability](https://img.shields.io/badge/HL7%20FHIR-R4%20Standard-orange.svg)]()
 
 > **B.Tech Capstone Project — Review 3 Deliverable**  
 > **Topic:** Neurosymbolic Inference-Time Closed-Loop Self-Correction for Degraded Clinical Reports  
-> **Target:** Final Production Architecture, Multi-Invariant Clinical Routing, Real-Time Dashboard & HL7 FHIR R4 SaMD Integration
+> **Target:** Final Production Architecture, Multi-Invariant Clinical Routing, Real-Time Dashboard & HL7 FHIR R4 Export  
+> **Regulatory Notice:** Audit-trail design informed by software-as-medical-device practices; not validated, not cleared. Research software and extraction quality gate.
 
 ---
 
@@ -117,12 +118,16 @@ Clinical diagnostic document extraction (e.g., lipid panels, comprehensive metab
 
 ### A. 20-Case Verification Benchmark (`evals/eval_twenty_test_cases.py`)
 
-| Metric | Baseline VLM | Symbolic Only | Full Architecture | Improvement vs Baseline | Target Criterion |
+| Metric | Baseline (oracle_sidecar) | Symbolic Only | Full Architecture | Improvement vs Baseline | Target Criterion |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Field Accuracy (FA)** | 76.25% | 86.25% | **95.00%** | **+18.75%** | $\ge 95.0\%$ |
-| **Mean Execution Latency** | 750.00 ms (est.) | 0.67 ms | **20.40 ms** | **97.28% compute reduction** | $>80.0\%$ |
+| **Mean Pipeline Latency** | 0.014 ms | 0.902 ms | **32.49 ms** | Real-time interactive | $< 100\text{ ms}$ |
+| **K=2 Solver Latency** | 0.750 ms (2D search) | N/A | **0.066 ms (1D-to-alg)** | **11.36x speedup** | $O(N)$ vs $O(N^2)$ |
+| **Repair vs Baseline Re-read** | Baseline not measured | N/A | Local SR gated repair | Tier-2 engine not deployed | Baseline not measured |
 | **False-Trigger Rate (Clean)** | 0.0% | 0.0% | **0.0% (Zero Harm)** | Guaranteed non-maleficence | $0.0\%$ |
 | **Sampson High-TG Routing** | N/A (Failed) | N/A | **100% Correct Routing** | Resolves TG > 400 limitation | Yes |
+
+*Note: Baseline 750 ms VLM reference is an assumed cloud VLM reference, not measured on local hardware. Active Stage 1 engine: `oracle_sidecar`.*
 
 ### B. 170-Document 3-Way Comparative Ablation Study (`evals/run_final_ablation.py`)
 
@@ -136,11 +141,11 @@ Clinical diagnostic document extraction (e.g., lipid panels, comprehensive metab
 
 ### C. Automated Test Suite Verification
 
-**53 out of 53 unit tests passing (100% pass rate in 1.1s):**
-1. `tests/test_candidate_scoring.py`: 14 tests (Damerau-Levenshtein scoring, decimal bonuses, transposition bonuses, cost bounds).
+**56 out of 56 unit tests passing (100% pass rate in 1.3s):**
+1. `tests/test_candidate_scoring.py`: 16 tests (Damerau-Levenshtein scoring, decimal bonuses, transposition bonuses, algebraic indeterminate abstention).
 2. `tests/test_vision_gate.py`: 9 tests (GrabCut segmentation, micro-crop padding, Tenengrad focus energy, Real-ESRGAN $4\times$).
-3. `tests/test_sampson_routing.py`: 15 tests (Sampson LDL calculation, $O(1)$ closed-form inversions, boundary conditions).
-4. `tests/test_clinical_features.py`: 15 tests (Martin-Hopkins divisor strata, Counterfactual XAI, Adversarial injection, Clinical Risk Flip, HL7 FHIR R4 export).
+3. `tests/test_sampson_routing.py`: 21 tests (Sampson LDL calculation, $O(1)$ closed-form inversions, TG decimal-shift hypotheses, CBC hard identities & soft Hct rule).
+4. `tests/test_clinical_features.py`: 16 tests (Martin-Hopkins divisor strata, Counterfactual XAI, Adversarial injection, Clinical Risk Flip, HL7 FHIR R4 export, SHA-256 seal integrity).
 
 ---
 
@@ -233,7 +238,22 @@ Open **[http://localhost:8501](http://localhost:8501)** in your web browser.
 
 ---
 
-## 6. Regulatory & Clinical References
+---
+
+## 6. Limitations Consistency & Solvability Boundaries
+
+1. **Underdetermined Identity Inversions:** A single scalar clinical identity (such as the Friedewald or Sampson equation) contains multiple variables and **cannot uniquely identify even one corrupted field** purely by algebra. Localization is achieved strictly through the **composite candidate cost model** (a heuristic combining Damerau-Levenshtein edit distance, OCR token confidence penalties, and decimal/transposition bonuses) coupled with **physical visual evidence**.
+2. **K=2 Dual-Field Policy:** Dual-field corruptions ($K=2$) represent an underdetermined system with infinitely many mathematical pairs. Candidates are ranked by the cost model, but a final commit **requires independent evidence** (blind re-read agreement on at least one of the two candidate fields or an external prior). In the absence of independent evidence, the system safely and explicitly returns **`ABSTAIN_ALGEBRAIC_INDETERMINATE`**.
+3. **Severe Hypertriglyceridemia ($TG > 800\text{ mg/dL}$):** Triglycerides exceeding 800 mg/dL invalidate mathematical estimation due to chylomicrons. The system tests for decimal-shift hypotheses (e.g. TG 900 -> 90) before safely emitting **`ABSTAIN_TG800`**.
+4. **Super-Resolution Gating & Hallucination Prevention:** Real-ESRGAN runs in compact architecture mode (pretrained `.pth` weights are absent from repository; blended with bicubic interpolation). To prevent hallucination on ambiguous glyphs (e.g., confusing 3/8, 5/6, 1/7, 0/6, 4/9), an SR-enhanced candidate is **committed only if the blind OCR read agrees with the counterfactual candidate AND is correct-or-neutral on the bicubic version**; otherwise, the system abstains. Sharpness metrics (Tenengrad) serve as logged diagnostics, not proof of correctness.
+5. **Physical Ink Ablation Limit:** As measured on the empirical ink ablation curve (`reports/ink_ablation_curve.json`), when ink strokes are progressively destroyed from 10% to 100%, the system transitions from repair to safe abstention, reaching **100% safe abstention at complete ink obliteration** (0% committed-wrong).
+
+---
+
+## 7. Regulatory Status & Clinical References
+
+> [!WARNING]
+> **Regulatory Notice:** Audit-trail design is informed by software-as-medical-device (SaMD) practices; it is **not validated, not cleared by the FDA or any medical device regulatory agency**. BioTrace is **research software** intended exclusively as an extraction quality gate and clinical decision support research prototype. Production clinical deployments must be reviewed and validated by a licensed pathologist and institutional review board.
 
 1. **Friedewald Equation:** W. T. Friedewald, R. I. Levy, and D. S. Fredrickson, "Estimation of the concentration of low-density lipoprotein cholesterol in plasma, without use of the preparative ultracentrifuge," *Clinical Chemistry*, vol. 18, no. 6, pp. 499–502, 1972.
 2. **Sampson Equation:** M. Sampson et al., "A New NLA-Endorsed Equation for Estimating Low-Density Lipoprotein Cholesterol in Patients with Severe Hypertriglyceridemia," *Journal of the American College of Cardiology*, vol. 75, no. 19, pp. 2489–2498, 2020.
@@ -241,3 +261,4 @@ Open **[http://localhost:8501](http://localhost:8501)** in your web browser.
 4. **NCEP ATP-III Guidelines:** National Cholesterol Education Program (NCEP) Expert Panel, "Detection, Evaluation, and Treatment of High Blood Cholesterol in Adults (Adult Treatment Panel III)," *Circulation*, vol. 106, no. 25, pp. 3143–3421, 2002.
 5. **Real-ESRGAN:** X. Wang, L. Xie, J. Dong, and C. C. Loy, "Real-ESRGAN: Training real-world blind super-resolution with pure synthetic data," in *Proc. IEEE/CVF ICCVW*, 2021.
 6. **HL7 FHIR Release 4:** Health Level Seven International, *HL7 FHIR Release 4 (v4.0.1)*, LOINC/SNOMED-CT Laboratory Reporting Specification, 2019.
+

@@ -243,5 +243,103 @@ class TestDynamicEquationRoutingThresholds(unittest.TestCase):
         self.assertEqual(status, "ABSTAIN_TG800")
 
 
+from src.stage2_constraints import check_tg_decimal_shift_hypothesis, evaluate_cbc_identities
+
+
+class TestTGDecimalShiftHypothesis(unittest.TestCase):
+    """Tests detection of TG decimal shifts (TG 90 -> 900, TG 350 -> 3500)."""
+
+    def test_tg_90_to_900_decimal_shift(self):
+        # Clean: TC=200, HDL=50, LDL=132, TG=90 (50 + 132 + 18 = 200)
+        # Corrupted TG: 900.0
+        corrupted = {
+            "total_cholesterol": 200.0,
+            "hdl": 50.0,
+            "ldl": 132.0,
+            "triglycerides": 900.0
+        }
+        res = check_tg_decimal_shift_hypothesis(corrupted, tolerance=0.10)
+        self.assertIsNotNone(res)
+        self.assertEqual(res["hypothesis_tg"], 90.0)
+        self.assertEqual(res["equation"], "FRIEDEWALD")
+
+    def test_tg_350_to_3500_decimal_shift(self):
+        # Clean: TC=220, HDL=40, LDL=110, TG=350 (40 + 110 + 70 = 220)
+        # Corrupted TG: 3500.0
+        corrupted = {
+            "total_cholesterol": 220.0,
+            "hdl": 40.0,
+            "ldl": 110.0,
+            "triglycerides": 3500.0
+        }
+        res = check_tg_decimal_shift_hypothesis(corrupted, tolerance=0.10)
+        self.assertIsNotNone(res)
+        self.assertEqual(res["hypothesis_tg"], 350.0)
+        self.assertEqual(res["equation"], "FRIEDEWALD")
+
+    def test_true_severe_hypertriglyceridemia_does_not_shift(self):
+        # A truly abnormal panel with TG=950 where no decimal shift produces an identity
+        abnormal = {
+            "total_cholesterol": 380.0,
+            "hdl": 25.0,
+            "ldl": 180.0,
+            "triglycerides": 950.0
+        }
+        res = check_tg_decimal_shift_hypothesis(abnormal, tolerance=0.10)
+        self.assertIsNone(res)
+
+
+class TestCBCIdentities(unittest.TestCase):
+    """Tests CBC hard identities (MCV, MCH, MCHC) and soft Hct ~ 3*Hb rule."""
+
+    def test_valid_cbc_panel(self):
+        # Hb = 14.0 g/dL, Hct = 42.0%, RBC = 4.5 M/uL
+        # MCV = (42 * 10) / 4.5 = 93.3 fL
+        # MCH = (14 * 10) / 4.5 = 31.1 pg
+        # MCHC = (14 * 100) / 42 = 33.3 g/dL
+        panel = {
+            "hemoglobin": 14.0,
+            "hematocrit": 42.0,
+            "rbc": 4.5,
+            "mcv": 93.3,
+            "mch": 31.1,
+            "mchc": 33.3
+        }
+        res = evaluate_cbc_identities(panel)
+        self.assertTrue(res["is_valid"])
+        self.assertEqual(len(res["hard_violations"]), 0)
+        self.assertEqual(len(res["soft_flags"]), 0)
+
+    def test_mcv_hard_violation(self):
+        # MCV misread as 193.3 instead of 93.3
+        panel = {
+            "hemoglobin": 14.0,
+            "hematocrit": 42.0,
+            "rbc": 4.5,
+            "mcv": 193.3,
+            "mch": 31.1,
+            "mchc": 33.3
+        }
+        res = evaluate_cbc_identities(panel)
+        self.assertFalse(res["is_valid"])
+        self.assertIn("MCV_IDENTITY_VIOLATION", res["hard_violations"])
+
+    def test_soft_hct_hb_discrepancy_flag(self):
+        # Hb = 10.0, Hct = 45.0 (ratio = 4.5 != 3.0, discrepancy > 15%)
+        panel = {
+            "hemoglobin": 10.0,
+            "hematocrit": 45.0,
+            "rbc": 4.5,
+            "mcv": 100.0,
+            "mch": 22.2,
+            "mchc": 22.2
+        }
+        res = evaluate_cbc_identities(panel)
+        # Soft flag is present, but it does NOT trigger a hard violation by itself
+        soft_rules = [f["rule"] for f in res["soft_flags"]]
+        self.assertIn("HCT_APPROX_3X_HB", soft_rules)
+
+
 if __name__ == "__main__":
     unittest.main()
+

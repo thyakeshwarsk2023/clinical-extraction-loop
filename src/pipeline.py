@@ -7,6 +7,7 @@ from src.stage2_constraints import (
     evaluate_sampson_invariant,
     calculate_sampson_ldl,
     evaluate_martin_hopkins_invariant,
+    check_tg_decimal_shift_hypothesis,
 )
 
 from src.stage2_isolation import (
@@ -68,11 +69,34 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
     while attempt < max_attempts:
         raw_tg = current_data.get("triglycerides", 0.0)
         
+        # Priority 1: Route by declared method text (Stage 0) first
         if route == "MARTIN_HOPKINS":
             status, rel_err = evaluate_martin_hopkins_invariant(current_data, tolerance)
             residual = rel_err
             active_equation = "MARTIN_HOPKINS"
+        elif route == "SAMPSON":
+            status, rel_err = evaluate_sampson_invariant(current_data, tolerance)
+            residual = rel_err
+            active_equation = "SAMPSON"
+        elif route == "FRIEDEWALD" and raw_tg <= 400.0:
+            status, residual, rel_err = evaluate_friedewald_invariant(current_data, tolerance)
+            active_equation = "FRIEDEWALD"
+        # Priority 2: Fallback to TG value routing
         elif raw_tg > 800.0:
+            # Test decimal-shift hypotheses before emitting ABSTAIN_TG800
+            shift_hyp = check_tg_decimal_shift_hypothesis(current_data, tolerance, declared_route=None)
+            if shift_hyp:
+                return {
+                    "status": "possible_TG_decimal_shift",
+                    "assay_route": route,
+                    "hypothesis_tg": shift_hyp["hypothesis_tg"],
+                    "original_tg": raw_tg,
+                    "evidence": shift_hyp,
+                    "requires_blind_reread": True,
+                    "data": current_data,
+                    "residual": shift_hyp["residual"],
+                    "audit_trail": audit_trail
+                }
             return {
                 "status": "ABSTAIN_TG800",
                 "assay_route": route,
@@ -102,6 +126,19 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             }
             
         if status == "ABSTAIN_TG800":
+            shift_hyp = check_tg_decimal_shift_hypothesis(current_data, tolerance, declared_route=route if route in ["FRIEDEWALD", "SAMPSON", "MARTIN_HOPKINS"] else None)
+            if shift_hyp:
+                return {
+                    "status": "possible_TG_decimal_shift",
+                    "assay_route": route,
+                    "hypothesis_tg": shift_hyp["hypothesis_tg"],
+                    "original_tg": raw_tg,
+                    "evidence": shift_hyp,
+                    "requires_blind_reread": True,
+                    "data": current_data,
+                    "residual": shift_hyp["residual"],
+                    "audit_trail": audit_trail
+                }
             return {
                 "status": "ABSTAIN_TG800",
                 "assay_route": route,
@@ -112,6 +149,19 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             }
             
         if status == "ABSTAIN_CLINICAL_ANOMALY":
+            shift_hyp = check_tg_decimal_shift_hypothesis(current_data, tolerance, declared_route="FRIEDEWALD")
+            if shift_hyp:
+                return {
+                    "status": "possible_TG_decimal_shift",
+                    "assay_route": route,
+                    "hypothesis_tg": shift_hyp["hypothesis_tg"],
+                    "original_tg": raw_tg,
+                    "evidence": shift_hyp,
+                    "requires_blind_reread": True,
+                    "data": current_data,
+                    "residual": shift_hyp["residual"],
+                    "audit_trail": audit_trail
+                }
             return {
                 "status": "ABSTAIN_CLINICAL_ANOMALY",
                 "assay_route": route,

@@ -1,0 +1,53 @@
+{
+  "total_evaluated_crops": 200,
+  "accuracies": {
+    "no_sr_pct": 100.0,
+    "bicubic_pct": 100.0,
+    "lanczos_pct": 100.0,
+    "realesrgan_pct": 20.0
+  },
+  "hallucination_rates": {
+    "no_sr_hallucination_pct": 0.0,
+    "bicubic_hallucination_pct": 0.0,
+    "lanczos_hallucination_pct": 0.0,
+    "realesrgan_hallucination_pct": 0.0
+  },
+  "sr_help_vs_hurt_counts": {
+    "helped": 0,
+    "hurt": 160,
+    "neutral": 40,
+    "gated_abstained": 160
+  },
+  "confusable_pairs_breakdown": {
+    "3_8": {
+      "total": 40,
+      "realesrgan_acc": 20,
+      "bicubic_acc": 40,
+      "realesrgan_hallucinations": 0
+    },
+    "5_6": {
+      "total": 40,
+      "realesrgan_acc": 0,
+      "bicubic_acc": 60,
+      "realesrgan_hallucinations": 0
+    },
+    "1_7": {
+      "total": 40,
+      "realesrgan_acc": 0,
+      "bicubic_acc": 40,
+      "realesrgan_hallucinations": 0
+    },
+    "0_6": {
+      "total": 40,
+      "realesrgan_acc": 0,
+      "bicubic_acc": 60,
+      "realesrgan_hallucinations": 0
+    },
+    "4_9": {
+      "total": 40,
+      "realesrgan_acc": 20,
+      "bicubic_acc": 40,
+      "realesrgan_hallucinations": 0
+    }
+  }
+}
