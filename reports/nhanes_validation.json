@@ -1,0 +1,127 @@
+{
+  "dataset": "CDC Continuous NHANES August 2021-August 2023 Laboratory Cycle",
+  "portal_url": "https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Laboratory&Cycle=2021-2023",
+  "data_download_urls": {
+    "TCHOL": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TCHOL_L.xpt",
+    "HDL": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HDL_L.xpt",
+    "TRIGLY": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt"
+  },
+  "total_complete_records": 3517,
+  "tolerance": 0.1,
+  "variables_extracted": {
+    "LBXTC": "Total Cholesterol (mg/dL) from TCHOL_L.xpt",
+    "LBDHDD": "HDL-Cholesterol (mg/dL) from HDL_L.xpt",
+    "LBXTLG_LBXTR": "Triglycerides (mg/dL) from TRIGLY_L.xpt",
+    "LBDLDL": "Friedewald LDL-Cholesterol (mg/dL) from TRIGLY_L.xpt",
+    "LBDLDLN": "NIH Sampson Equation LDL-Cholesterol (mg/dL) from TRIGLY_L.xpt",
+    "LBDLDLM": "Martin-Hopkins LDL-Cholesterol (mg/dL) from TRIGLY_L.xpt"
+  },
+  "equation_routing_counts": {
+    "FRIEDEWALD": 3480,
+    "SAMPSON": 33,
+    "MARTIN_HOPKINS": 0,
+    "ABSTAIN_TG800": 3,
+    "BOUND_VIOLATION": 0
+  },
+  "results_by_triglycerides_range": {
+    "tg_le_400": {
+      "label": "TG <= 400 mg/dL",
+      "active_equation": "FRIEDEWALD",
+      "total_stratum_records": 3480,
+      "evaluated_records": 3480,
+      "satisfies_identity_pct": 100.0,
+      "abstention_pct": 0.0,
+      "violation_pct": 0.0,
+      "converged_count": 3480,
+      "abstain_count": 0,
+      "violation_count": 0,
+      "residual_distribution": {
+        "count": 3480,
+        "mean": 0.0014,
+        "std": 0.001,
+        "median": 0.0013,
+        "p25": 0.0009,
+        "p75": 0.0021,
+        "p95": 0.003,
+        "min": 0.0,
+        "max": 0.0065
+      },
+      "martin_hopkins_cross_routing": {
+        "evaluated_records": 3480,
+        "satisfies_identity_pct": 97.82,
+        "residual_distribution": {
+          "count": 3480,
+          "mean": 0.0239,
+          "std": 0.0333,
+          "median": 0.0187,
+          "p25": 0.011,
+          "p75": 0.0273,
+          "p95": 0.0571,
+          "min": 0.0,
+          "max": 0.7583
+        }
+      },
+      "sampson_cross_routing": {
+        "evaluated_records": 3480,
+        "satisfies_identity_pct": 0.0,
+        "residual_distribution": {
+          "count": 3480,
+          "mean": 16.2117,
+          "std": 11.7444,
+          "median": 12.8957,
+          "p25": 8.8465,
+          "p75": 19.4819,
+          "p95": 38.0062,
+          "min": 0.2158,
+          "max": 130.3227
+        }
+      }
+    },
+    "tg_400_800": {
+      "label": "400 < TG <= 800 mg/dL",
+      "active_equation": "SAMPSON",
+      "total_stratum_records": 34,
+      "evaluated_records": 33,
+      "satisfies_identity_pct": 0.0,
+      "abstention_pct": 0.0,
+      "violation_pct": 100.0,
+      "converged_count": 0,
+      "abstain_count": 0,
+      "violation_count": 33,
+      "residual_distribution": {
+        "count": 33,
+        "mean": 140.5149,
+        "std": 59.5404,
+        "median": 122.9094,
+        "p25": 94.3973,
+        "p75": 167.4615,
+        "p95": 250.1735,
+        "min": 69.4536,
+        "max": 315.2563
+      }
+    },
+    "tg_gt_800": {
+      "label": "TG > 800 mg/dL",
+      "active_equation": "ABSTAIN_TG800",
+      "total_stratum_records": 3,
+      "evaluated_records": 3,
+      "satisfies_identity_pct": 0.0,
+      "abstention_pct": 100.0,
+      "violation_pct": 0.0,
+      "converged_count": 0,
+      "abstain_count": 3,
+      "violation_count": 0,
+      "residual_distribution": {
+        "count": 3,
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0,
+        "p25": 1.0,
+        "p75": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      }
+    }
+  }
+}
