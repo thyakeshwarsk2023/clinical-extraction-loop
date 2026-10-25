@@ -8,13 +8,17 @@
 ### a) Real-ESRGAN Weight File & Backend Share
 - **Weights Present on Disk:** `True` (Official pretrained RealESRGAN_x4plus.pth present in `models/`, verified non-Kaiming via `tests/test_vision_gate.py`).
 - **Active SR Backend:** `realesrgan` (Official 23-block RRDBNet loaded with 16.7M trained parameters; untrained fallback backend active only if checkpoint is explicitly missing).
-- **Hallucination & Gating Benchmark (`reports/sr_hallucination_benchmark_trained.json`):**
-  - Total crops tested: 200
+- **Hallucination & Gating Benchmark Analysis (`reports/sr_hallucination_benchmark_trained.json`):**
+  - Total crops tested: 200 (40 crops per pair across 3/8, 5/6, 1/7, 0/6, 4/9)
   - Count committed (blind-read agreed with counterfactual): 200 (100.0% commit rate)
   - Count abstained: 0 (0.0% abstention rate)
   - Accuracy computed ONLY over committed cases: 100.0% (200 / 200)
   - Accuracy computed over all 200 cases (including abstentions): 100.0% (200 / 200)
   - Baseline comparison (untrained fallback backend): 40 committed (20.0%), 160 abstained (80.0%), 100.0% accuracy on committed (40/40), 20.0% resolved accuracy over all 200 cases.
+- **Investigation of 100% Commit Rate & Synthetic Degradation Limitations:**
+  - **Mild Degradation Finding:** Visual inspection of crops rendered to `reports/sr_hallucination_samples/` confirms that synthetic downscaling (32x32 -> 16x16) with 3x3 Gaussian blur is too mild to induce genuine digit morphing (e.g. '3' loop remains wide open and never closes into an '8').
+  - **Baseline Parity:** Raw nearest-neighbor (`no_sr_pct: 100.0%`) and bicubic interpolation (`bicubic_pct: 100.0%`) also achieve 100% template accuracy on these crops. Because the input glyph is already recognizable as the true digit and matches the counterfactual target, the consensus gate admits 100% of cases.
+  - **Real Scanned Document Limitation:** Real-world degraded laboratory scans feature ink bleeding, scan compression artifacts, and physical smudge occlusions that bridge stroke gaps. The 0% abstention rate is a consequence of clean synthetic font crops; real scanned documents would encounter harder stroke ambiguities and higher necessary abstention rates.
 
 ### b) Secondary / Stronger Extraction Model Behind Routing
 - **Second Model Status:** `config-only, not evaluated`. The pipeline contains the criticality hierarchy in `configs/constraints.yaml` (Potassium: 5/5, LDL: 4/5, Test Date: 1/5), but does NOT deploy a live secondary VLM for high-risk fields.
@@ -74,7 +78,7 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` | `src/stage2_isolation.py:compute_candidate_cost, damerau_levenshtein_distance` | `.\venv\Scripts\python.exe -m unittest tests/test_candidate_scoring.py` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` | `src/stage2_isolation.py:explain_counterfactual` | `.\venv\Scripts\python.exe -m unittest tests/test_clinical_features.py` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE. | `implemented-and-tested` | `src/stage3_vision_gate.py:process_vision_gate` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
-| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops; trained backend achieves 100.0% accuracy over committed cases with 100.0% commit rate (200/200 committed, 0 abstained). | `implemented-and-tested` | `src/stage4_enhance_extract.py:apply_real_esrgan_4x` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
+| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops; on synthetic confusable-pair crops, trained backend achieves 100.0% accuracy with 100.0% commit rate (200/200, 0 abstained) due to mild downscaling preserving topology (visual inspection in reports/sr_hallucination_samples/). | `implemented-and-tested` | `src/stage4_enhance_extract.py:apply_real_esrgan_4x` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
 | **CLAIM-08** | Compute Routing | Risk-routed dual-model re-extraction concentrates expensive compute on high-criticality fields (>= 4/5) using a larger secondary model. | `config-only, not evaluated` | `configs/constraints.yaml, src/pipeline.py` | `N/A` |
 | **CLAIM-09** | Visual Grounding | Token-level confidence delta (Delta-conf) logged between initial read and enhanced crop read; uses stroke-clarity/contrast heuristic proxy (Tenengrad, Otsu decimal isolation, contrast percentile) regardless of engine, rather than native RapidOCR token scores. | `simulated` | `src/stage4_enhance_extract.py:enhance_and_reextract` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
 | **CLAIM-10** | Clinical Impact | NCEP ATP-III Cardiovascular Risk Stratification quantifies diagnostic risk flips (e.g. false statin escalation). | `implemented-and-tested` | `src/clinical_risk.py:classify_ldl_risk, evaluate_clinical_risk_flip` | `.\venv\Scripts\python.exe -m unittest tests/test_clinical_features.py` |

@@ -76,7 +76,7 @@ CLAIMS_DATABASE = [
     {
         "id": "CLAIM-07",
         "category": "Super-Resolution",
-        "claim_text": "Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops; trained backend achieves 100.0% accuracy over committed cases with 100.0% commit rate (200/200 committed, 0 abstained).",
+        "claim_text": "Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops; on synthetic confusable-pair crops, trained backend achieves 100.0% accuracy with 100.0% commit rate (200/200, 0 abstained) due to mild downscaling preserving topology (visual inspection in reports/sr_hallucination_samples/).",
         "status": "implemented-and-tested",
         "file_function": "src/stage4_enhance_extract.py:apply_real_esrgan_4x",
         "test_or_eval": "tests/test_vision_gate.py:test_loaded_weights_not_kaiming_normal_consistent",
@@ -270,13 +270,17 @@ def main():
         if details['weights_present']:
             f.write(f"- **Weights Present on Disk:** `True` (Official pretrained RealESRGAN_x4plus.pth present in `models/`, verified non-Kaiming via `tests/test_vision_gate.py`).\n")
             f.write(f"- **Active SR Backend:** `realesrgan` (Official 23-block RRDBNet loaded with 16.7M trained parameters; untrained fallback backend active only if checkpoint is explicitly missing).\n")
-            f.write("- **Hallucination & Gating Benchmark (`reports/sr_hallucination_benchmark_trained.json`):**\n")
-            f.write("  - Total crops tested: 200\n")
+            f.write("- **Hallucination & Gating Benchmark Analysis (`reports/sr_hallucination_benchmark_trained.json`):**\n")
+            f.write("  - Total crops tested: 200 (40 crops per pair across 3/8, 5/6, 1/7, 0/6, 4/9)\n")
             f.write("  - Count committed (blind-read agreed with counterfactual): 200 (100.0% commit rate)\n")
             f.write("  - Count abstained: 0 (0.0% abstention rate)\n")
             f.write("  - Accuracy computed ONLY over committed cases: 100.0% (200 / 200)\n")
             f.write("  - Accuracy computed over all 200 cases (including abstentions): 100.0% (200 / 200)\n")
-            f.write("  - Baseline comparison (untrained fallback backend): 40 committed (20.0%), 160 abstained (80.0%), 100.0% accuracy on committed (40/40), 20.0% resolved accuracy over all 200 cases.\n\n")
+            f.write("  - Baseline comparison (untrained fallback backend): 40 committed (20.0%), 160 abstained (80.0%), 100.0% accuracy on committed (40/40), 20.0% resolved accuracy over all 200 cases.\n")
+            f.write("- **Investigation of 100% Commit Rate & Synthetic Degradation Limitations:**\n")
+            f.write("  - **Mild Degradation Finding:** Visual inspection of crops rendered to `reports/sr_hallucination_samples/` confirms that synthetic downscaling (32x32 -> 16x16) with 3x3 Gaussian blur is too mild to induce genuine digit morphing (e.g. '3' loop remains wide open and never closes into an '8').\n")
+            f.write("  - **Baseline Parity:** Raw nearest-neighbor (`no_sr_pct: 100.0%`) and bicubic interpolation (`bicubic_pct: 100.0%`) also achieve 100% template accuracy on these crops. Because the input glyph is already recognizable as the true digit and matches the counterfactual target, the consensus gate admits 100% of cases.\n")
+            f.write("  - **Real Scanned Document Limitation:** Real-world degraded laboratory scans feature ink bleeding, scan compression artifacts, and physical smudge occlusions that bridge stroke gaps. The 0% abstention rate is a consequence of clean synthetic font crops; real scanned documents would encounter harder stroke ambiguities and higher necessary abstention rates.\n\n")
         else:
             f.write(f"- **Weights Present on Disk:** `False` (Pretrained `.pth` weights are absent from project repository).\n")
             f.write(f"- **Active SR Backend:** `untrained_fallback_backend`.\n\n")
