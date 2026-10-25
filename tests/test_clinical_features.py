@@ -180,8 +180,15 @@ class TestAdversarialInjection(unittest.TestCase):
         self.assertEqual(corrupt["triglycerides"], 850.0)
 
 
+from src.fhir_export import (
+    generate_fhir_r4_lipid_bundle,
+    verify_fhir_bundle_sha256,
+    LOINC_CODES,
+)
+
+
 class TestFHIRR4Export(unittest.TestCase):
-    """Tests HL7 FHIR Release 4 standard compliance and LOINC coding."""
+    """Tests HL7 FHIR Release 4 standard compliance, LOINC coding, and SHA-256 seal."""
 
     def test_fhir_bundle_structure(self):
         raw = {"total_cholesterol": 2000.0, "hdl": 50.0, "ldl": 120.0, "triglycerides": 150.0}
@@ -206,6 +213,22 @@ class TestFHIRR4Export(unittest.TestCase):
         self.assertIn("13457-7", obs_codes) # LDL
         self.assertIn("2571-8", obs_codes)  # TG
 
+    def test_sha256_seal_integrity_and_mutation_detection(self):
+        """Verifies valid SHA-256 seal passes and any 1-byte mutation fails."""
+        raw = {"total_cholesterol": 250.0, "hdl": 50.0, "ldl": 150.0, "triglycerides": 250.0}
+        ver = {"total_cholesterol": 250.0, "hdl": 50.0, "ldl": 150.0, "triglycerides": 250.0}
+        bundle = generate_fhir_r4_lipid_bundle(
+            "doc_crypto_test", raw, ver, "mg/dL", "CONVERGED", "FRIEDEWALD", 12.0
+        )
+
+        # 1. Unaltered bundle MUST pass verification
+        self.assertTrue(verify_fhir_bundle_sha256(bundle), "Unaltered bundle failed SHA-256 seal verification")
+
+        # 2. Mutate a single byte in an observation value: 150.0 -> 150.1
+        bundle["entry"][1]["resource"]["valueQuantity"]["value"] = 150.1
+        self.assertFalse(verify_fhir_bundle_sha256(bundle), "One-byte mutation was not caught by SHA-256 seal verification!")
+
 
 if __name__ == "__main__":
     unittest.main()
+

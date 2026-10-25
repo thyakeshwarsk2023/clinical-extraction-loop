@@ -191,7 +191,7 @@ def generate_fhir_r4_lipid_bundle(
         "resource": report_resource
     })
     
-    return {
+    bundle = {
         "resourceType": "Bundle",
         "id": bundle_id,
         "meta": {
@@ -203,3 +203,56 @@ def generate_fhir_r4_lipid_bundle(
         "total": len(entries),
         "entry": entries
     }
+
+    # Compute canonical SHA-256 seal across the bundle payload
+    seal = compute_bundle_seal(bundle)
+    bundle["signature"] = {
+        "type": [{
+            "system": "urn:iso-astm:E1762-95:2013",
+            "code": "1.2.840.10065.1.12.1.1",
+            "display": "Author's Signature"
+        }],
+        "when": now_iso,
+        "data": seal
+    }
+    bundle["meta"]["security"] = [{
+        "system": "http://biotrace.ai/security/sha256-seal",
+        "code": seal,
+        "display": "Cryptographic SHA-256 Payload Seal"
+    }]
+    return bundle
+
+
+def compute_bundle_seal(bundle: dict) -> str:
+    """
+    Computes deterministic SHA-256 seal over canonical JSON representation of the bundle
+    excluding the signature and security seal fields.
+    """
+    bundle_copy = json.loads(json.dumps(bundle))
+    bundle_copy.pop("signature", None)
+    if "meta" in bundle_copy and "security" in bundle_copy["meta"]:
+        bundle_copy["meta"].pop("security", None)
+    canonical = json.dumps(bundle_copy, sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def verify_fhir_bundle_sha256(bundle: dict) -> bool:
+    """
+    Cryptographically verifies that the bundle has not undergone 1-byte mutation.
+    Returns True if valid seal matches canonical payload hash; False otherwise.
+    """
+    if not isinstance(bundle, dict):
+        return False
+    signature = bundle.get("signature", {})
+    recorded_seal = signature.get("data")
+    if not recorded_seal:
+        meta_security = bundle.get("meta", {}).get("security", [])
+        for s in meta_security:
+            if s.get("system") == "http://biotrace.ai/security/sha256-seal":
+                recorded_seal = s.get("code")
+                break
+    if not recorded_seal:
+        return False
+    computed = compute_bundle_seal(bundle)
+    return computed == recorded_seal
+

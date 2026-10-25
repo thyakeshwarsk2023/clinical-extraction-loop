@@ -1,0 +1,7022 @@
+[
+  {
+    "doc_id": "doc_0023",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.014,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.093,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 113.538,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0000",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0050",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.016,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 2.872,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": false,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 2.949,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0159",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.526,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 20.977,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0076",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.089,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 23.992,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0051",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.158,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 14.671,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0048",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.008,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.002,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0049",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.012,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0026",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.018,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0121",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.017,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.096,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 22.606,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0015",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.017,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.01,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0071",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.016,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0017",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0172",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.164,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 22.106,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0061",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.136,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 25.844,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0084",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0183",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0129",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.131,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 19.184,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0123",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.002,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0145",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.134,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 29.539,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0034",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.147,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 25.457,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0031",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.018,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.074,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 22.079,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0160",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.002,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0182",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0126",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.222,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 15.116,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0016",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.018,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.134,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 24.588,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0132",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.063,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 31.257,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0115",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.022,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0198",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.022,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.014,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.007,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0070",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.015,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0164",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.024,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.173,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 28.311,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0178",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.016,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0157",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.01,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0075",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.081,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 14.618,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0119",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.014,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0006",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.081,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 14.169,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0046",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.015,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.01,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0003",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.017,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 2.981,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 3.765,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0193",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0191",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0140",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.007,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.002,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0066",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 2.779,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 3.796,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0156",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.008,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0012",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.125,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 11.862,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0114",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.1,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 14.778,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0036",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.01,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.014,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0122",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.015,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0002",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.248,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 23.305,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0091",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.02,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0073",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.007,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0037",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.017,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0141",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.02,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 2.675,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 2.318,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0112",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.015,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0100",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.018,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.01,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0189",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.015,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0068",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.007,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.002,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0139",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.149,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 17.893,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0180",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.177,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 16.767,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0192",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.008,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.003,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0085",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.129,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 21.878,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0195",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.076,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 16.48,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0163",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.166,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.092,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0053",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.015,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.065,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 17.902,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0047",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.012,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0086",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.017,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0149",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.024,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0087",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.016,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0154",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.024,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.016,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.01,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0125",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.235,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 48.765,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0094",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.008,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.185,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 52.049,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0064",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.072,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 44.793,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0045",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.011,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0007",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.111,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 45.693,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0199",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.022,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.014,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.007,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0038",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.014,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0179",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.014,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0060",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.01,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.018,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0008",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.024,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0177",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.231,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 25.168,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0096",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.166,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 27.291,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0040",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.224,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 40.12,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0135",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.149,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 25.304,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0041",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.024,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 6.204,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 6.778,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0079",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0116",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.19,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 42.356,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0196",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.254,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.228,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0089",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0057",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.012,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.012,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0142",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0186",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.214,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 26.655,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0059",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0063",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.16,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 31.838,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0146",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.017,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.009,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0098",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.123,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 56.1,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0118",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.096,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 53.697,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0138",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.008,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.398,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 33.938,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0147",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0171",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 4.697,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 3.841,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0181",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.004,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.198,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 46.32,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0025",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.072,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 48.26,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0032",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0105",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.027,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.103,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 30.647,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0013",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.008,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.262,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 49.643,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0165",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.009,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.012,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0175",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.008,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0107",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.209,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 47.838,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0082",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0104",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.237,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 44.851,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0093",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.017,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.01,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0162",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.849,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 5.302,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0161",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.017,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.009,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0120",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.015,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0024",
+    "split": "corrupted_single",
+    "corruption_type": "decimal_shift",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.161,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 24.062,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0158",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.016,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.007,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0067",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.023,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0174",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.02,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0081",
+    "split": "corrupted_single",
+    "corruption_type": "digit_swap",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.01,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.014,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0168",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.028,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.017,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.009,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0009",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.008,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.012,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0021",
+    "split": "corrupted_single",
+    "corruption_type": "smudge",
+    "corrupted_fields": [
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.014,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0099",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+smudge",
+    "corrupted_fields": [
+      "triglycerides",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.008,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.014,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0042",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "triglycerides",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.017,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.009,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0187",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+decimal_shift",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.024,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 3.268,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 101.946,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0137",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+smudge",
+    "corrupted_fields": [
+      "hdl",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.008,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.01,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0095",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "triglycerides",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.011,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.441,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 103.737,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0039",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+smudge",
+    "corrupted_fields": [
+      "hdl",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.163,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 30.508,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0130",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 6.864,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 93.727,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0152",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+digit_swap",
+    "corrupted_fields": [
+      "ldl",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 6.193,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": false,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 125.587,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0020",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+smudge",
+    "corrupted_fields": [
+      "hdl",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.12,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 51.419,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0102",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 6.529,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 56.863,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0133",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+smudge",
+    "corrupted_fields": [
+      "ldl",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.027,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 4.673,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 95.283,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0062",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+digit_swap",
+    "corrupted_fields": [
+      "ldl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.013,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.2,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 111.353,
+      "status": "FULL_VISION_CORRECTED_K1",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0027",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+smudge",
+    "corrupted_fields": [
+      "triglycerides",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.01,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.004,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0150",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+smudge",
+    "corrupted_fields": [
+      "hdl",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.228,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 33.411,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0022",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+smudge",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.017,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.01,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0092",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+smudge",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.011,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.516,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 44.399,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0148",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.023,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.474,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 103.158,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0043",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.011,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0166",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "triglycerides",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 4.056,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 4.759,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0005",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+digit_swap",
+    "corrupted_fields": [
+      "ldl",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.027,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.018,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.01,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0144",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+decimal_shift",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 3.232,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 66.119,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0190",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "ldl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.022,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.684,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 100.407,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0167",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.005,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.155,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 51.506,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0194",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+smudge",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0103",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+digit_swap",
+    "corrupted_fields": [
+      "ldl",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.01,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.02,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.007,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0109",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+smudge",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.031,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.008,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0080",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.173,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 51.498,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0019",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.012,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.006,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0117",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.743,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 55.696,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0004",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.02,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.155,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 45.155,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0111",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 4.169,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 107.068,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0010",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+smudge",
+    "corrupted_fields": [
+      "ldl",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.07,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.298,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 69.503,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0176",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.019,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.157,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 129.384,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0018",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+smudge",
+    "corrupted_fields": [
+      "ldl",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.009,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.005,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0090",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "triglycerides",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.024,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 4.422,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 4.747,
+      "status": "FULL_ABSTAIN_INDETERMINATE",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0143",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.156,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 48.997,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0128",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+smudge",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.024,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.016,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.009,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0058",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "hdl",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.067,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.334,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 48.029,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0136",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "triglycerides",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.027,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.781,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 101.305,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0097",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+digit_swap",
+    "corrupted_fields": [
+      "triglycerides",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.026,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.999,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": false,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 97.349,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0033",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+smudge",
+    "corrupted_fields": [
+      "triglycerides",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.043,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.017,
+      "status": "SYMBOLIC_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.009,
+      "status": "FULL_ABSTAIN_TG400",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0044",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "ldl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.028,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.204,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.138,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0188",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+digit_swap",
+    "corrupted_fields": [
+      "triglycerides",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.008,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.313,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 45.82,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0127",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.652,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 98.558,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0184",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "hdl"
+    ],
+    "baseline": {
+      "latency_ms": 0.027,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 5.638,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 97.727,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0030",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+smudge",
+    "corrupted_fields": [
+      "triglycerides",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.027,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.018,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.009,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0083",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+digit_swap",
+    "corrupted_fields": [
+      "hdl",
+      "ldl"
+    ],
+    "baseline": {
+      "latency_ms": 0.025,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 3.259,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 90.9,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0074",
+    "split": "corrupted_double",
+    "corruption_type": "digit_swap+decimal_shift",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.006,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.075,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "full_arch": {
+      "latency_ms": 89.145,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 1.0
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0065",
+    "split": "corrupted_double",
+    "corruption_type": "decimal_shift+decimal_shift",
+    "corrupted_fields": [
+      "hdl",
+      "total_cholesterol"
+    ],
+    "baseline": {
+      "latency_ms": 0.007,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.251,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": false,
+        "triglycerides": true,
+        "overall": 0.25
+      }
+    },
+    "full_arch": {
+      "latency_ms": 27.563,
+      "status": "FULL_VISION_CORRECTED_K1",
+      "field_accuracy": {
+        "total_cholesterol": false,
+        "hdl": false,
+        "ldl": true,
+        "triglycerides": true,
+        "overall": 0.5
+      }
+    }
+  },
+  {
+    "doc_id": "doc_0035",
+    "split": "corrupted_double",
+    "corruption_type": "smudge+decimal_shift",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "triglycerides"
+    ],
+    "baseline": {
+      "latency_ms": 0.021,
+      "status": "BASELINE_PASSTHROUGH",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "symbolic": {
+      "latency_ms": 0.013,
+      "status": "SYMBOLIC_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    },
+    "full_arch": {
+      "latency_ms": 0.007,
+      "status": "FULL_CONVERGED",
+      "field_accuracy": {
+        "total_cholesterol": true,
+        "hdl": true,
+        "ldl": true,
+        "triglycerides": false,
+        "overall": 0.75
+      }
+    }
+  }
+]

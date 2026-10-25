@@ -94,8 +94,43 @@ def main():
             }
         })
 
+    # Measure K=2 solver latency before (brute-force 2D) vs after (1D-to-algebraic) on double-corrupted cases
+    import time
+    from src.stage2_isolation import generate_discrete_plausible_candidates, compute_candidate_cost
+    import itertools
+
+    double_cases = [all_recs[did] for did in test_case_ids if did in [r['doc_id'] for r in double_recs]]
+    lat_before_k2, lat_after_k2 = [], []
+
+    for d_case in double_cases[:5]:
+        p = d_case["display_values"].copy()
+        conf = {k: 0.85 for k in p}
+        
+        # After optimization: 1D-to-algebraic solver
+        t0 = time.perf_counter()
+        from src.stage2_isolation import hierarchical_isolation_search
+        _ = hierarchical_isolation_search(p, conf)
+        lat_after_k2.append((time.perf_counter() - t0) * 1000.0)
+
+        # Before optimization: Naive 2D combinatorial search over all pairs
+        t0_bf = time.perf_counter()
+        fields = ["total_cholesterol", "hdl", "ldl", "triglycerides"]
+        for f1, f2 in itertools.permutations(fields, 2):
+            c1_list = generate_discrete_plausible_candidates(p[f1], f1)
+            c2_list = generate_discrete_plausible_candidates(p[f2], f2)
+            for c1 in c1_list:
+                for c2 in c2_list:
+                    tp = p.copy()
+                    tp[f1], tp[f2] = c1, c2
+                    exp_tc = tp["hdl"] + tp["ldl"] + (tp["triglycerides"] / 5.0)
+                    _ = abs(tp["total_cholesterol"] - exp_tc)
+        lat_before_k2.append((time.perf_counter() - t0_bf) * 1000.0)
+
+    mean_k2_before = round(sum(lat_before_k2) / max(len(lat_before_k2), 1), 3)
+    mean_k2_after = round(sum(lat_after_k2) / max(len(lat_after_k2), 1), 3)
+    k2_speedup = round(mean_k2_before / max(mean_k2_after, 0.001), 2)
+
     mean_full_lat = sum(full_lat_list) / len(full_lat_list)
-    reduction = ((750.0 - mean_full_lat) / 750.0) * 100.0
 
     res_dict = {
         "description": "Targeted empirical evaluation of 20 diverse corrupted clinical documents across Baseline, Symbolic, and Full Architecture post-fix",
@@ -107,7 +142,12 @@ def main():
             "baseline_mean_latency_ms": round(sum(base_lat_list) / len(base_lat_list), 3),
             "symbolic_mean_latency_ms": round(sum(sym_lat_list) / len(sym_lat_list), 3),
             "full_arch_mean_latency_ms": round(mean_full_lat, 3),
-            "compute_reduction_vs_750ms_vlm_pct": round(reduction, 2)
+            "k2_solver_latency": {
+                "before_optimization_ms": mean_k2_before,
+                "after_optimization_ms": mean_k2_after,
+                "speedup_factor": f"{k2_speedup}x"
+            },
+            "repair_latency_vs_baseline_reread": "baseline not measured (tier-2 engine not deployed on local hardware)"
         },
         "test_cases": updated_test_cases
     }

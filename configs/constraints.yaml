@@ -8,8 +8,24 @@ assay_routes:
     formula: "total_cholesterol - (hdl + ldl + (triglycerides / 5.0))"
     tolerance: 0.10
     validity_bounds:
+      triglycerides_min: 0.0
       triglycerides_max: 400.0
       abstain_label: "ABSTAIN_CLINICAL_ANOMALY"
+
+  sampson:
+    type: "bivariate_non_hdl"
+    formula: "tc/1.19 + hdl/1.1 - tg/3.98 - (tg*(tc-hdl))/8.2 - 0.17"
+    tolerance: 0.10
+    validity_bounds:
+      triglycerides_min: 400.0
+      triglycerides_max: 800.0
+      abstain_label: "ABSTAIN_TG800"
+
+  martin_hopkins:
+    type: "stratified_empirical_divisor"
+    formula: "total_cholesterol - hdl - (triglycerides / f)"
+    divisor_range: [3.1, 11.9]
+    tolerance: 0.10
 
   direct_measured:
     type: "plausibility_bounds"
@@ -32,7 +48,8 @@ assay_routes:
 hierarchical_search:
   k1_max_edit_distance: 2
   k2_discrete_candidate_limit: 15
-  learned_weights:
-    alpha_edit: 0.48
-    beta_conf: 0.22
-    gamma_mag: 0.30
+  cost_model:
+    confidence_weight: 0.50
+    decimal_shift_bonus: 0.30
+    transposition_bonus: 0.25
+    k2_pair_bonus: 0.50

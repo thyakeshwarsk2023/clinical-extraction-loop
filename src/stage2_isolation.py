@@ -313,7 +313,14 @@ def compute_candidate_cost(
     }
     return cost, metadata
 
-def hierarchical_isolation_search(panel: dict, confidences: dict = None, tol: float = 0.10, method: str = None) -> dict:
+def hierarchical_isolation_search(
+    panel: dict,
+    confidences: dict = None,
+    tol: float = 0.10,
+    method: str = None,
+    require_independent_evidence: bool = False,
+    independent_evidence: dict = None
+) -> dict:
     if confidences is None:
         confidences = {f: 0.85 for f in panel}
 
@@ -509,6 +516,20 @@ def hierarchical_isolation_search(panel: dict, confidences: dict = None, tol: fl
         all_k2_pairs.sort(key=lambda x: x["penalty"])
         best_k2_pair = all_k2_pairs[0].copy()
         best_k2_pair["ranked_pairs"] = all_k2_pairs
+
+        has_independent_evidence = False
+        if independent_evidence:
+            for field, confirmed_val in independent_evidence.items():
+                if field in best_k2_pair["corrections"] and abs(best_k2_pair["corrections"][field] - confirmed_val) <= 0.05:
+                    has_independent_evidence = True
+                    break
+
+        if require_independent_evidence and not has_independent_evidence:
+            return {
+                "action": "ABSTAIN_ALGEBRAIC_INDETERMINATE",
+                "reason": "K=2 candidates ranked by cost model, but abstained due to lack of independent confirmation.",
+                "ranked_pairs": all_k2_pairs
+            }
         return best_k2_pair
 
     # Step 4: Bounded Abstention

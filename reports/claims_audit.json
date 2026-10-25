@@ -1,0 +1,189 @@
+{
+  "audit_version": "1.0",
+  "stage1_engine": "oracle_sidecar",
+  "vlm_reference": "assumed reference (not measured on local hardware)",
+  "sr_backend": {
+    "weights_present": false,
+    "sr_backend_used": "bicubic_blended (realesrgan_unweighted)",
+    "share": {
+      "bicubic_blended": 1.0,
+      "realesrgan_pretrained": 0.0
+    }
+  },
+  "secondary_model_routing": {
+    "status": "config-only, not evaluated",
+    "has_second_model": false
+  },
+  "sha256_seal": {
+    "implemented_and_tested": true,
+    "mutation_detection": "1-byte mutation fails"
+  },
+  "equations_in_code": {
+    "sampson": "def calculate_sampson_ldl(tc: float, hdl: float, tg: float) -> float:\n    \"\"\"Calculates LDL using the Sampson (2020) equation.\"\"\"\n    # LDL = TC/1.19 + HDL/1.1 - TG/3.98 - (TG * (TC - HDL)) / 8.2 - 0.17\n    non_hdl = tc - hdl\n    ldl = (tc / 1.19) + (hdl / 1.1) - (tg / 3.98) - ((tg * non_hdl) / 8.2) - 0.17\n    return round(ldl, 1)",
+    "martin_hopkins": "def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:\n    \"\"\"\n    Returns the dynamic Martin-Hopkins VLDL divisor based on TG and non-HDL strata.\n    Bounds: Divisor ranges from 3.1 to 11.9.\n    \"\"\"\n    if tg < 50:\n        return 3.5 if non_hdl < 100 else 4.0\n    elif tg < 100:\n        return 4.5 if non_hdl < 100 else 5.0\n    elif tg <= 400:\n        return 5.5 if non_hdl < 100 else 6.0\n    else:\n        return 6.5"
+  },
+  "claims": [
+    {
+      "id": "CLAIM-01",
+      "category": "Symbolic Verification",
+      "claim_text": "Deterministic Clinical Constraint Engine verifies Friedewald identity (TC = HDL + LDL + TG/5, tol +/-10%) and physiological bounds.",
+      "status": "implemented-and-tested",
+      "file_function": "src/stage2_constraints.py:evaluate_friedewald_invariant, verify_physiological_bounds",
+      "test_or_eval": "tests/test_candidate_scoring.py",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_candidate_scoring.py"
+    },
+    {
+      "id": "CLAIM-02",
+      "category": "Symbolic Verification",
+      "claim_text": "Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels, and emits ABSTAIN_TG800 for TG > 800.",
+      "status": "implemented-and-tested",
+      "file_function": "src/stage2_constraints.py:evaluate_sampson_invariant, evaluate_martin_hopkins_invariant; src/pipeline.py",
+      "test_or_eval": "tests/test_sampson_routing.py, tests/test_clinical_features.py",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_sampson_routing.py tests/test_clinical_features.py"
+    },
+    {
+      "id": "CLAIM-03",
+      "category": "Fault Localization",
+      "claim_text": "O(1) closed-form algebraic inversions for K=1 single-field faults and 1D-to-algebraic solver for K=2 dual-field faults.",
+      "status": "implemented-and-tested",
+      "file_function": "src/stage2_isolation.py:solve_field_closed_form, hierarchical_isolation_search",
+      "test_or_eval": "tests/test_candidate_scoring.py",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_candidate_scoring.py"
+    },
+    {
+      "id": "CLAIM-04",
+      "category": "Fault Localization",
+      "claim_text": "Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses.",
+      "status": "implemented-and-tested",
+      "file_function": "src/stage2_isolation.py:compute_candidate_cost, damerau_levenshtein_distance",
+      "test_or_eval": "tests/test_candidate_scoring.py:test_damerau_levenshtein_cost_calculation",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_candidate_scoring.py"
+    },
+    {
+      "id": "CLAIM-05",
+      "category": "XAI",
+      "claim_text": "Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual).",
+      "status": "implemented-and-tested",
+      "file_function": "src/stage2_isolation.py:explain_counterfactual",
+      "test_or_eval": "tests/test_clinical_features.py:test_counterfactual_explanation_structure",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_clinical_features.py"
+    },
+    {
+      "id": "CLAIM-06",
+      "category": "Machine Vision Gate",
+      "claim_text": "OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE.",
+      "status": "implemented-and-tested",
+      "file_function": "src/stage3_vision_gate.py:process_vision_gate",
+      "test_or_eval": "tests/test_vision_gate.py",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_vision_gate.py"
+    },
+    {
+      "id": "CLAIM-07",
+      "category": "Super-Resolution",
+      "claim_text": "Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops.",
+      "status": "implemented-untested",
+      "file_function": "src/stage4_enhance_extract.py:apply_real_esrgan_4x",
+      "test_or_eval": "tests/test_vision_gate.py:test_real_esrgan_4x_shape_and_range",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_vision_gate.py"
+    },
+    {
+      "id": "CLAIM-08",
+      "category": "Compute Routing",
+      "claim_text": "Risk-routed dual-model re-extraction concentrates expensive compute on high-criticality fields (>= 4/5) using a larger secondary model.",
+      "status": "config-only, not evaluated",
+      "file_function": "configs/constraints.yaml, src/pipeline.py",
+      "test_or_eval": "None (no secondary large model instance deployed)",
+      "reproduce_command": "N/A"
+    },
+    {
+      "id": "CLAIM-09",
+      "category": "Visual Grounding",
+      "claim_text": "Token-level confidence delta (Delta-conf) logged between initial read and enhanced crop read to quantify visual grounding gain.",
+      "status": "simulated",
+      "file_function": "src/stage4_enhance_extract.py:enhance_and_reextract",
+      "test_or_eval": "tests/test_vision_gate.py:test_confidence_delta_calculation",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_vision_gate.py"
+    },
+    {
+      "id": "CLAIM-10",
+      "category": "Clinical Impact",
+      "claim_text": "NCEP ATP-III Cardiovascular Risk Stratification quantifies diagnostic risk flips (e.g. false statin escalation).",
+      "status": "implemented-and-tested",
+      "file_function": "src/clinical_risk.py:classify_ldl_risk, evaluate_clinical_risk_flip",
+      "test_or_eval": "tests/test_clinical_features.py:test_clinical_risk_flip_detection",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_clinical_features.py"
+    },
+    {
+      "id": "CLAIM-11",
+      "category": "Clinical Interoperability",
+      "claim_text": "HL7 FHIR Release 4 Collection Bundle export with LOINC codes and cryptographic SHA-256 integrity seal.",
+      "status": "implemented-and-tested",
+      "file_function": "src/fhir_export.py:generate_fhir_r4_lipid_bundle, verify_fhir_bundle_sha256",
+      "test_or_eval": "tests/test_clinical_features.py:test_sha256_seal_integrity_and_mutation_detection",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_clinical_features.py"
+    },
+    {
+      "id": "CLAIM-12",
+      "category": "Testing & Robustness",
+      "claim_text": "Adversarial clinical corruption injector tests decimal shifts, digit transpositions, visual smudges, and severe hypertriglyceridemia.",
+      "status": "implemented-and-tested",
+      "file_function": "src/adversarial.py:inject_adversarial_corruption",
+      "test_or_eval": "tests/test_clinical_features.py:test_adversarial_injection_modalities",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_clinical_features.py"
+    },
+    {
+      "id": "CLAIM-13",
+      "category": "Baseline Extraction",
+      "claim_text": "Benchmarking across LayoutLMv3, Donut, and Qwen2.5-VL to demonstrate architecture-agnostic gains.",
+      "status": "not-implemented",
+      "file_function": "src/stage1_extract.py:extract_document_state (uses oracle_sidecar)",
+      "test_or_eval": "None",
+      "reproduce_command": "N/A"
+    },
+    {
+      "id": "CLAIM-14",
+      "category": "Visual Localization",
+      "claim_text": "VLM cross-attention token-to-patch attention hooks (OCR heads) for model-driven dynamic localization.",
+      "status": "not-implemented",
+      "file_function": "None (bounding boxes from layout metadata)",
+      "test_or_eval": "None",
+      "reproduce_command": "N/A"
+    },
+    {
+      "id": "CLAIM-15",
+      "category": "Multi-Panel Coverage",
+      "claim_text": "Multi-panel clinical verification for Hematology (CBC: Hct ~ 3*Hb) and Kidney function (Potassium, Creatinine).",
+      "status": "partial",
+      "file_function": "configs/constraints.yaml, src/stage2_constraints.py",
+      "test_or_eval": "CBC hard identities added in Phase 5.5",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_clinical_features.py"
+    },
+    {
+      "id": "CLAIM-16",
+      "category": "Evaluation Benchmark",
+      "claim_text": "20-case diverse clinical test suite achieves 95.0% Field Accuracy with low latency.",
+      "status": "implemented-and-tested",
+      "file_function": "evals/eval_twenty_test_cases.py",
+      "test_or_eval": "reports/twenty_test_cases_evaluation.json",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe evals/eval_twenty_test_cases.py"
+    },
+    {
+      "id": "CLAIM-17",
+      "category": "Ablation Study",
+      "claim_text": "170-document 3-way ablation benchmark comparing Baseline vs Symbolic vs Full Architecture.",
+      "status": "implemented-and-tested",
+      "file_function": "evals/run_final_ablation.py",
+      "test_or_eval": "reports/ablation_results.json",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe evals/run_final_ablation.py"
+    },
+    {
+      "id": "CLAIM-18",
+      "category": "User Interface",
+      "claim_text": "Interactive clinical inspection dashboard in app_demo.py supporting direct image upload, XAI, and FHIR export.",
+      "status": "implemented-and-tested",
+      "file_function": "app_demo.py",
+      "test_or_eval": "Streamlit app execution and zero-emoji compliance",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m streamlit run app_demo.py --server.port 8501"
+    }
+  ]
+}

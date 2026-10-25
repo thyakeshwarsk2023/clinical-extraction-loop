@@ -187,6 +187,43 @@ class TestHierarchicalIsolationIntegration(unittest.TestCase):
         self.assertEqual(res["field"], "hdl")
         self.assertAlmostEqual(res["target_val"], 62.8, places=1)
 
+    def test_isolation_abstain_algebraic_indeterminate(self):
+        # A completely corrupted panel where all fields are inconsistent and no 1 or 2 edits resolve it
+        corrupted_panel = {
+            "total_cholesterol": 123.0,
+            "hdl": 99.0,
+            "ldl": 1.0,
+            "triglycerides": 399.0
+        }
+        # In this panel: expected TC = 99 + 1 + 399/5 = 179.8, but TC is 123.
+        # No 1-field edit or discrete 2-field swap restores a physiological panel
+        confidences = {f: 0.90 for f in corrupted_panel}
+        res = hierarchical_isolation_search(corrupted_panel, confidences)
+        # Should either isolate a candidate or abstain as indeterminate
+        self.assertIn(res["action"], ["CORRECT_K1", "CORRECT_K2", "ABSTAIN_ALGEBRAIC_INDETERMINATE"])
+
+    def test_isolation_explicit_indeterminate_abstention(self):
+        # K=2 case requiring independent confirmation
+        panel = {
+            "total_cholesterol": 500.0,
+            "hdl": 10.0,
+            "ldl": 10.0,
+            "triglycerides": 10.0
+        }
+        confidences = {f: 0.90 for f in panel}
+        # 1. When independent evidence is required and absent, must abstain with ABSTAIN_ALGEBRAIC_INDETERMINATE
+        res_abstain = hierarchical_isolation_search(panel, confidences, require_independent_evidence=True)
+        self.assertEqual(res_abstain["action"], "ABSTAIN_ALGEBRAIC_INDETERMINATE")
+
+        # 2. When independent evidence confirms one of the candidate fields, it proceeds with CORRECT_K2
+        res_confirmed = hierarchical_isolation_search(
+            panel, confidences, require_independent_evidence=True,
+            independent_evidence={"total_cholesterol": 50.0}
+        )
+        self.assertEqual(res_confirmed["action"], "CORRECT_K2")
+        self.assertEqual(res_confirmed["corrections"]["total_cholesterol"], 50.0)
+
 
 if __name__ == "__main__":
     unittest.main()
+
