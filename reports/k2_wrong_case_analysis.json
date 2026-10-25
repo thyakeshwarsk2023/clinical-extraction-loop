@@ -1,0 +1,275 @@
+[
+  {
+    "doc_id": "doc_0027",
+    "status": "possible_TG_decimal_shift",
+    "corrupted_fields": [
+      "triglycerides",
+      "ldl"
+    ],
+    "corruption_types": "decimal_shift+smudge",
+    "ground_truth": {
+      "total_cholesterol": 155.2,
+      "hdl": 70.7,
+      "ldl": 57.3,
+      "triglycerides": 136.2
+    },
+    "display_input": {
+      "total_cholesterol": 155.2,
+      "hdl": 70.7,
+      "ldl": 57.3,
+      "triglycerides": 1362.0,
+      "non_hdl_cholesterol": 84.5
+    },
+    "committed": {
+      "total_cholesterol": 155.2,
+      "hdl": 70.7,
+      "ldl": 57.3,
+      "triglycerides": 1362.0,
+      "non_hdl_cholesterol": 84.5
+    },
+    "risk_flip": {
+      "has_risk_flip": false,
+      "direction": "CONCORDANT",
+      "direction_label": "Concordant (Zero Risk Shift)",
+      "raw_tier": {
+        "tier_level": 1,
+        "category": "Optimal",
+        "range": "< 100 mg/dL",
+        "color": "#10b981",
+        "recommendation": "Lifestyle maintenance; statin generally not indicated.",
+        "urgency": "LOW"
+      },
+      "verified_tier": {
+        "tier_level": 1,
+        "category": "Optimal",
+        "range": "< 100 mg/dL",
+        "color": "#10b981",
+        "recommendation": "Lifestyle maintenance; statin generally not indicated.",
+        "urgency": "LOW"
+      },
+      "raw_ldl": 57.3,
+      "verified_ldl": 57.3,
+      "tier_step_delta": 0,
+      "signed_tier_delta": 0,
+      "severity": "NEGLIGIBLE",
+      "clinical_narrative": "Both raw and verified LDL lie within the same clinical risk band (Optimal)."
+    },
+    "crops": {
+      "triglycerides": "C:\\Users\\welcome\\Downloads\\clinical-extraction-loop\\reports\\k2_wrong_case_crops\\doc_0027_triglycerides_crop.png",
+      "ldl": "C:\\Users\\welcome\\Downloads\\clinical-extraction-loop\\reports\\k2_wrong_case_crops\\doc_0027_ldl_crop.png"
+    },
+    "blind_reread": {
+      "triglycerides": {
+        "blind_val": 1362.0,
+        "confidence": 0.7732,
+        "metrics": {
+          "tenengrad": 39167.99,
+          "contrast_ratio": 0.123,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.683,
+          "blind_reread_val": 1362.0,
+          "ocr_agreement": false,
+          "delta_conf": 0.2732
+        }
+      },
+      "ldl": {
+        "blind_val": null,
+        "confidence": 0.74,
+        "metrics": {
+          "tenengrad": 1364.2,
+          "contrast_ratio": 0.034,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.6,
+          "blind_reread_val": null,
+          "ocr_agreement": true,
+          "delta_conf": 0.24
+        }
+      }
+    },
+    "audit": []
+  },
+  {
+    "doc_id": "doc_0044",
+    "status": "CONVERGED",
+    "corrupted_fields": [
+      "ldl",
+      "total_cholesterol"
+    ],
+    "corruption_types": "smudge+digit_swap",
+    "ground_truth": {
+      "total_cholesterol": 161.6,
+      "hdl": 84.3,
+      "ldl": 7.7,
+      "triglycerides": 349.0
+    },
+    "display_input": {
+      "total_cholesterol": 2.4,
+      "hdl": 2.18,
+      "ldl": 0.2,
+      "triglycerides": 3.94
+    },
+    "committed": {
+      "total_cholesterol": 92.8,
+      "hdl": 84.3,
+      "ldl": 7.7,
+      "triglycerides": 4.0
+    },
+    "risk_flip": {
+      "has_risk_flip": false,
+      "direction": "CONCORDANT",
+      "direction_label": "Concordant (Zero Risk Shift)",
+      "raw_tier": {
+        "tier_level": 1,
+        "category": "Optimal",
+        "range": "< 100 mg/dL",
+        "color": "#10b981",
+        "recommendation": "Lifestyle maintenance; statin generally not indicated.",
+        "urgency": "LOW"
+      },
+      "verified_tier": {
+        "tier_level": 1,
+        "category": "Optimal",
+        "range": "< 100 mg/dL",
+        "color": "#10b981",
+        "recommendation": "Lifestyle maintenance; statin generally not indicated.",
+        "urgency": "LOW"
+      },
+      "raw_ldl": 7.7,
+      "verified_ldl": 7.7,
+      "tier_step_delta": 0,
+      "signed_tier_delta": 0,
+      "severity": "NEGLIGIBLE",
+      "clinical_narrative": "Both raw and verified LDL lie within the same clinical risk band (Optimal)."
+    },
+    "crops": {
+      "ldl": "C:\\Users\\welcome\\Downloads\\clinical-extraction-loop\\reports\\k2_wrong_case_crops\\doc_0044_ldl_crop.png",
+      "total_cholesterol": "C:\\Users\\welcome\\Downloads\\clinical-extraction-loop\\reports\\k2_wrong_case_crops\\doc_0044_total_cholesterol_crop.png"
+    },
+    "blind_reread": {
+      "ldl": {
+        "blind_val": null,
+        "confidence": 0.74,
+        "metrics": {
+          "tenengrad": 1043.26,
+          "contrast_ratio": 0.03,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.6,
+          "blind_reread_val": null,
+          "ocr_agreement": true,
+          "delta_conf": 0.24
+        }
+      },
+      "total_cholesterol": {
+        "blind_val": 2.4,
+        "confidence": 0.7624,
+        "metrics": {
+          "tenengrad": 36829.91,
+          "contrast_ratio": 0.045,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.656,
+          "blind_reread_val": 2.4,
+          "ocr_agreement": false,
+          "delta_conf": 0.2624
+        }
+      }
+    },
+    "audit": [
+      {
+        "attempt": 1,
+        "stage": "STAGE_2.5_FAST_PATH",
+        "field": "triglycerides",
+        "old_val": 349.0,
+        "new_val": 4.0,
+        "delta_conf": "+0.41",
+        "latency": "0.1ms"
+      }
+    ]
+  },
+  {
+    "doc_id": "doc_0035",
+    "status": "CONVERGED",
+    "corrupted_fields": [
+      "total_cholesterol",
+      "triglycerides"
+    ],
+    "corruption_types": "smudge+decimal_shift",
+    "ground_truth": {
+      "total_cholesterol": 140.8,
+      "hdl": 65.7,
+      "ldl": 63.0,
+      "triglycerides": 59.3
+    },
+    "display_input": {
+      "total_cholesterol": 3.64,
+      "hdl": 1.7,
+      "ldl": 1.63,
+      "triglycerides": 0.1
+    },
+    "committed": {
+      "total_cholesterol": 140.8,
+      "hdl": 65.7,
+      "ldl": 63.0,
+      "triglycerides": 8.9
+    },
+    "risk_flip": {
+      "has_risk_flip": false,
+      "direction": "CONCORDANT",
+      "direction_label": "Concordant (Zero Risk Shift)",
+      "raw_tier": {
+        "tier_level": 1,
+        "category": "Optimal",
+        "range": "< 100 mg/dL",
+        "color": "#10b981",
+        "recommendation": "Lifestyle maintenance; statin generally not indicated.",
+        "urgency": "LOW"
+      },
+      "verified_tier": {
+        "tier_level": 1,
+        "category": "Optimal",
+        "range": "< 100 mg/dL",
+        "color": "#10b981",
+        "recommendation": "Lifestyle maintenance; statin generally not indicated.",
+        "urgency": "LOW"
+      },
+      "raw_ldl": 63.0,
+      "verified_ldl": 63.0,
+      "tier_step_delta": 0,
+      "signed_tier_delta": 0,
+      "severity": "NEGLIGIBLE",
+      "clinical_narrative": "Both raw and verified LDL lie within the same clinical risk band (Optimal)."
+    },
+    "crops": {
+      "total_cholesterol": "C:\\Users\\welcome\\Downloads\\clinical-extraction-loop\\reports\\k2_wrong_case_crops\\doc_0035_total_cholesterol_crop.png",
+      "triglycerides": "C:\\Users\\welcome\\Downloads\\clinical-extraction-loop\\reports\\k2_wrong_case_crops\\doc_0035_triglycerides_crop.png"
+    },
+    "blind_reread": {
+      "total_cholesterol": {
+        "blind_val": null,
+        "confidence": 0.74,
+        "metrics": {
+          "tenengrad": 1007.38,
+          "contrast_ratio": 0.03,
+          "has_isolated_decimal": false,
+          "stroke_clarity": 0.6,
+          "blind_reread_val": null,
+          "ocr_agreement": true,
+          "delta_conf": 0.24
+        }
+      },
+      "triglycerides": {
+        "blind_val": 0.1,
+        "confidence": 0.7588,
+        "metrics": {
+          "tenengrad": 37715.88,
+          "contrast_ratio": 0.02,
+          "has_isolated_decimal": true,
+          "stroke_clarity": 0.647,
+          "blind_reread_val": 0.1,
+          "ocr_agreement": true,
+          "delta_conf": 0.2588
+        }
+      }
+    },
+    "audit": []
+  }
+]

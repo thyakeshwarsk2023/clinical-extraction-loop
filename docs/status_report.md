@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `32598349538bb5802ebff828ad9fa0057869564c`
+> **Generated at Git Commit:** `cb1d353e81d85e1171d2ccac14896dfd6c93e9d7`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
@@ -55,7 +55,7 @@
 | :--- | :--- | :--- | :--- |
 | **CLAIM-01** | Symbolic Verification | Deterministic Clinical Constraint Engine verifies Friedewald identity (TC = HDL + LDL + TG/5, tol +/-10%) and physiological bounds. | `implemented-and-tested` |
 | **CLAIM-02** | Symbolic Verification | Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels (condensed 6-branch approximation in [3.5, 6.5], not full 180-cell table), and emits ABSTAIN_TG800 for TG > 800. | `implemented-and-tested` |
-| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 dual-field faults are improved via independent evidence sources (extra reported fields, dual blind re-read); remains correctly indeterminate and abstains when neither source is available -- this is expected behavior, not a residual limitation. | `implemented-and-tested` |
+| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling moved from 0% wrong/100% abstain to 6.0% wrong/86.0% correct/8.0% abstain; of the committed-wrong cases, 0 (0.0%) caused a clinical risk-category flip; remains correctly indeterminate and abstains when neither independent source is available. | `implemented-and-tested` |
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise; sibling bounding box fallback interpolation for missing/[0,0,0,0] boxes is absent (known gap; defaults to [0,0,10,10] or symbolic pass-through). | `implemented-and-tested` |
