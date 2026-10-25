@@ -1,0 +1,96 @@
+{
+  "dataset": "CDC Continuous NHANES August 2021-August 2023 (BIOPRO_L.xpt)",
+  "protein_panel": {
+    "panel": "Protein Panel",
+    "identity": "Total Protein = Albumin + Globulin",
+    "total_records": 6364,
+    "converged_count": 6364,
+    "convergence_rate_pct": 100.0,
+    "converged_within_0_1_g_dl_pct": 100.0,
+    "recommended_relative_tolerance": 0.02,
+    "absolute_residual_g_dl": {
+      "count": 6364,
+      "mean": 0.0,
+      "std": 0.0,
+      "median": 0.0,
+      "p25": 0.0,
+      "p75": 0.0,
+      "p95": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "relative_residual": {
+      "count": 6364,
+      "mean": 0.0,
+      "std": 0.0,
+      "median": 0.0,
+      "p25": 0.0,
+      "p75": 0.0,
+      "p95": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    }
+  },
+  "anion_gap": {
+    "panel": "Electrolyte Panel - Anion Gap",
+    "identity": "Anion Gap = Sodium - (Chloride + Bicarbonate)",
+    "total_records": 6325,
+    "physiological_bounds_satisfied_pct": 99.98,
+    "anion_gap_within_8_16_mEq_L_count": 5778,
+    "anion_gap_within_8_16_mEq_L_pct": 91.35,
+    "anion_gap_within_5_18_mEq_L_pct": 97.31,
+    "anion_gap_distribution": {
+      "count": 6325,
+      "mean": 13.5668,
+      "std": 2.4423,
+      "median": 13.0,
+      "p25": 12.0,
+      "p75": 15.0,
+      "p95": 17.0,
+      "min": -20.0,
+      "max": 49.0
+    }
+  },
+  "osmolar_gap_advisory": {
+    "panel": "Electrolyte Panel - Osmolar Gap (Advisory)",
+    "identity": "Calculated Osmolality = 2*Na + Glucose/18 + BUN/2.8",
+    "advisory_metric": "Osmolar Gap = Measured Osmolality - Calculated Osmolality",
+    "total_records": 6322,
+    "normal_gap_neg10_to_pos10_count": 730,
+    "normal_gap_pct": 11.55,
+    "advisory_flags_emitted_pct": 88.45,
+    "calculated_osmolality_distribution": {
+      "count": 6322,
+      "mean": 289.8006,
+      "std": 5.4681,
+      "median": 289.7619,
+      "p25": 286.5873,
+      "p75": 292.9921,
+      "p95": 298.1429,
+      "min": 247.619,
+      "max": 348.1429
+    },
+    "measured_osmolality_distribution": {
+      "count": 6322,
+      "mean": 279.2757,
+      "std": 5.2006,
+      "median": 279.0,
+      "p25": 276.0,
+      "p75": 282.0,
+      "p95": 287.0,
+      "min": 240.0,
+      "max": 334.0
+    },
+    "osmolar_gap_distribution": {
+      "count": 6322,
+      "mean": -10.5249,
+      "std": 0.444,
+      "median": -10.5317,
+      "p25": -10.8175,
+      "p75": -10.2381,
+      "p95": -9.8254,
+      "min": -14.1429,
+      "max": -7.619
+    }
+  }
+}
