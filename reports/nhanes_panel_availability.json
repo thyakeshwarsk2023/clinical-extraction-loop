@@ -1,0 +1,157 @@
+{
+  "nhanes_cycle": "August 2021-August 2023",
+  "component": "Laboratory - Standard Biochemistry Profile (BIOPRO_L)",
+  "documentation_url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm",
+  "data_file_url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt",
+  "local_cached_file": "nhanes_raw/BIOPRO_L.xpt",
+  "total_records_in_file": 7199,
+  "analytes": {
+    "total_bilirubin": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSTB",
+      "unit_conventional": "mg/dL",
+      "variable_name_si": "LBDSTBSI",
+      "unit_si": "umol/L",
+      "non_null_count": 6325,
+      "sample_value": 0.7
+    },
+    "direct_bilirubin": {
+      "available": false,
+      "file": null,
+      "variable_name_conventional": null,
+      "unit_conventional": null,
+      "variable_name_si": null,
+      "unit_si": null,
+      "non_null_count": 0,
+      "notes": "Direct (conjugated) bilirubin is not measured or reported in CDC NHANES core biochemistry profiles."
+    },
+    "indirect_bilirubin": {
+      "available": false,
+      "file": null,
+      "variable_name_conventional": null,
+      "unit_conventional": null,
+      "variable_name_si": null,
+      "unit_si": null,
+      "non_null_count": 0,
+      "notes": "Indirect (unconjugated) bilirubin is not measured or reported in CDC NHANES core biochemistry profiles."
+    },
+    "albumin": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSAL",
+      "unit_conventional": "g/dL",
+      "variable_name_si": "LBDSALSI",
+      "unit_si": "g/L",
+      "non_null_count": 6366,
+      "sample_value": 4.3
+    },
+    "total_protein": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSTP",
+      "unit_conventional": "g/dL",
+      "variable_name_si": "LBDSTPSI",
+      "unit_si": "g/L",
+      "non_null_count": 6364,
+      "sample_value": 7.5
+    },
+    "sodium": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSNASI",
+      "unit_conventional": "mmol/L",
+      "variable_name_si": "LBXSNASI",
+      "unit_si": "mmol/L",
+      "non_null_count": 6366,
+      "sample_value": 139.0
+    },
+    "potassium": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSKSI",
+      "unit_conventional": "mmol/L",
+      "variable_name_si": "LBXSKSI",
+      "unit_si": "mmol/L",
+      "non_null_count": 6281,
+      "sample_value": 4.4
+    },
+    "chloride": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSCLSI",
+      "unit_conventional": "mmol/L",
+      "variable_name_si": "LBXSCLSI",
+      "unit_si": "mmol/L",
+      "non_null_count": 6329,
+      "sample_value": 101.0
+    },
+    "bicarbonate": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSC3SI",
+      "unit_conventional": "mmol/L",
+      "variable_name_si": "LBXSC3SI",
+      "unit_si": "mmol/L",
+      "non_null_count": 6325,
+      "sample_value": 24.0
+    },
+    "glucose": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSGL",
+      "unit_conventional": "mg/dL",
+      "variable_name_si": "LBDSGLSI",
+      "unit_si": "mmol/L",
+      "non_null_count": 6357,
+      "sample_value": 107.0
+    },
+    "bun": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSBU",
+      "unit_conventional": "mg/dL",
+      "variable_name_si": "LBDSBUSI",
+      "unit_si": "mmol/L",
+      "non_null_count": 6326,
+      "sample_value": 11.0
+    },
+    "measured_osmolality": {
+      "available": true,
+      "file": "BIOPRO_L.xpt",
+      "variable_name_conventional": "LBXSOSSI",
+      "unit_conventional": "mmol/Kg",
+      "variable_name_si": "LBXSOSSI",
+      "unit_si": "mmol/Kg",
+      "non_null_count": 6322,
+      "sample_value": 277.0
+    }
+  },
+  "liver_bilirubin_feasibility": {
+    "direct_indirect_available_in_nhanes": false,
+    "verdict": "CANNOT_BE_NHANES_VALIDATED",
+    "recommendation": "Drop the direct/indirect bilirubin fractionation identity (Total Bilirubin = Direct + Indirect) from this NHANES validation round. Alternatively, use the Serum Protein partition identity (Total Protein = Albumin + Globulin), which is 100% available in BIOPRO_L.xpt (LBXSTP = LBXSAL + LBXSGB with 6,364 complete records)."
+  },
+  "electrolyte_and_metabolic_feasibility": {
+    "serum_osmolality_identity": {
+      "status": "FULLY_VALIDATABLE",
+      "formula_conventional": "Calculated_Osmolality = 2*Na + Glucose/18 + BUN/2.8",
+      "formula_si": "Calculated_Osmolality = 2*Na + Glucose_SI + BUN_SI",
+      "osmolar_gap_formula": "Osmolar_Gap = Measured_Osmolality - Calculated_Osmolality",
+      "variables": ["LBXSNASI", "LBXSGL", "LBDSGLSI", "LBXSBU", "LBDSBUSI", "LBXSOSSI"],
+      "complete_rows_available": 6310
+    },
+    "anion_gap_identity": {
+      "status": "FULLY_VALIDATABLE",
+      "formula": "Anion_Gap = Na - (Cl + HCO3) [or (Na + K) - (Cl + HCO3)]",
+      "variables": ["LBXSNASI", "LBXSKSI", "LBXSCLSI", "LBXSC3SI"],
+      "complete_rows_available": 6275
+    },
+    "protein_partition_identity": {
+      "status": "FULLY_VALIDATABLE",
+      "formula": "Total_Protein = Albumin + Globulin",
+      "variables": ["LBXSTP", "LBXSAL", "LBXSGB"],
+      "complete_rows_available": 6364
+    }
+  }
+}
