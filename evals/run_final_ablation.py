@@ -304,6 +304,55 @@ def run_full_architecture(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
         res = hierarchical_isolation_search(current, confidences, tol=tolerance)
         action = res.get("action", "")
 
+        if action == "ABSTAIN_ALGEBRAIC_INDETERMINATE":
+            ranked_pairs = res.get("ranked_pairs", [])
+            dual_blind_committed = False
+            if img_bgr is not None and ranked_pairs:
+                from src.stage4_enhance_extract import verify_dual_blind_reread
+                for pair in ranked_pairs:
+                    corrs = pair.get("corrections", {})
+                    if len(corrs) != 2:
+                        continue
+                    (f1, c1), (f2, c2) = list(corrs.items())
+                    bb1 = bboxes.get(f1, DUMMY_BBOX)
+                    bb2 = bboxes.get(f2, DUMMY_BBOX)
+
+                    has_crop1 = False
+                    has_crop2 = False
+                    if bb1 != [0, 0, 10, 10] and len(bb1) == 4:
+                        t1 = img_bgr[bb1[1]:bb1[3], bb1[0]:bb1[2]]
+                        if t1.size > 0 and t1.std() >= 5.0:
+                            has_crop1 = True
+                    if bb2 != [0, 0, 10, 10] and len(bb2) == 4:
+                        t2 = img_bgr[bb2[1]:bb2[3], bb2[0]:bb2[2]]
+                        if t2.size > 0 and t2.std() >= 5.0:
+                            has_crop2 = True
+
+                    if has_crop1 and has_crop2:
+                        raw1, seg1, _ = process_vision_gate(img_bgr, bb1)
+                        raw2, seg2, _ = process_vision_gate(img_bgr, bb2)
+                        crop1 = seg1 if seg1 is not None else raw1
+                        crop2 = seg2 if seg2 is not None else raw2
+
+                        both_agreed, details = verify_dual_blind_reread(
+                            crop1, crop2, c1, c2,
+                            conf1=confidences.get(f1, 0.8),
+                            conf2=confidences.get(f2, 0.8)
+                        )
+                        if both_agreed:
+                            current[f1] = c1
+                            current[f2] = c2
+                            confidences[f1] = details["field1_post_conf"]
+                            confidences[f2] = details["field2_post_conf"]
+                            status = "FULL_CORRECTED_K2_DUAL_BLIND"
+                            dual_blind_committed = True
+                            break
+
+            if dual_blind_committed:
+                continue
+            status = "FULL_ABSTAIN_ALGEBRAIC_INDETERMINATE"
+            break
+
         if "ABSTAIN" in action:
             status = f"FULL_{action}"
             break
@@ -400,6 +449,13 @@ def run_full_architecture(doc, tolerance=TOL, max_attempts=MAX_ATTEMPTS):
             continue
             
         elif action == "CORRECT_K2":
+            if res.get("resolution_mechanism") == "extra_field_equation":
+                for f_name, c_val in res["corrections"].items():
+                    current[f_name] = c_val
+                    confidences[f_name] = 0.98
+                status = "FULL_CORRECTED_K2_EXTRA_FIELD"
+                continue
+
             ranked_pairs = res.get("ranked_pairs", [res])
             chosen_pair = None
             

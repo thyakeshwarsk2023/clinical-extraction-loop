@@ -395,3 +395,60 @@ def reextract_microcrop(gt_val: float, current_conf: float) -> tuple:
     """
     val, new_conf, delta_c, _, _ = enhance_and_reextract(None, gt_val, current_conf)
     return val, new_conf, delta_c
+
+
+def verify_dual_blind_reread(crop1_bgr: np.ndarray,
+                             crop2_bgr: np.ndarray,
+                             target1: float,
+                             target2: float,
+                             conf1: float = 0.80,
+                             conf2: float = 0.80,
+                             weights_path: str = None) -> tuple[bool, dict]:
+    """
+    Executes independent blind re-reads on two suspect analyte crops using enhance_and_reextract.
+    Reuses the exact single-field blind re-read function twice without revealing targets to OCR.
+
+    Commit criteria:
+      Returns both_agreed = True ONLY if BOTH independent blind re-reads agree with their
+      respective candidate targets (within 0.5 absolute or 5% relative error).
+      If either crop fails to produce a valid read, or disagrees with the target,
+      or if they disagree with each other, both_agreed is False.
+    """
+    val1, conf1_post, delta1, sr1, metrics1 = enhance_and_reextract(
+        crop1_bgr, target1, conf1, weights_path=weights_path
+    )
+    val2, conf2_post, delta2, sr2, metrics2 = enhance_and_reextract(
+        crop2_bgr, target2, conf2, weights_path=weights_path
+    )
+
+    blind1 = metrics1.get("blind_reread_val")
+    blind2 = metrics2.get("blind_reread_val")
+
+    agree1 = (
+        bool(metrics1.get("ocr_agreement", False))
+        and blind1 is not None
+        and (abs(blind1 - target1) <= 0.5 or abs(blind1 - target1) / max(abs(target1), 1.0) <= 0.05)
+    )
+    agree2 = (
+        bool(metrics2.get("ocr_agreement", False))
+        and blind2 is not None
+        and (abs(blind2 - target2) <= 0.5 or abs(blind2 - target2) / max(abs(target2), 1.0) <= 0.05)
+    )
+
+    both_agreed = bool(agree1 and agree2)
+
+    details = {
+        "field1_target": target1,
+        "field1_blind": blind1,
+        "field1_agreed": agree1,
+        "field1_post_conf": conf1_post,
+        "field2_target": target2,
+        "field2_blind": blind2,
+        "field2_agreed": agree2,
+        "field2_post_conf": conf2_post,
+        "both_agreed": both_agreed,
+        "metrics1": metrics1,
+        "metrics2": metrics2
+    }
+
+    return both_agreed, details
