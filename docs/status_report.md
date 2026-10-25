@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `2bd696ae93131ec49f6a2c23a1d068dfb1458db5`
+> **Generated at Git Commit:** `1ac646a74cd33ad5f41d7ebb76566b418ca54584`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
