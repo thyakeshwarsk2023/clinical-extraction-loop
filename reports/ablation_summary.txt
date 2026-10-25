@@ -1,6 +1,6 @@
 ================================================================================
   TRACK 2 - FINAL REVIEW ABLATION STUDY RESULTS
-  Generated : 2026-10-22 22:03:46
+  Generated : 2026-10-25 19:43:42
   Total corrupted docs evaluated : 170
 ================================================================================
 
@@ -12,45 +12,45 @@ ARMS COMPARED:
 OVERALL AGGREGATE (all corrupted docs)
   Arm                     N   Mean FA%   Median FA%   Mean Lat(ms)  P95 Lat(ms)
   --------------------------------------------------------------------------------
-  Baseline (VLM only)   170     80.59%       75.00%         0.015        0.027
-  Symbolic Only         170     86.76%      100.00%         0.750        5.670
-  Full Architecture     170     93.53%      100.00%        22.745      100.901
+  Baseline (VLM only)   170     80.59%       75.00%         0.012        0.023
+  Symbolic Only         170     86.91%      100.00%         0.608        4.297
+  Full Architecture     170     93.53%      100.00%        12.814       46.655
 
 BREAKDOWN BY SPLIT
   Split: corrupted_double  (n=50)
     Arm                     N   Mean FA%   Mean Lat(ms)
     ------------------------------------------------------
-    Baseline               50     70.00%         0.021ms
-    Symbolic               50     74.00%         1.817ms
-    Full Arch              50     92.00%        47.658ms
+    Baseline               50     70.00%         0.014ms
+    Symbolic               50     74.00%         1.379ms
+    Full Arch              50     92.00%        21.695ms
 
   Split: corrupted_single  (n=120)
     Arm                     N   Mean FA%   Mean Lat(ms)
     ------------------------------------------------------
     Baseline              120     85.00%         0.012ms
-    Symbolic              120     92.08%         0.305ms
-    Full Arch             120     94.17%        12.365ms
+    Symbolic              120     92.29%         0.287ms
+    Full Arch             120     94.17%         9.114ms
 
 BREAKDOWN BY CORRUPTION TYPE
   Corruption                        N |   Base%    Sym%   Full% |  BaseLat   SymLat  FullLat
   --------------------------------------------------------------------------------
-  decimal_shift                    39 |   75.0%   96.2%   96.8% |    0.01ms    0.13ms   27.65ms
-  decimal_shift+decimal_shift       6 |   50.0%   62.5%   91.7% |    0.02ms    4.11ms   67.65ms
-  decimal_shift+digit_swap          4 |   50.0%   43.8%   93.8% |    0.02ms    3.91ms  106.30ms
-  decimal_shift+smudge              5 |   75.0%   90.0%   90.0% |    0.02ms    0.11ms   23.07ms
-  digit_swap                       36 |   77.1%   77.8%   84.0% |    0.01ms    0.86ms   11.25ms
-  digit_swap+decimal_shift          8 |   50.0%   53.1%   93.8% |    0.02ms    3.51ms   90.18ms
-  digit_swap+digit_swap             2 |   87.5%   87.5%   87.5% |    0.02ms    0.02ms    0.01ms
-  digit_swap+smudge                 4 |   75.0%   75.0%   93.8% |    0.03ms    1.38ms   52.30ms
-  smudge                           45 |  100.0%  100.0%  100.0% |    0.01ms    0.01ms    0.01ms
-  smudge+decimal_shift              5 |   75.0%   95.0%   95.0% |    0.02ms    0.13ms   39.43ms
-  smudge+digit_swap                 9 |   75.0%   69.4%   83.3% |    0.03ms    1.73ms   34.28ms
-  smudge+smudge                     7 |  100.0%  100.0%  100.0% |    0.02ms    0.02ms    0.01ms
+  decimal_shift                    39 |   75.0%   96.2%   96.8% |    0.01ms    0.14ms   21.16ms
+  decimal_shift+decimal_shift       6 |   50.0%   62.5%   91.7% |    0.01ms    3.27ms   34.50ms
+  decimal_shift+digit_swap          4 |   50.0%   43.8%   93.8% |    0.01ms    3.02ms   48.03ms
+  decimal_shift+smudge              5 |   75.0%   90.0%   90.0% |    0.01ms    0.09ms   10.90ms
+  digit_swap                       36 |   77.1%   78.5%   84.0% |    0.01ms    0.80ms    7.45ms
+  digit_swap+decimal_shift          8 |   50.0%   53.1%   93.8% |    0.01ms    2.59ms   40.25ms
+  digit_swap+digit_swap             2 |   87.5%   87.5%   87.5% |    0.01ms    0.01ms    0.00ms
+  digit_swap+smudge                 4 |   75.0%   75.0%   93.8% |    0.01ms    0.99ms   22.83ms
+  smudge                           45 |  100.0%  100.0%  100.0% |    0.01ms    0.01ms    0.00ms
+  smudge+decimal_shift              5 |   75.0%   95.0%   95.0% |    0.02ms    0.14ms   19.12ms
+  smudge+digit_swap                 9 |   75.0%   69.4%   83.3% |    0.01ms    1.26ms   13.57ms
+  smudge+smudge                     7 |  100.0%  100.0%  100.0% |    0.01ms    0.01ms    0.00ms
 
 MICRO-CROP COMPUTE REDUCTION VS FULL-PAGE VLM RE-EXTRACTION
   Reference: Full-page VLM re-run latency (industry est.) : 750 ms
-  Mean latency - Full Architecture (targeted micro-crop)   : 22.745 ms
-  Compute reduction                                         : 97.0%
+  Mean latency - Full Architecture (targeted micro-crop)   : 12.814 ms
+  Compute reduction                                         : 98.3%
   Criterion satisfied (>80% reduction)                      : YES
   Note: Synthetic in-memory baseline has no VLM GPU/network latency.
         The >80% claim is validated against the 750ms real-world VLM reference.

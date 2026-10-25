@@ -20,10 +20,14 @@
 #### Sampson Equation in Code (`src/stage2_constraints.py`):
 ```python
 def calculate_sampson_ldl(tc: float, hdl: float, tg: float) -> float:
-    """Calculates LDL using the Sampson (2020) equation."""
-    # LDL = TC/1.19 + HDL/1.1 - TG/3.98 - (TG * (TC - HDL)) / 8.2 - 0.17
+    """
+    Calculates LDL using the NIH Sampson (2020) Equation 2.
+    Ref: Sampson et al., JAMA Cardiol. 2020;5(5):540-548.
+    LDL = (TC/0.948) - (HDL/0.971) - (TG/8.56 + (TG*(TC-HDL))/2140 - (TG**2)/16100) - 9.44
+    """
     non_hdl = tc - hdl
-    ldl = (tc / 1.19) + (hdl / 1.1) - (tg / 3.98) - ((tg * non_hdl) / 8.2) - 0.17
+    vldl = (tg / 8.56) + ((tg * non_hdl) / 2140.0) - ((tg ** 2) / 16100.0)
+    ldl = (tc / 0.948) - (hdl / 0.971) - vldl - 9.44
     return round(ldl, 1)
 ```
 #### Martin-Hopkins Table in Code (`src/stage2_constraints.py`):

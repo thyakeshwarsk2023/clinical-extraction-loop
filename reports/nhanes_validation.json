@@ -63,17 +63,17 @@
       },
       "sampson_cross_routing": {
         "evaluated_records": 3480,
-        "satisfies_identity_pct": 0.0,
+        "satisfies_identity_pct": 100.0,
         "residual_distribution": {
           "count": 3480,
-          "mean": 16.2117,
-          "std": 11.7444,
-          "median": 12.8957,
-          "p25": 8.8465,
-          "p75": 19.4819,
-          "p95": 38.0062,
-          "min": 0.2158,
-          "max": 130.3227
+          "mean": 0.0027,
+          "std": 0.0021,
+          "median": 0.0024,
+          "p25": 0.0012,
+          "p75": 0.0038,
+          "p95": 0.0065,
+          "min": 0.0,
+          "max": 0.0263
         }
       }
     },
@@ -82,22 +82,22 @@
       "active_equation": "SAMPSON",
       "total_stratum_records": 34,
       "evaluated_records": 33,
-      "satisfies_identity_pct": 0.0,
+      "satisfies_identity_pct": 100.0,
       "abstention_pct": 0.0,
-      "violation_pct": 100.0,
-      "converged_count": 0,
+      "violation_pct": 0.0,
+      "converged_count": 33,
       "abstain_count": 0,
-      "violation_count": 33,
+      "violation_count": 0,
       "residual_distribution": {
         "count": 33,
-        "mean": 140.5149,
-        "std": 59.5404,
-        "median": 122.9094,
-        "p25": 94.3973,
-        "p75": 167.4615,
-        "p95": 250.1735,
-        "min": 69.4536,
-        "max": 315.2563
+        "mean": 0.0031,
+        "std": 0.0052,
+        "median": 0.002,
+        "p25": 0.0009,
+        "p75": 0.0034,
+        "p95": 0.0063,
+        "min": 0.0,
+        "max": 0.0308
       }
     },
     "tg_gt_800": {

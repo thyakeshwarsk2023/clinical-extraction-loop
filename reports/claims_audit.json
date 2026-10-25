@@ -19,7 +19,7 @@
     "mutation_detection": "1-byte mutation fails"
   },
   "equations_in_code": {
-    "sampson": "def calculate_sampson_ldl(tc: float, hdl: float, tg: float) -> float:\n    \"\"\"Calculates LDL using the Sampson (2020) equation.\"\"\"\n    # LDL = TC/1.19 + HDL/1.1 - TG/3.98 - (TG * (TC - HDL)) / 8.2 - 0.17\n    non_hdl = tc - hdl\n    ldl = (tc / 1.19) + (hdl / 1.1) - (tg / 3.98) - ((tg * non_hdl) / 8.2) - 0.17\n    return round(ldl, 1)",
+    "sampson": "def calculate_sampson_ldl(tc: float, hdl: float, tg: float) -> float:\n    \"\"\"\n    Calculates LDL using the NIH Sampson (2020) Equation 2.\n    Ref: Sampson et al., JAMA Cardiol. 2020;5(5):540-548.\n    LDL = (TC/0.948) - (HDL/0.971) - (TG/8.56 + (TG*(TC-HDL))/2140 - (TG**2)/16100) - 9.44\n    \"\"\"\n    non_hdl = tc - hdl\n    vldl = (tg / 8.56) + ((tg * non_hdl) / 2140.0) - ((tg ** 2) / 16100.0)\n    ldl = (tc / 0.948) - (hdl / 0.971) - vldl - 9.44\n    return round(ldl, 1)",
     "martin_hopkins": "def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:\n    \"\"\"\n    Returns the dynamic Martin-Hopkins VLDL divisor based on TG and non-HDL strata.\n    Bounds: Divisor ranges from 3.1 to 11.9.\n    \"\"\"\n    if tg < 50:\n        return 3.5 if non_hdl < 100 else 4.0\n    elif tg < 100:\n        return 4.5 if non_hdl < 100 else 5.0\n    elif tg <= 400:\n        return 5.5 if non_hdl < 100 else 6.0\n    else:\n        return 6.5"
   },
   "claims": [

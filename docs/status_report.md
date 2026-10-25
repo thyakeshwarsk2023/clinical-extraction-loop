@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `bda98fcf1eb20eb5ad5949be6e093fa073e3dd17`
+> **Generated at Git Commit:** `dca1a749c442933f3acf40ceaf21ecc76413e23f`
 > **Stage 1 Extractor Engine:** `oracle_sidecar`
 > **750ms VLM Latency Benchmark:** `assumed reference (not measured on local hardware)`
 > **Super-Resolution Backend:** `bicubic_blended (realesrgan_unweighted)` (Weights Present on Disk: `False`)
@@ -14,11 +14,11 @@
 - **Baseline Pass-through Accuracy:** `76.25%`
 - **Symbolic Only (Stage 2) Accuracy:** `86.25%`
 - **Full Architecture Accuracy:** `95.00%`
-- **Mean Pipeline Execution Latency:** `32.49 ms`
+- **Mean Pipeline Execution Latency:** `24.53 ms`
 
 ### B. 170-Document 3-Way Ablation Suite (`reports/ablation_results.json`)
 - **Arm 0 (Baseline Feed-Forward):** `80.59%` Field Accuracy
-- **Arm 1 (Symbolic Invariant Only):** `86.76%` Field Accuracy
+- **Arm 1 (Symbolic Invariant Only):** `86.91%` Field Accuracy
 - **Arm 2 (Full Closed-Loop Vision Repair):** `93.53%` Field Accuracy
 
 ---

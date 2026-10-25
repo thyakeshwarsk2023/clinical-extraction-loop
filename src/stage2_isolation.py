@@ -1,5 +1,7 @@
 import itertools
+import math
 import Levenshtein
+from scipy.optimize import brentq
 from src.stage2_constraints import (
     calculate_sampson_ldl,
     evaluate_sampson_invariant,
@@ -134,44 +136,65 @@ def solve_field_closed_form(field: str, panel: dict, method: str = None) -> floa
     if tg > 800.0:
         return 0.0
 
-    is_sampson = (400.0 < tg <= 800.0)
+    is_sampson = (method == "SAMPSON") or (400.0 < tg <= 800.0)
     
     if field == "total_cholesterol":
         if is_sampson:
-            denom = (1.0 / 1.19) - (tg / 8.2)
+            denom = (1.0 / 0.948) - (tg / 2140.0)
             if abs(denom) < 1e-6:
                 return 0.0
-            return (ldl - (hdl / 1.1) + (tg / 3.98) - ((tg * hdl) / 8.2) + 0.17) / denom
+            return (ldl + (hdl / 0.971) + (tg / 8.56) - ((tg * hdl) / 2140.0) - (tg**2 / 16100.0) + 9.44) / denom
         else:
             return hdl + ldl + (tg / 5.0)
             
     elif field == "hdl":
         if is_sampson:
-            denom = (1.0 / 1.1) + (tg / 8.2)
+            denom = (1.0 / 0.971) - (tg / 2140.0)
             if abs(denom) < 1e-6:
                 return 0.0
-            return (ldl - (tc / 1.19) + (tg / 3.98) + ((tg * tc) / 8.2) + 0.17) / denom
+            return ((tc / 0.948) - ldl - (tg / 8.56) - ((tg * tc) / 2140.0) + (tg**2 / 16100.0) - 9.44) / denom
         else:
             return tc - ldl - (tg / 5.0)
             
     elif field == "ldl":
         if is_sampson:
-            non_hdl = tc - hdl
-            return (tc / 1.19) + (hdl / 1.1) - (tg / 3.98) - ((tg * non_hdl) / 8.2) - 0.17
+            return calculate_sampson_ldl(tc, hdl, tg)
         else:
             return tc - hdl - (tg / 5.0)
             
     elif field == "triglycerides":
-        denom_tg = -(1.0 / 3.98) - ((tc - hdl) / 8.2)
-        if is_sampson and abs(denom_tg) > 1e-6:
-            return (ldl - (tc / 1.19) - (hdl / 1.1) + 0.17) / denom_tg
+        def solve_sampson_tg() -> float | None:
+            a = 1.0 / 16100.0
+            b = -((1.0 / 8.56) + ((tc - hdl) / 2140.0))
+            c = (tc / 0.948) - (hdl / 0.971) - 9.44 - ldl
+            disc = b**2 - 4.0 * a * c
+            if disc >= 0:
+                sqrt_disc = math.sqrt(disc)
+                r1 = (-b - sqrt_disc) / (2.0 * a)
+                r2 = (-b + sqrt_disc) / (2.0 * a)
+                valid = [r for r in [r1, r2] if 0.0 <= r <= 800.0]
+                if valid:
+                    return valid[0]
+            try:
+                def f_res(x):
+                    non_hdl = tc - hdl
+                    v = (x / 8.56) + ((x * non_hdl) / 2140.0) - ((x ** 2) / 16100.0)
+                    return (tc / 0.948) - (hdl / 0.971) - v - 9.44 - ldl
+                return brentq(f_res, 0.0, 800.0)
+            except Exception:
+                return None
+
+        if is_sampson:
+            stg = solve_sampson_tg()
+            if stg is not None:
+                return stg
+
         tg_f = 5.0 * (tc - hdl - ldl)
-        if tg_f <= 400.0:
+        if tg_f <= 400.0 and method != "SAMPSON":
             return tg_f
-        if abs(denom_tg) > 1e-6:
-            tg_s = (ldl - (tc / 1.19) - (hdl / 1.1) + 0.17) / denom_tg
-            if 400.0 < tg_s <= 800.0:
-                return tg_s
+        stg = solve_sampson_tg()
+        if stg is not None and 400.0 < stg <= 800.0:
+            return stg
         return tg_f
         
     return 0.0
@@ -285,6 +308,9 @@ def compute_candidate_cost(
     
     # 1. Base Damerau-Levenshtein Edit Distance (Deletion, Insertion, Substitution, Adjacent Swap)
     raw_dist = damerau_levenshtein_distance(raw_str, target_str)
+    if abs(raw_val - round(raw_val)) < 1e-3 and abs(target_val - round(target_val)) < 0.20:
+        int_dist = damerau_levenshtein_distance(f"{raw_val:.0f}", f"{round(target_val):.0f}")
+        raw_dist = min(raw_dist, int_dist)
     
     # 2. Check Physical Artifact Flags
     is_dec = is_decimal_shift(raw_val, target_val, field)
@@ -358,31 +384,9 @@ def hierarchical_isolation_search(
         
     # Step 2: k=1 Single-Field Algebraic Counterfactual Search
     single_candidates = {}
-    if is_martin:
-        single_candidates["ldl"] = invert_martin_hopkins(panel, "ldl")
-        single_candidates["total_cholesterol"] = invert_martin_hopkins(panel, "total_cholesterol")
-        single_candidates["hdl"] = invert_martin_hopkins(panel, "hdl")
-        single_candidates["triglycerides"] = invert_martin_hopkins(panel, "triglycerides")
-    elif is_sampson:
-        # Sampson closed-form inversions
-        single_candidates["ldl"] = calculate_sampson_ldl(tc, hdl, tg)
-        
-        denom_tc = (1.0 / 1.19) - (tg / 8.2)
-        if abs(denom_tc) > 1e-6:
-            single_candidates["total_cholesterol"] = (ldl - (hdl / 1.1) + (tg / 3.98) - ((tg * hdl) / 8.2) + 0.17) / denom_tc
-            
-        denom_hdl = (1.0 / 1.1) + (tg / 8.2)
-        if abs(denom_hdl) > 1e-6:
-            single_candidates["hdl"] = (ldl - (tc / 1.19) + (tg / 3.98) + ((tg * tc) / 8.2) + 0.17) / denom_hdl
-            
-        denom_tg = -(1.0 / 3.98) - ((tc - hdl) / 8.2)
-        if abs(denom_tg) > 1e-6:
-            single_candidates["triglycerides"] = (ldl - (tc / 1.19) - (hdl / 1.1) + 0.17) / denom_tg
-    else:
-        single_candidates["total_cholesterol"] = hdl + ldl + (tg / 5.0)
-        single_candidates["hdl"] = tc - ldl - (tg / 5.0)
-        single_candidates["ldl"] = tc - hdl - (tg / 5.0)
-        single_candidates["triglycerides"] = 5.0 * (tc - hdl - ldl)
+    active_method = "MARTIN_HOPKINS" if is_martin else ("SAMPSON" if is_sampson else "FRIEDEWALD")
+    for f in ["total_cholesterol", "hdl", "ldl", "triglycerides"]:
+        single_candidates[f] = solve_field_closed_form(f, panel, method=active_method)
         
     k1_ranked_list = []
     for field, target in single_candidates.items():
@@ -421,9 +425,10 @@ def hierarchical_isolation_search(
         is_trans = meta["is_transposition"]
         is_plausible = (meta["effective_dist"] <= 2 or is_fast_path or is_trans)
         
+        target_rounded = float(round(target)) if abs(target - round(target)) < 0.06 else round(target, 1)
         k1_ranked_list.append({
             "field": field,
-            "target_val": round(target, 1),
+            "target_val": target_rounded,
             "score": cost,
             "is_fast_path": is_fast_path,
             "is_trans": is_trans,

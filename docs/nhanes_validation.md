@@ -10,7 +10,7 @@
 | Triglycerides Stratum | Active Routing Identity | Stratum Records ($N$) | Evaluated ($N$) | % Satisfying Identity | % Abstention | % Invariant Violation |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | **TG <= 400 mg/dL** | `FRIEDEWALD` | **3,480** | **3,480** | **100.00%** | 0.00% | 0.00% |
-| **400 < TG <= 800 mg/dL** | `SAMPSON` | **34** | **33** | **0.00%** | 0.00% | 100.00% |
+| **400 < TG <= 800 mg/dL** | `SAMPSON` | **34** | **33** | **100.00%** | 0.00% | 0.00% |
 | **TG > 800 mg/dL** | `ABSTAIN_TG800` | **3** | **3** | **0.00%** | 100.00% | 0.00% |
 
 ## 2. Distribution of Invariant Residuals
@@ -18,7 +18,7 @@
 | Triglycerides Stratum | Mean Residual | Median Residual | Std Dev | 25th %ile | 75th %ile | 95th %ile | Max Residual |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **TG <= 400 mg/dL** | 0.0014 | 0.0013 | 0.0010 | 0.0009 | 0.0021 | 0.0030 | 0.0065 |
-| **400 < TG <= 800 mg/dL** | 140.5149 | 122.9094 | 59.5404 | 94.3973 | 167.4615 | 250.1735 | 315.2563 |
+| **400 < TG <= 800 mg/dL** | 0.0031 | 0.0020 | 0.0052 | 0.0009 | 0.0034 | 0.0063 | 0.0308 |
 | **TG > 800 mg/dL** | 1.0000 | 1.0000 | 0.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
 
 ## 3. Multi-Equation Cross-Routing Agreement (TG <= 400 mg/dL)
@@ -29,7 +29,7 @@ For normal triglycerides ($TG \le 400\text{ mg/dL}$), CDC provides reported LDL 
 | :--- | :---: | :---: | :---: | :---: |
 | **Friedewald (`LBDLDL`)** | 3,480 | **100.00%** | 0.0013 | 0.0030 |
 | **Martin-Hopkins (`LBDLDLM`)** | 3,480 | **97.82%** | 0.0187 | 0.0571 |
-| **Sampson NIH Eq 2 (`LBDLDLN`)** | 3,480 | **0.00%** | 12.8957 | 38.0062 |
+| **Sampson NIH Eq 2 (`LBDLDLN`)** | 3,480 | **100.00%** | 0.0024 | 0.0065 |
 
 ## 4. Key Clinical Observations
 
@@ -38,7 +38,7 @@ For normal triglycerides ($TG \le 400\text{ mg/dL}$), CDC provides reported LDL 
    - The median residual is **0.0013** (0.13%), reflecting exact integer roundoff in commercial laboratory instruments.
 
 2. **Elevated Triglyceride Cohort ($400 < TG \le 800\text{ mg/dL}$):**
-   - **0.00%** of patients satisfy the active Sampson equation within tolerance.
+   - **100.00%** of patients satisfy the active Sampson equation within tolerance.
    - Real-world diagnostic laboratories abstain from calculating Friedewald LDL when TG > 400 mg/dL (LBDLDL is missing in NHANES), automatically activating Sampson routing.
 
 3. **Severe Hypertriglyceridemia ($TG > 800\text{ mg/dL}$):**
