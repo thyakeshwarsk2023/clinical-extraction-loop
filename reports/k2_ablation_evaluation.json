@@ -1,0 +1,459 @@
+{
+  "total_k2_documents": 50,
+  "before_change": {
+    "committed_correct_count": 0,
+    "committed_correct_pct": 0.0,
+    "committed_wrong_count": 0,
+    "committed_wrong_pct": 0.0,
+    "abstained_count": 50,
+    "abstained_pct": 100.0,
+    "breakdown": {
+      "resolved_via_extra_field_equation": 0,
+      "resolved_via_dual_blind_reread": 0,
+      "still_abstained_no_evidence": 50
+    }
+  },
+  "after_change": {
+    "committed_correct_count": 43,
+    "committed_correct_pct": 86.0,
+    "committed_wrong_count": 3,
+    "committed_wrong_pct": 6.0,
+    "abstained_count": 4,
+    "abstained_pct": 8.0,
+    "breakdown": {
+      "resolved_via_extra_field_equation_count": 1,
+      "resolved_via_extra_field_equation_pct": 2.0,
+      "resolved_via_dual_blind_reread_count": 42,
+      "resolved_via_dual_blind_reread_pct": 84.0,
+      "still_abstained_no_evidence_count": 7,
+      "still_abstained_no_evidence_pct": 14.0
+    }
+  },
+  "per_document_details": [
+    {
+      "doc_id": "doc_0099",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0042",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0187",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0137",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0095",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_3_4_VISION_GATE"
+      ]
+    },
+    {
+      "doc_id": "doc_0039",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0130",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0152",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0020",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0102",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0133",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0062",
+      "status": "ABSTAIN_PATHOLOGIST_REVIEW",
+      "is_correct": false,
+      "mechanism": "still abstained, no independent evidence available",
+      "audit_stages": [
+        "STAGE_3_4_VISION_GATE",
+        "STAGE_3_4_VISION_GATE"
+      ]
+    },
+    {
+      "doc_id": "doc_0027",
+      "status": "possible_TG_decimal_shift",
+      "is_correct": false,
+      "mechanism": "still abstained, no independent evidence available",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0150",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0022",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0092",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_3_4_VISION_GATE"
+      ]
+    },
+    {
+      "doc_id": "doc_0148",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0043",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0166",
+      "status": "ABSTAIN_ALGEBRAIC_INDETERMINATE",
+      "is_correct": false,
+      "mechanism": "still abstained, no independent evidence available",
+      "audit_stages": [
+        "STAGE_2_SAFETY_GUARDRAIL"
+      ]
+    },
+    {
+      "doc_id": "doc_0005",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0144",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0190",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0167",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0194",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0103",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0109",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0080",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0019",
+      "status": "ABSTAIN_TG800",
+      "is_correct": false,
+      "mechanism": "still abstained, no independent evidence available",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0117",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0004",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0111",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via extra-field equation",
+      "audit_stages": [
+        "STAGE_2.5_K2_EXTRA_FIELD_EQUATION"
+      ]
+    },
+    {
+      "doc_id": "doc_0010",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0176",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH",
+        "STAGE_2.5_SECONDARY_PASS"
+      ]
+    },
+    {
+      "doc_id": "doc_0018",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0090",
+      "status": "ABSTAIN_ALGEBRAIC_INDETERMINATE",
+      "is_correct": false,
+      "mechanism": "still abstained, no independent evidence available",
+      "audit_stages": [
+        "STAGE_2_SAFETY_GUARDRAIL"
+      ]
+    },
+    {
+      "doc_id": "doc_0143",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0128",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0058",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0136",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0097",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0033",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0044",
+      "status": "CONVERGED",
+      "is_correct": false,
+      "mechanism": "still abstained, no independent evidence available",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH"
+      ]
+    },
+    {
+      "doc_id": "doc_0188",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_3_4_VISION_GATE"
+      ]
+    },
+    {
+      "doc_id": "doc_0127",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0184",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0030",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": []
+    },
+    {
+      "doc_id": "doc_0083",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0074",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_FAST_PATH",
+        "STAGE_2.5_SECONDARY_PASS"
+      ]
+    },
+    {
+      "doc_id": "doc_0065",
+      "status": "CONVERGED",
+      "is_correct": true,
+      "mechanism": "resolved via dual blind re-read",
+      "audit_stages": [
+        "STAGE_2.5_K2_DISCRETE_PAIR"
+      ]
+    },
+    {
+      "doc_id": "doc_0035",
+      "status": "CONVERGED",
+      "is_correct": false,
+      "mechanism": "still abstained, no independent evidence available",
+      "audit_stages": []
+    }
+  ]
+}

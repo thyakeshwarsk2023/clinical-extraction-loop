@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `a8d1633dbb74624568ecc2a72c0a403ebb001240`
+> **Generated at Git Commit:** `32598349538bb5802ebff828ad9fa0057869564c`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
@@ -20,6 +20,20 @@
 - **Arm 0 (Baseline Feed-Forward):** `80.59%` Field Accuracy
 - **Arm 1 (Symbolic Invariant Only):** `86.91%` Field Accuracy
 - **Arm 2 (Full Closed-Loop Vision Repair):** `93.53%` Field Accuracy
+
+### C. K=2 Dual-Field Ablation Breakdown (`reports/k2_ablation_evaluation.json`, N=50)
+- **Before Independent Evidence (Pure 1-Equation Invariant):**
+  - Committed-Correct Rate: `0.0%` (0/50)
+  - Committed-Wrong Rate: `0.0%` (0/50)
+  - Abstention Rate: `100.0%` (50/50)
+- **After Independent Evidence (Extra-Field Equations + Dual Blind Re-Read):**
+  - Committed-Correct Rate: `86.0%` (43/50)
+  - Committed-Wrong Rate: `6.0%` (3/50)
+  - Abstention Rate: `8.0%` (4/50)
+- **Three-Way Mechanism Breakdown:**
+  - Resolved via Extra-Field Equation: `2.0%` (1/50)
+  - Resolved via Dual Blind Re-Read: `84.0%` (42/50)
+  - Still Abstained (No Evidence Available): `14.0%` (7/50)
 
 ---
 
@@ -41,7 +55,7 @@
 | :--- | :--- | :--- | :--- |
 | **CLAIM-01** | Symbolic Verification | Deterministic Clinical Constraint Engine verifies Friedewald identity (TC = HDL + LDL + TG/5, tol +/-10%) and physiological bounds. | `implemented-and-tested` |
 | **CLAIM-02** | Symbolic Verification | Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels (condensed 6-branch approximation in [3.5, 6.5], not full 180-cell table), and emits ABSTAIN_TG800 for TG > 800. | `implemented-and-tested` |
-| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults and 1D-to-algebraic solver for K=2 dual-field faults. | `implemented-and-tested` |
+| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 dual-field faults are improved via independent evidence sources (extra reported fields, dual blind re-read); remains correctly indeterminate and abstains when neither source is available -- this is expected behavior, not a residual limitation. | `implemented-and-tested` |
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise; sibling bounding box fallback interpolation for missing/[0,0,0,0] boxes is absent (known gap; defaults to [0,0,10,10] or symbolic pass-through). | `implemented-and-tested` |

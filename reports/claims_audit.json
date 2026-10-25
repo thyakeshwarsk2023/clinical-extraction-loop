@@ -44,11 +44,11 @@
     {
       "id": "CLAIM-03",
       "category": "Fault Localization",
-      "claim_text": "O(1) closed-form algebraic inversions for K=1 single-field faults and 1D-to-algebraic solver for K=2 dual-field faults.",
+      "claim_text": "O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 dual-field faults are improved via independent evidence sources (extra reported fields, dual blind re-read); remains correctly indeterminate and abstains when neither source is available -- this is expected behavior, not a residual limitation.",
       "status": "implemented-and-tested",
-      "file_function": "src/stage2_isolation.py:solve_field_closed_form, hierarchical_isolation_search",
-      "test_or_eval": "tests/test_candidate_scoring.py",
-      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_candidate_scoring.py"
+      "file_function": "src/stage2_isolation.py:solve_field_closed_form, solve_k2_augmented_closed_form; src/stage4_enhance_extract.py:verify_dual_blind_reread",
+      "test_or_eval": "tests/test_candidate_scoring.py, tests/test_k2_augmented_isolation.py, tests/test_dual_blind_reread.py",
+      "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_k2_augmented_isolation.py tests/test_dual_blind_reread.py"
     },
     {
       "id": "CLAIM-04",

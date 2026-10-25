@@ -66,6 +66,12 @@ def main():
         st = c.get("status", "unknown")
         status_counts[st] = status_counts.get(st, 0) + 1
 
+    k2_eval = load_json("reports/k2_ablation_evaluation.json")
+    k2_before = k2_eval.get("before_change", {})
+    k2_after = k2_eval.get("after_change", {})
+    k2_breakdown = k2_after.get("breakdown", {})
+    k2_total = k2_eval.get("total_k2_documents", 50)
+
     lines = [
         "# BioTrace Automated Status & Fulfilment Report",
         "",
@@ -89,6 +95,20 @@ def main():
         f"- **Arm 0 (Baseline Feed-Forward):** `{abl_arm0_fa:.2f}%` Field Accuracy",
         f"- **Arm 1 (Symbolic Invariant Only):** `{abl_arm1_fa:.2f}%` Field Accuracy",
         f"- **Arm 2 (Full Closed-Loop Vision Repair):** `{abl_arm2_fa:.2f}%` Field Accuracy",
+        "",
+        "### C. K=2 Dual-Field Ablation Breakdown (`reports/k2_ablation_evaluation.json`, N=50)",
+        f"- **Before Independent Evidence (Pure 1-Equation Invariant):**",
+        f"  - Committed-Correct Rate: `{k2_before.get('committed_correct_pct', 0.0):.1f}%` ({k2_before.get('committed_correct_count', 0)}/{k2_total})",
+        f"  - Committed-Wrong Rate: `{k2_before.get('committed_wrong_pct', 0.0):.1f}%` ({k2_before.get('committed_wrong_count', 0)}/{k2_total})",
+        f"  - Abstention Rate: `{k2_before.get('abstained_pct', 0.0):.1f}%` ({k2_before.get('abstained_count', 0)}/{k2_total})",
+        f"- **After Independent Evidence (Extra-Field Equations + Dual Blind Re-Read):**",
+        f"  - Committed-Correct Rate: `{k2_after.get('committed_correct_pct', 0.0):.1f}%` ({k2_after.get('committed_correct_count', 0)}/{k2_total})",
+        f"  - Committed-Wrong Rate: `{k2_after.get('committed_wrong_pct', 0.0):.1f}%` ({k2_after.get('committed_wrong_count', 0)}/{k2_total})",
+        f"  - Abstention Rate: `{k2_after.get('abstained_pct', 0.0):.1f}%` ({k2_after.get('abstained_count', 0)}/{k2_total})",
+        f"- **Three-Way Mechanism Breakdown:**",
+        f"  - Resolved via Extra-Field Equation: `{k2_breakdown.get('resolved_via_extra_field_equation_pct', 0.0):.1f}%` ({k2_breakdown.get('resolved_via_extra_field_equation_count', 0)}/{k2_total})",
+        f"  - Resolved via Dual Blind Re-Read: `{k2_breakdown.get('resolved_via_dual_blind_reread_pct', 0.0):.1f}%` ({k2_breakdown.get('resolved_via_dual_blind_reread_count', 0)}/{k2_total})",
+        f"  - Still Abstained (No Evidence Available): `{k2_breakdown.get('still_abstained_no_evidence_pct', 0.0):.1f}%` ({k2_breakdown.get('still_abstained_no_evidence_count', 0)}/{k2_total})",
         "",
         "---",
         "",
