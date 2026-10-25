@@ -184,7 +184,11 @@ def run_hallucination_benchmark(samples_per_pair: int = 20, seed: int = 42):
         "confusable_pairs_breakdown": results["pair_breakdown"]
     }
 
-    out_json = os.path.join(ROOT, "reports", "sr_hallucination_benchmark.json")
+    from src.stage4_enhance_extract import get_sr_backend_used
+    summary["sr_backend_used"] = get_sr_backend_used()
+
+    out_name = sys.argv[1] if len(sys.argv) > 1 else "sr_hallucination_benchmark_trained.json"
+    out_json = os.path.join(ROOT, "reports", out_name)
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)
     print(f"Saved SR hallucination benchmark to: {out_json}")

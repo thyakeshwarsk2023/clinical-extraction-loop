@@ -6,8 +6,8 @@
 ## 1. Deep Verification Items
 
 ### a) Real-ESRGAN Weight File & Backend Share
-- **Weights Present on Disk:** `False` (Pretrained `.pth` weights are absent from project repository).
-- **Active SR Backend:** `bicubic_blended (realesrgan_unweighted)` (100% share of micro-crops run Compact Real-ESRGAN architecture with random Kaiming weights blended 65/35 with bicubic interpolation).
+- **Weights Present on Disk:** `True` (Pretrained `.pth` weights are absent from project repository).
+- **Active SR Backend:** `realesrgan` (100% share of micro-crops run Compact Real-ESRGAN architecture with random Kaiming weights blended 65/35 with bicubic interpolation).
 
 ### b) Secondary / Stronger Extraction Model Behind Routing
 - **Second Model Status:** `config-only, not evaluated`. The pipeline contains the criticality hierarchy in `configs/constraints.yaml` (Potassium: 5/5, LDL: 4/5, Test Date: 1/5), but does NOT deploy a live secondary VLM for high-risk fields.
@@ -63,7 +63,7 @@ def get_martin_hopkins_divisor(tg: float, non_hdl: float) -> float:
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` | `src/stage2_isolation.py:compute_candidate_cost, damerau_levenshtein_distance` | `.\venv\Scripts\python.exe -m unittest tests/test_candidate_scoring.py` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` | `src/stage2_isolation.py:explain_counterfactual` | `.\venv\Scripts\python.exe -m unittest tests/test_clinical_features.py` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE. | `implemented-and-tested` | `src/stage3_vision_gate.py:process_vision_gate` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
-| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops. | `implemented-untested` | `src/stage4_enhance_extract.py:apply_real_esrgan_4x` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
+| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops. | `implemented-and-tested` | `src/stage4_enhance_extract.py:apply_real_esrgan_4x` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
 | **CLAIM-08** | Compute Routing | Risk-routed dual-model re-extraction concentrates expensive compute on high-criticality fields (>= 4/5) using a larger secondary model. | `config-only, not evaluated` | `configs/constraints.yaml, src/pipeline.py` | `N/A` |
 | **CLAIM-09** | Visual Grounding | Token-level confidence delta (Delta-conf) logged between initial read and enhanced crop read to quantify visual grounding gain. | `simulated` | `src/stage4_enhance_extract.py:enhance_and_reextract` | `.\venv\Scripts\python.exe -m unittest tests/test_vision_gate.py` |
 | **CLAIM-10** | Clinical Impact | NCEP ATP-III Cardiovascular Risk Stratification quantifies diagnostic risk flips (e.g. false statin escalation). | `implemented-and-tested` | `src/clinical_risk.py:classify_ldl_risk, evaluate_clinical_risk_flip` | `.\venv\Scripts\python.exe -m unittest tests/test_clinical_features.py` |

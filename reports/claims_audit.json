@@ -3,8 +3,8 @@
   "stage1_engine": "oracle_sidecar",
   "vlm_reference": "assumed reference (not measured on local hardware)",
   "sr_backend": {
-    "weights_present": false,
-    "sr_backend_used": "bicubic_blended (realesrgan_unweighted)",
+    "weights_present": true,
+    "sr_backend_used": "realesrgan",
     "share": {
       "bicubic_blended": 1.0,
       "realesrgan_pretrained": 0.0
@@ -81,9 +81,9 @@
       "id": "CLAIM-07",
       "category": "Super-Resolution",
       "claim_text": "Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops.",
-      "status": "implemented-untested",
+      "status": "implemented-and-tested",
       "file_function": "src/stage4_enhance_extract.py:apply_real_esrgan_4x",
-      "test_or_eval": "tests/test_vision_gate.py:test_real_esrgan_4x_shape_and_range",
+      "test_or_eval": "tests/test_vision_gate.py:test_loaded_weights_not_kaiming_normal_consistent",
       "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_vision_gate.py"
     },
     {

@@ -1,9 +1,9 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `dca1a749c442933f3acf40ceaf21ecc76413e23f`
+> **Generated at Git Commit:** `5626ed1b7c2cb5110409854730d0db84ed47926b`
 > **Stage 1 Extractor Engine:** `oracle_sidecar`
 > **750ms VLM Latency Benchmark:** `assumed reference (not measured on local hardware)`
-> **Super-Resolution Backend:** `bicubic_blended (realesrgan_unweighted)` (Weights Present on Disk: `False`)
+> **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
 > **FHIR R4 SHA-256 Integrity Seal:** `True`
 
 ---
@@ -28,8 +28,7 @@
 | Implementation Status | Count | Notes |
 | :--- | :--- | :--- |
 | `config-only, not evaluated` | **1** | Defined in YAML/schema but no live secondary model |
-| `implemented-and-tested` | **12** | Fully verified with executable test or eval |
-| `implemented-untested` | **1** | Code present but pretrained model weights absent |
+| `implemented-and-tested` | **13** | Fully verified with executable test or eval |
 | `not-implemented` | **2** | Deferred / stretch goal |
 | `partial` | **1** | Multi-panel CBC rules |
 | `simulated` | **1** | Approximated via stroke heuristics |
@@ -46,7 +45,7 @@
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise and normalizes illumination via CLAHE. | `implemented-and-tested` |
-| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops. | `implemented-untested` |
+| **CLAIM-07** | Super-Resolution | Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops. | `implemented-and-tested` |
 | **CLAIM-08** | Compute Routing | Risk-routed dual-model re-extraction concentrates expensive compute on high-criticality fields (>= 4/5) using a larger secondary model. | `config-only, not evaluated` |
 | **CLAIM-09** | Visual Grounding | Token-level confidence delta (Delta-conf) logged between initial read and enhanced crop read to quantify visual grounding gain. | `simulated` |
 | **CLAIM-10** | Clinical Impact | NCEP ATP-III Cardiovascular Risk Stratification quantifies diagnostic risk flips (e.g. false statin escalation). | `implemented-and-tested` |

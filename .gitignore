@@ -7,3 +7,5 @@ __pycache__/
 .vscode/
 .idea/
 nhanes_raw/
+models/*.pth
+models/*.onnx

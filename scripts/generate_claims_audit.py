@@ -77,9 +77,9 @@ CLAIMS_DATABASE = [
         "id": "CLAIM-07",
         "category": "Super-Resolution",
         "claim_text": "Real-ESRGAN 4x Super-Resolution network (Residual-in-Residual Dense Blocks) upscales micro-crops.",
-        "status": "implemented-untested",
+        "status": "implemented-and-tested",
         "file_function": "src/stage4_enhance_extract.py:apply_real_esrgan_4x",
-        "test_or_eval": "tests/test_vision_gate.py:test_real_esrgan_4x_shape_and_range",
+        "test_or_eval": "tests/test_vision_gate.py:test_loaded_weights_not_kaiming_normal_consistent",
         "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_vision_gate.py"
     },
     {

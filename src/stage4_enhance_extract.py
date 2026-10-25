@@ -3,8 +3,8 @@ Stage 4 — Real-ESRGAN 4x Super-Resolution & Dual-Model Consensus Re-Extraction
 
 Track 1 Deliverable:
   1. Real-ESRGAN 4x Super-Resolution:
-     Upscales degraded character micro-crops (4x) using a PyTorch Real-ESRGAN
-     Residual-in-Residual Dense Block (RRDBNet) architecture to sharpen faint
+     Upscales degraded character micro-crops (4x) using official pretrained PyTorch
+     Real-ESRGAN Residual-in-Residual Dense Block (RRDBNet) architecture to sharpen faint
      decimal points and split blurred adjoining digits.
   2. Dual-Model Consensus & Delta Confidence Tracking:
      Performs secondary verification on the restored 4x patch, computing
@@ -14,13 +14,88 @@ Track 1 Deliverable:
 
 import os
 import cv2
+import logging
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+
+logger = logging.getLogger("BioTrace.Stage4")
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DEFAULT_WEIGHTS_PATH = os.path.join(ROOT, "models", "RealESRGAN_x4plus.pth")
 
 
-class ResidualDenseBlock(nn.Module):
-    """Residual-in-Residual Dense Block for Real-ESRGAN generator."""
+# =============================================================================
+# 1. OFFICIAL REAL-ESRGAN RRDBNET ARCHITECTURE (RealESRGAN_x4plus)
+# =============================================================================
+
+class ResidualDenseBlock_5C(nn.Module):
+    """Residual-in-Residual Dense Block (5 convolutions) for official Real-ESRGAN."""
+    def __init__(self, nf=64, gc=32, bias=True):
+        super().__init__()
+        self.conv1 = nn.Conv2d(nf, gc, 3, 1, 1, bias=bias)
+        self.conv2 = nn.Conv2d(nf + gc, gc, 3, 1, 1, bias=bias)
+        self.conv3 = nn.Conv2d(nf + 2 * gc, gc, 3, 1, 1, bias=bias)
+        self.conv4 = nn.Conv2d(nf + 3 * gc, gc, 3, 1, 1, bias=bias)
+        self.conv5 = nn.Conv2d(nf + 4 * gc, nf, 3, 1, 1, bias=bias)
+        self.lrelu = nn.LeakyReLU(negative_slope=0.2, inplace=True)
+
+    def forward(self, x):
+        x1 = self.lrelu(self.conv1(x))
+        x2 = self.lrelu(self.conv2(torch.cat((x, x1), 1)))
+        x3 = self.lrelu(self.conv3(torch.cat((x, x1, x2), 1)))
+        x4 = self.lrelu(self.conv4(torch.cat((x, x1, x2, x3), 1)))
+        x5 = self.conv5(torch.cat((x, x1, x2, x3, x4), 1))
+        return x5 * 0.2 + x
+
+
+class RRDB(nn.Module):
+    """Residual in Residual Dense Block."""
+    def __init__(self, nf=64, gc=32):
+        super().__init__()
+        self.rdb1 = ResidualDenseBlock_5C(nf, gc)
+        self.rdb2 = ResidualDenseBlock_5C(nf, gc)
+        self.rdb3 = ResidualDenseBlock_5C(nf, gc)
+
+    def forward(self, x):
+        out = self.rdb1(x)
+        out = self.rdb2(out)
+        out = self.rdb3(out)
+        return out * 0.2 + x
+
+
+class RRDBNet(nn.Module):
+    """
+    Official Real-ESRGAN generator architecture for RealESRGAN_x4plus.
+    23 RRDB blocks, 64 features, 4x nearest+conv upsampling.
+    """
+    def __init__(self, num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32):
+        super().__init__()
+        self.conv_first = nn.Conv2d(num_in_ch, num_feat, 3, 1, 1)
+        self.body = nn.Sequential(*[RRDB(num_feat, num_grow_ch) for _ in range(num_block)])
+        self.conv_body = nn.Conv2d(num_feat, num_feat, 3, 1, 1)
+        self.conv_up1 = nn.Conv2d(num_feat, num_feat, 3, 1, 1)
+        self.conv_up2 = nn.Conv2d(num_feat, num_feat, 3, 1, 1)
+        self.conv_hr = nn.Conv2d(num_feat, num_feat, 3, 1, 1)
+        self.conv_last = nn.Conv2d(num_feat, num_out_ch, 3, 1, 1)
+        self.lrelu = nn.LeakyReLU(negative_slope=0.2, inplace=True)
+
+    def forward(self, x):
+        fea = self.conv_first(x)
+        res = self.conv_body(self.body(fea))
+        fea = fea + res
+        fea = self.lrelu(self.conv_up1(F.interpolate(fea, scale_factor=2, mode="nearest")))
+        fea = self.lrelu(self.conv_up2(F.interpolate(fea, scale_factor=2, mode="nearest")))
+        out = self.conv_last(self.lrelu(self.conv_hr(fea)))
+        return out
+
+
+# =============================================================================
+# 2. UNTRAINED FALLBACK BACKEND (Only active if checkpoint explicitly missing)
+# =============================================================================
+
+class ResidualDenseBlockCompact(nn.Module):
     def __init__(self, nf=32, gc=16):
         super().__init__()
         self.conv1 = nn.Conv2d(nf, gc, 3, 1, 1)
@@ -35,15 +110,15 @@ class ResidualDenseBlock(nn.Module):
         return x3 * 0.2 + x
 
 
-class RealESRGANCompact4x(nn.Module):
+class untrained_fallback_backend(nn.Module):
     """
-    Compact Real-ESRGAN generator for high-speed CPU/GPU micro-crop super-resolution.
-    Upscales input tensors by 4x while suppressing ringing artifacts.
+    Random-init fallback generator with Kaiming normal weights.
+    Only active if pretrained RealESRGAN_x4plus.pth is explicitly missing from models/.
     """
     def __init__(self, in_nc=3, out_nc=3, nf=32, nb=4):
         super().__init__()
         self.conv_first = nn.Conv2d(in_nc, nf, 3, 1, 1)
-        self.body = nn.Sequential(*[ResidualDenseBlock(nf) for _ in range(nb)])
+        self.body = nn.Sequential(*[ResidualDenseBlockCompact(nf) for _ in range(nb)])
         self.conv_body = nn.Conv2d(nf, nf, 3, 1, 1)
         self.conv_up1 = nn.Conv2d(nf, nf, 3, 1, 1)
         self.conv_up2 = nn.Conv2d(nf, nf, 3, 1, 1)
@@ -51,10 +126,6 @@ class RealESRGANCompact4x(nn.Module):
         self.conv_last = nn.Conv2d(nf, out_nc, 3, 1, 1)
         self.lrelu = nn.LeakyReLU(0.2, inplace=True)
 
-        # Initialize with identity-like weights for stable blind enhancement
-        self._initialize_weights()
-
-    def _initialize_weights(self):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.kaiming_normal_(m.weight, a=0.2, mode="fan_in", nonlinearity="leaky_relu")
@@ -65,30 +136,71 @@ class RealESRGANCompact4x(nn.Module):
         fea = self.conv_first(x)
         res = self.conv_body(self.body(fea))
         fea = fea + res
-        fea = self.lrelu(self.conv_up1(nn.functional.interpolate(fea, scale_factor=2, mode="nearest")))
-        fea = self.lrelu(self.conv_up2(nn.functional.interpolate(fea, scale_factor=2, mode="nearest")))
+        fea = self.lrelu(self.conv_up1(F.interpolate(fea, scale_factor=2, mode="nearest")))
+        fea = self.lrelu(self.conv_up2(F.interpolate(fea, scale_factor=2, mode="nearest")))
         out = self.conv_last(self.lrelu(self.conv_hr(fea)))
         return out
 
 
-# Global singleton instance of Real-ESRGAN model
+# Backward compatibility alias
+RealESRGANCompact4x = untrained_fallback_backend
+
+
+# =============================================================================
+# 3. MODEL SINGLETON & BACKEND REGISTRATION
+# =============================================================================
+
 _SR_MODEL = None
+_SR_BACKEND_USED = None
 
 
-def get_sr_model(weights_path: str = None) -> RealESRGANCompact4x:
-    global _SR_MODEL
-    if _SR_MODEL is None:
-        model = RealESRGANCompact4x()
-        if weights_path and os.path.isfile(weights_path):
-            try:
-                state_dict = torch.load(weights_path, map_location="cpu")
-                if "params" in state_dict:
-                    state_dict = state_dict["params"]
-                model.load_state_dict(state_dict, strict=False)
-            except Exception as e:
-                pass
-        model.eval()
-        _SR_MODEL = model
+def get_sr_backend_used() -> str:
+    """Returns 'realesrgan' if official trained weights are active, else 'untrained_fallback_backend'."""
+    global _SR_BACKEND_USED
+    if _SR_BACKEND_USED is None:
+        get_sr_model()
+    return _SR_BACKEND_USED
+
+
+def get_sr_model(weights_path: str = None) -> nn.Module:
+    """
+    Loads official pretrained Real-ESRGAN x4plus model if available;
+    otherwise logs a loud warning and returns untrained_fallback_backend.
+    """
+    global _SR_MODEL, _SR_BACKEND_USED
+    if _SR_MODEL is not None:
+        return _SR_MODEL
+
+    target_path = weights_path if weights_path else DEFAULT_WEIGHTS_PATH
+
+    if os.path.isfile(target_path):
+        try:
+            logger.info("Loading official pretrained Real-ESRGAN x4plus weights from: %s", target_path)
+            model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32)
+            state_dict = torch.load(target_path, map_location="cpu")
+            if "params_ema" in state_dict:
+                state_dict = state_dict["params_ema"]
+            elif "params" in state_dict:
+                state_dict = state_dict["params"]
+            model.load_state_dict(state_dict, strict=True)
+            model.eval()
+            _SR_MODEL = model
+            _SR_BACKEND_USED = "realesrgan"
+            logger.info("Successfully loaded trained Real-ESRGAN weights. Backend set to: realesrgan")
+            return _SR_MODEL
+        except Exception as e:
+            logger.warning("FAILED to load pretrained weights from %s (%s). Falling back.", target_path, e)
+
+    # Fallback path if weights are absent
+    logger.warning(
+        "CRITICAL WARNING: Official Real-ESRGAN weights not found at %s! "
+        "Falling back to untrained_fallback_backend (random Kaiming init).",
+        target_path
+    )
+    fallback = untrained_fallback_backend()
+    fallback.eval()
+    _SR_MODEL = fallback
+    _SR_BACKEND_USED = "untrained_fallback_backend"
     return _SR_MODEL
 
 
@@ -109,7 +221,7 @@ def apply_real_esrgan_4x(crop_bgr: np.ndarray, weights_path: str = None) -> np.n
     with torch.inference_mode():
         sr_tensor = model(tensor)
         # Residual blend with bicubic anchor for high character fidelity
-        bicubic_tensor = nn.functional.interpolate(tensor, scale_factor=4, mode="bicubic", align_corners=False)
+        bicubic_tensor = F.interpolate(tensor, scale_factor=4, mode="bicubic", align_corners=False)
         sr_tensor = 0.65 * bicubic_tensor + 0.35 * sr_tensor
 
     sr_img = sr_tensor.squeeze(0).permute(1, 2, 0).clamp(0, 1).numpy()
