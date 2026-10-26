@@ -1,0 +1,46 @@
+{
+  "acquisition_timestamp": "2026-10-26T17:49:04Z",
+  "datasets": {
+    "clinocr_bench": {
+      "dataset_name": "ClinOCR-Bench",
+      "version": "v1.0",
+      "source_url": "https://github.com/ClinOCR-Bench/ClinOCR-Bench/releases/download/v1.0/ClinOCR-Bench-v1.0.zip",
+      "official_repo": "https://github.com/ClinOCR-Bench/ClinOCR-Bench",
+      "access_date": "2026-10-26 17:49:04Z",
+      "license": "Creative Commons / MIT Research Open Access",
+      "status": "downloaded_and_verified",
+      "sha256": "ce1d231138050abf7f458ba5e6bd75c6ee2f3832b72f22296843da4c5ba45457",
+      "file_size_bytes": 119227531,
+      "document_count": 384,
+      "subsets": [
+        "ClinOCR-Bench"
+      ],
+      "action_required": null
+    },
+    "mendeley": {
+      "dataset_name": "Clinical Laboratory Test Reports (Mendeley Data)",
+      "version": "2.0 (2022-01-07)",
+      "doi": "10.17632/bygfmk4rx9.2",
+      "source_url": "https://data.mendeley.com/datasets/bygfmk4rx9/2",
+      "access_date": "2026-10-26 17:50:41Z",
+      "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "status": "requires_user_download",
+      "sha256": null,
+      "file_size_bytes": null,
+      "document_count": 0,
+      "action_required": "Mendeley Data requires browser-based session / Cloudflare verification to export the full 260-report archive. Next Step: Open https://data.mendeley.com/datasets/bygfmk4rx9/2, click 'Download All (ZIP)', and place the extracted files in 'data/external/mendeley/raw/'."
+    },
+    "ekacare": {
+      "dataset_name": "EkaCare Medical Records Parsing Validation Set",
+      "version": "1.0",
+      "source_url": "https://huggingface.co/datasets/ekacare/medical_records_parsing_validation_set",
+      "access_date": "2026-10-26 17:50:41Z",
+      "license": "Open Access for Medical Research / Eka Care PHR Terms",
+      "status": "gated_access_required",
+      "sha256": null,
+      "file_size_bytes": null,
+      "document_count": 0,
+      "action_required": "EkaCare is a gated Hugging Face repository ('gated: auto'). Next Step: 1. Visit https://huggingface.co/datasets/ekacare/medical_records_parsing_validation_set 2. Log in and accept terms of use. 3. Export your token: $env:HF_TOKEN='your_token' or place downloaded parquet/images in 'data/external/ekacare/raw/'."
+    }
+  }
+}
