@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import time
+import glob
 import cv2
 import numpy as np
 import streamlit as st
@@ -234,12 +235,43 @@ def load_all_benchmark_data():
     single_recs = _load_corrupted_single(clean_map)
     double_recs = _load_corrupted_double(clean_map)
     combined = {r["doc_id"]: r for r in single_recs + double_recs}
+
+    # Index dataset_C_realworld
+    c_catalog_path = os.path.join(ROOT, "dataset_C_realworld", "dataset_catalog.json")
+    if os.path.exists(c_catalog_path):
+        with open(c_catalog_path, "r", encoding="utf-8") as f:
+            c_catalog = json.load(f)
+        for s in c_catalog.get("samples", []):
+            d_id = s["doc_id"]
+            cat = s["category"]
+            c_matches = glob.glob(os.path.join(ROOT, "dataset_C_realworld", f"*{cat}*", f"{d_id}.png"))
+            if not c_matches:
+                c_matches = glob.glob(os.path.join(ROOT, "dataset_C_realworld", "*", f"{d_id}.png"))
+            if c_matches:
+                combined[d_id] = {
+                    "doc_id": d_id,
+                    "img_path": c_matches[0],
+                    "display_values": s["injected_display_data"],
+                    "gt_clean_values": s["ground_truth_clean"],
+                    "unit": s.get("unit", "mg/dL"),
+                    "bboxes_long": s.get("bounding_boxes", {}),
+                    "method_text": s.get("method_text", "Method: Calculated by Friedewald Equation"),
+                    "corrupted_fields": s.get("corrupted_fields", []),
+                    "corruption_type": s.get("error_scenario", "realworld"),
+                }
     return combined
 
 
 all_benchmark_records = load_all_benchmark_data()
 
 BENCHMARK_PRESETS = {
+    "[Real-World] rw_0001 (Smartphone Shadow Gradient on TC)": "rw_0001",
+    "[Real-World] rw_0002 (Diagonal Paper Crease intersecting LDL)": "rw_0002",
+    "[Real-World] rw_0011 (Glyph Confusion 3 vs 8 on TC: 185 -> 135)": "rw_0011",
+    "[Real-World] rw_0021 (Decimal Point Shift on TG: 165.0 -> 16.5)": "rw_0021",
+    "[Real-World] rw_0031 (K=2 Dual Fault with Extra Non-HDL & VLDL)": "rw_0031",
+    "[Real-World] rw_0041 (Sampson High-TG Boundary: TG=540 mg/dL)": "rw_0041",
+    "[Real-World] rw_0045 (Severe Hypertriglyceridemia: TG=920 ABSTAIN_TG800)": "rw_0045",
     "doc_0051 (HDL Digit Swap: 26.8 vs 62.8 mg/dL)": "doc_0051",
     "doc_0061 (HDL Digit Swap: 26.8 vs 62.8 mg/dL)": "doc_0061",
     "doc_0159 (TC Decimal Shift: 166.0 -> 1660.0 mg/dL)": "doc_0159",
@@ -339,22 +371,44 @@ def _find_metadata_for_image(base_name: str):
                 "corrupted_fields": meta.get("corrupted_fields", []),
                 "corruption_type": meta.get("mode", "clean"),
             }
+
+    # Search recursively in dataset_C_realworld
+    c_dir = os.path.join(ROOT, "dataset_C_realworld")
+    if os.path.exists(c_dir):
+        for root_dir, _, files in os.walk(c_dir):
+            if f"{base_name}.json" in files:
+                json_file = os.path.join(root_dir, f"{base_name}.json")
+                with open(json_file, "r", encoding="utf-8") as f:
+                    meta = json.load(f)
+                return {
+                    "method_text": meta.get("method_text", "Method: Calculated by Friedewald Equation"),
+                    "unit": meta.get("unit", "mg/dL"),
+                    "display_values": meta.get("injected_display_data", {}),
+                    "bboxes_long": meta.get("bounding_boxes", {}),
+                    "gt_clean_values": meta.get("ground_truth_clean", {}),
+                    "corrupted_fields": meta.get("corrupted_fields", []),
+                    "corruption_type": meta.get("error_scenario", meta.get("mode", "clean")),
+                }
     return None
 
 
 def resolve_document_input():
     if input_source == "Benchmark Sample Image" and active_doc_id in all_benchmark_records:
         rec = all_benchmark_records[active_doc_id]
-        json_path = _write_sidecar(
-            rec["img_path"],
-            rec["display_values"],
-            rec["gt_clean_values"],
-            rec["unit"],
-            rec["bboxes_long"],
-            rec["method_text"],
-        )
+        sidecar_path = os.path.splitext(rec["img_path"])[0] + ".json"
+        is_permanent_sidecar = os.path.exists(sidecar_path)
+        if not is_permanent_sidecar:
+            _write_sidecar(
+                rec["img_path"],
+                rec["display_values"],
+                rec["gt_clean_values"],
+                rec["unit"],
+                rec["bboxes_long"],
+                rec["method_text"],
+            )
         doc = extract_document_state(rec["img_path"])
-        _remove_sidecar(rec["img_path"])
+        if not is_permanent_sidecar:
+            _remove_sidecar(rec["img_path"])
         doc["gt_clean_values"] = rec["gt_clean_values"]
         doc["corrupted_fields"] = rec["corrupted_fields"]
         doc["corruption_type"] = rec["corruption_type"]
