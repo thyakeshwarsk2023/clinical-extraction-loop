@@ -363,6 +363,9 @@ def resolve_document_input():
     elif uploaded_file is not None:
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         img_bgr = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+        if img_bgr is None:
+            st.error("The uploaded file could not be decoded as an image. Please upload a valid PNG or JPG clinical report.")
+            st.stop()
 
         base_name = os.path.splitext(uploaded_file.name)[0]
         meta = _find_metadata_for_image(base_name)
@@ -411,6 +414,9 @@ def resolve_document_input():
                 ocr_unit = "mg/dL"
                 ocr_method = "Method: Calculated by Friedewald Equation"
                 ocr_confs = {f: 0.85 for f in ocr_values}
+
+            if not ocr_values:
+                st.sidebar.warning("No clinical laboratory analytes detected by RapidOCR in this document. Please enter values below:")
 
             # Collapsed off-by-default manual override
             with st.sidebar.expander("Manual Field Overrides (Optional)", expanded=False):
@@ -546,7 +552,7 @@ else:
         )
         action = search_res.get("action")
 
-        if action in ["ABSTAIN_TG800", "ABSTAIN_ALGEBRAIC_INDETERMINATE"]:
+        if action and action.startswith("ABSTAIN_"):
             final_status = action
             break
 
@@ -609,17 +615,20 @@ col_left, col_right = st.columns([1, 1], gap="medium")
 with col_left:
     st.markdown('<div class="card-panel"><div class="card-title">Input Document View</div>', unsafe_allow_html=True)
 
-    annotated_canvas = active_doc["image_bgr"].copy()
-    for f_name, bbox in active_doc["bounding_boxes"].items():
-        if bbox and bbox != [0, 0, 10, 10] and len(bbox) == 4:
-            x0, y0, x1, y1 = [int(v) for v in bbox]
-            is_corrupt = f_name in active_doc.get("corrupted_fields", [])
-            color = (0, 70, 240) if is_corrupt else (220, 180, 0)
-            cv2.rectangle(annotated_canvas, (x0, y0), (x1, y1), color, 2)
-            lbl = f"{f_name[:3].upper()} [ERR]" if is_corrupt else f_name[:3].upper()
-            cv2.putText(annotated_canvas, lbl, (x0, max(12, y0 - 4)), cv2.FONT_HERSHEY_SIMPLEX, 0.42, color, 1)
+    if active_doc.get("image_bgr") is not None:
+        annotated_canvas = active_doc["image_bgr"].copy()
+        for f_name, bbox in active_doc["bounding_boxes"].items():
+            if bbox and bbox != [0, 0, 10, 10] and len(bbox) == 4:
+                x0, y0, x1, y1 = [int(v) for v in bbox]
+                is_corrupt = f_name in active_doc.get("corrupted_fields", [])
+                color = (0, 70, 240) if is_corrupt else (220, 180, 0)
+                cv2.rectangle(annotated_canvas, (x0, y0), (x1, y1), color, 2)
+                lbl = f"{f_name[:3].upper()} [ERR]" if is_corrupt else f_name[:3].upper()
+                cv2.putText(annotated_canvas, lbl, (x0, max(12, y0 - 4)), cv2.FONT_HERSHEY_SIMPLEX, 0.42, color, 1)
 
-    st.image(cv2.cvtColor(annotated_canvas, cv2.COLOR_BGR2RGB))
+        st.image(cv2.cvtColor(annotated_canvas, cv2.COLOR_BGR2RGB))
+    else:
+        st.info("No document image available for rendering.")
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Document Metadata Block
