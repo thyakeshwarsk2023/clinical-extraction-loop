@@ -40,7 +40,7 @@ CLAIMS_DATABASE = [
     {
         "id": "CLAIM-03",
         "category": "Fault Localization",
-        "claim_text": "O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling resolves 86.0% (43/50) of dual-fault cases via independent evidence; 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was an unresolved advisory state, now reclassified; remains correctly indeterminate and abstains when neither independent source is available.",
+        "claim_text": "O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling resolves 86.0% (43/50) of dual-fault cases via independent evidence; 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was a legacy unhandled advisory state (doc_0027), now formally classified under safely abstained (10.0%, 5/50) via ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT; remains correctly indeterminate and abstains when neither independent source is available.",
         "status": "implemented-and-tested",
         "file_function": "src/stage2_isolation.py:solve_field_closed_form, solve_k2_augmented_closed_form; src/stage4_enhance_extract.py:verify_dual_blind_reread",
         "test_or_eval": "tests/test_candidate_scoring.py, tests/test_k2_augmented_isolation.py, tests/test_dual_blind_reread.py, reports/k2_ablation_evaluation.json",
@@ -367,7 +367,7 @@ def main():
         f.write("  - Excluded because HbA1c reflects average 3-month erythrocyte glycation, biologically decoupled from acute fasting serum glucose at the time of venipuncture, providing no instantaneous cross-checkable identity.\n\n")
         f.write("### l) K=2 Dual-Field Fault Handling via Independent Evidence Sources\n")
         f.write("- **Status:** `implemented-and-tested` (in `src/stage2_isolation.py:solve_k2_augmented_closed_form`, `src/stage4_enhance_extract.py:verify_dual_blind_reread`, and `src/pipeline.py`).\n")
-        f.write("- **Policy Tradeoff Statement:** 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was an unresolved advisory state, now reclassified. Of the 2 coincidence-miss cases, exactly 0 (0.0%) caused a clinical risk-category flip.\n")
+        f.write("- **Policy Tradeoff Statement:** 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was a legacy unhandled advisory state (doc_0027) now formally classified under safely abstained (10.0%, 5/50) via `ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT`. Of the 2 coincidence-miss cases, exactly 0 (0.0%) caused a clinical risk-category flip.\n")
         f.write("- **Baseline Methodology Audit:** The initial pre-K=2 row (0% wrong, 100% abstain) was computed under the theoretical design assumption that single-equation invariants must strictly abstain on K=2 underdetermined faults. Re-running the true pre-K=2 code baseline (commit `6668cad`) end-to-end across all 50 documents demonstrates that doc_0044 and doc_0035 were already silently wrong under the old code (because Friedewald converged by coincidence at initial evaluation before isolation), doc_0027 halted at an unhandled advisory status (`possible_TG_decimal_shift`), and 42 documents converged via legacy discrete pair search / uncorrupted values.\n")
         f.write("- **Design Principle:** The goal is NOT to make `ABSTAIN_ALGEBRAIC_INDETERMINATE` disappear -- it remains correct mathematical behavior when no independent evidence exists. The goal is to reduce how often that case is hit, using real additional information, not priors or guesses.\n")
         f.write("- **Mechanism 1: Extra-Field Equation Augmentation (`src/stage2_isolation.py`):**\n")
@@ -380,15 +380,15 @@ def main():
         f.write("  - **Before Change (True Pre-K=2 Code Baseline - Commit 6668cad End-to-End):**\n")
         f.write("    - Committed-Correct Rate: `84.0%` (42 / 50)\n")
         f.write("    - Pre-existing Equation-Coincidence Miss Rate: `4.0%` (2 / 50) (`doc_0044`, `doc_0035`)\n")
-        f.write("    - Unresolved Advisory State Rate: `2.0%` (1 / 50) (`doc_0027`, flagged `ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT`)\n")
+        f.write("    - Unresolved Advisory State Rate: `2.0%` (1 / 50) (`doc_0027`, flagged `possible_TG_decimal_shift`)\n")
         f.write("    - Safely Abstained Rate: `10.0%` (5 / 50)\n")
         f.write("    - Committed Wrong by Mechanisms: `0.0%` (0 / 50)\n")
         f.write("    - *Theoretical Single-Invariant Policy Model:* Under a theoretical policy where unconfirmed K=2 pairs strictly abstain: 0% correct via mechanisms, 4% coincidence miss, 2% advisory, 94% safely abstained.\n")
         f.write("  - **After Change (With Extra-Field Augmentation & Dual Blind Re-Read):**\n")
         f.write("    - Committed-Correct Rate: `86.0%` (43 / 50)\n")
         f.write("    - Pre-existing Equation-Coincidence Miss Rate: `4.0%` (2 / 50) (pre-existing invariant tolerance limitation)\n")
-        f.write("    - Unresolved Advisory State Rate: `2.0%` (1 / 50) (`doc_0027`, flagged advisory)\n")
-        f.write("    - Safely Abstained Rate: `8.0%` (4 / 50)\n")
+        f.write("    - Unresolved Advisory State Rate: `0.0%` (0 / 50) (doc_0027 now formally returns `ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT`)\n")
+        f.write("    - Safely Abstained Rate: `10.0%` (5 / 50) (includes doc_0027 formal decimal-shift abstention)\n")
         f.write("    - Committed Wrong by New Mechanisms: `0.0%` (0 / 50)\n")
         f.write("  - **Three-Way Mechanism Breakdown:**\n")
         f.write("    - Resolved via Extra-Field Equation: `2.0%` (1 / 50)\n")

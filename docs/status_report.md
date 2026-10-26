@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `a1e89258d7231e08bb82024000ca1c77368b05ae`
+> **Generated at Git Commit:** `4b6e2f850597766d8920dc28374a84c632ee729b`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
@@ -31,8 +31,8 @@
 - **After Independent Evidence (Extra-Field Equations + Dual Blind Re-Read):**
   - Committed-Correct Rate:            `86.0%` (43/50)
   - Equation-Coincidence Miss Rate:    `4.0%` (2/50) (Pre-existing constraint limit)
-  - Unresolved Advisory State Rate:    `2.0%` (1/50) (doc_0027, flagged advisory)
-  - Safely Abstained Rate:             `8.0%` (4/50)
+  - Unresolved Advisory State Rate:    `0.0%` (0/50) (doc_0027, flagged advisory)
+  - Safely Abstained Rate:             `10.0%` (5/50)
   - Committed Wrong by New Mechanisms: `0.0%` (0/50)
 - **Three-Way Mechanism Breakdown:**
   - Resolved via Extra-Field Equation: `2.0%` (1/50)
@@ -59,7 +59,7 @@
 | :--- | :--- | :--- | :--- |
 | **CLAIM-01** | Symbolic Verification | Deterministic Clinical Constraint Engine verifies Friedewald identity (TC = HDL + LDL + TG/5, tol +/-10%) and physiological bounds. | `implemented-and-tested` |
 | **CLAIM-02** | Symbolic Verification | Dynamic Equation Routing switches to Sampson for 400 < TG <= 800 mg/dL, Martin-Hopkins for novel panels (condensed 6-branch approximation in [3.5, 6.5], not full 180-cell table), and emits ABSTAIN_TG800 for TG > 800. | `implemented-and-tested` |
-| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling resolves 86.0% (43/50) of dual-fault cases via independent evidence; 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was an unresolved advisory state, now reclassified; remains correctly indeterminate and abstains when neither independent source is available. | `implemented-and-tested` |
+| **CLAIM-03** | Fault Localization | O(1) closed-form algebraic inversions for K=1 single-field faults; K=2 handling resolves 86.0% (43/50) of dual-fault cases via independent evidence; 0 of 50 committed-wrong cases were caused by the dual blind re-read or extra-field mechanisms themselves; 2/50 were pre-existing equation-coincidence misses present before this change; 1/50 was a legacy unhandled advisory state (doc_0027), now formally classified under safely abstained (10.0%, 5/50) via ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT; remains correctly indeterminate and abstains when neither independent source is available. | `implemented-and-tested` |
 | **CLAIM-04** | Fault Localization | Composite Candidate Cost Model ranks candidates using Damerau-Levenshtein distance, token confidence penalty, and artifact bonuses. | `implemented-and-tested` |
 | **CLAIM-05** | XAI | Counterfactual XAI Engine produces natural language clinical rationales and candidate edit distances (explain_counterfactual). | `implemented-and-tested` |
 | **CLAIM-06** | Machine Vision Gate | OpenCV Graph-Cut (GrabCut) foreground segmentation isolates ink strokes from smudged background noise; sibling bounding box fallback interpolation for missing/[0,0,0,0] boxes is absent (known gap; defaults to [0,0,10,10] or symbolic pass-through). | `implemented-and-tested` |

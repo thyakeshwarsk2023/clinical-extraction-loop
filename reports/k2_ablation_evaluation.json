@@ -28,10 +28,10 @@
     "committed_correct_pct": 86.0,
     "equation_coincidence_miss_count": 2,
     "equation_coincidence_miss_pct": 4.0,
-    "unresolved_advisory_state_count": 1,
-    "unresolved_advisory_state_pct": 2.0,
-    "abstained_safe_count": 4,
-    "abstained_safe_pct": 8.0,
+    "unresolved_advisory_state_count": 0,
+    "unresolved_advisory_state_pct": 0.0,
+    "abstained_safe_count": 5,
+    "abstained_safe_pct": 10.0,
     "committed_wrong_by_mechanisms_count": 0,
     "committed_wrong_by_mechanisms_pct": 0.0,
     "breakdown": {
@@ -162,9 +162,9 @@
     {
       "doc_id": "doc_0027",
       "status": "ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT",
-      "category": "unresolved_advisory_state",
+      "category": "abstained_safe",
       "is_correct": false,
-      "mechanism": "flagged advisory anomaly, uncorrected",
+      "mechanism": "safely abstained (advisory TG decimal shift flagged and abstained)",
       "audit_stages": []
     },
     {

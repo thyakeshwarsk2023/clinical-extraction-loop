@@ -138,8 +138,8 @@ def run_k2_evaluation():
         final_data = res.get("data", native_disp)
 
         is_correct = evaluate_doc_accuracy(final_data, gt_clean, tol=TOL)
-        was_abstained = status.startswith("ABSTAIN") or "ABSTAIN" in status or status == "possible_TG_decimal_shift"
-        is_advisory = status in ("possible_TG_decimal_shift", "ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT")
+        was_abstained = status.startswith("ABSTAIN") or "ABSTAIN" in status
+        is_unresolved_advisory = (status == "possible_TG_decimal_shift")
 
         # Identify which mechanism resolved this document
         used_extra_eq = any(
@@ -154,15 +154,19 @@ def run_k2_evaluation():
         )
 
         # Classification into explicit, mutually exclusive categories
-        if is_advisory:
-            category = "unresolved_advisory_state"
-            mechanism = "flagged advisory anomaly, uncorrected"
-            after_counts["unresolved_advisory_state"] += 1
-            after_counts["still_abstained_no_evidence"] += 1
-        elif was_abstained:
+        # Any status starting with ABSTAIN_ (including ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT) is a formal safe abstention
+        if was_abstained:
             category = "abstained_safe"
-            mechanism = "still abstained, no independent evidence available"
+            if status == "ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT":
+                mechanism = "safely abstained (advisory TG decimal shift flagged and abstained)"
+            else:
+                mechanism = "still abstained, no independent evidence available"
             after_counts["abstained_safe"] += 1
+            after_counts["still_abstained_no_evidence"] += 1
+        elif is_unresolved_advisory:
+            category = "unresolved_advisory_state"
+            mechanism = "legacy unhandled advisory anomaly (possible_TG_decimal_shift)"
+            after_counts["unresolved_advisory_state"] += 1
             after_counts["still_abstained_no_evidence"] += 1
         elif not is_correct and status == "CONVERGED":
             category = "equation_coincidence_miss"
