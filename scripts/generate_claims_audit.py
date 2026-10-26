@@ -198,8 +198,18 @@ CLAIMS_DATABASE = [
         "file_function": "src/panels/electrolytes.py:ElectrolytePanel; src/panel_registry.py",
         "test_or_eval": "tests/test_electrolytes_panel.py; reports/nhanes_protein_electrolytes_validation.json",
         "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_electrolytes_panel.py"
+    },
+    {
+        "id": "CLAIM-21",
+        "category": "Multi-Panel Coverage",
+        "claim_text": "Clinical Calcium Panel verifies Payne formula (Corrected Calcium = Measured Calcium + 0.8*(4.0 - Albumin)) with closed-form K=1 inversions (100.0% convergence on N=6,362 NHANES patients, tolerance 2.0% / 0.10 mg/dL), and evaluates Renal BUN/Creatinine ratio (10:1-20:1, N=6,323 patients) as an advisory soft bounds check.",
+        "status": "implemented-and-tested",
+        "file_function": "src/panels/calcium.py:CalciumPanel; src/panel_registry.py",
+        "test_or_eval": "tests/test_calcium_panel.py; reports/nhanes_calcium_validation.json",
+        "reproduce_command": ".\\venv\\Scripts\\python.exe -m unittest tests/test_calcium_panel.py"
     }
 ]
+
 
 def inspect_codebase_details():
     # a) Real-ESRGAN weights check

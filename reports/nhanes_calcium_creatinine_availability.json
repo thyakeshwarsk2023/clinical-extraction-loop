@@ -1,0 +1,60 @@
+{
+  "source_file": "nhanes_raw/BIOPRO_L.xpt",
+  "cycle": "2021-2023",
+  "total_file_records": 7199,
+  "fields": {
+    "LBXSCA": {
+      "variable_name": "LBXSCA",
+      "description": "Total Calcium (mg/dL)",
+      "non_null_count": 6362,
+      "completeness_pct": 88.37,
+      "sample_values": [
+        9.6,
+        9.4,
+        9.4,
+        9.5,
+        9.3
+      ]
+    },
+    "LBXSAL": {
+      "variable_name": "LBXSAL",
+      "description": "Albumin (g/dL)",
+      "non_null_count": 6366,
+      "completeness_pct": 88.43,
+      "sample_values": [
+        4.3,
+        3.9,
+        3.7,
+        4.3,
+        3.7
+      ]
+    },
+    "LBXSCR": {
+      "variable_name": "LBXSCR",
+      "description": "Creatinine (mg/dL)",
+      "non_null_count": 6326,
+      "completeness_pct": 87.87,
+      "sample_values": [
+        0.8,
+        0.79,
+        0.64,
+        0.82,
+        0.76
+      ]
+    },
+    "LBXSBU": {
+      "variable_name": "LBXSBU",
+      "description": "Blood Urea Nitrogen (mg/dL)",
+      "non_null_count": 6326,
+      "completeness_pct": 87.87,
+      "sample_values": [
+        11.0,
+        24.0,
+        10.0,
+        17.0,
+        15.0
+      ]
+    }
+  },
+  "evaluation": "Both calcium (88.37%) and creatinine (87.87%) exceed the >=80% completeness threshold. Proceeding with Corrected Calcium panel implementation and validation."
+}

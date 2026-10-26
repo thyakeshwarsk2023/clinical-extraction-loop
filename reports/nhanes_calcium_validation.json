@@ -1,0 +1,60 @@
+{
+  "cycle": "Continuous NHANES August 2021-August 2023",
+  "file": "BIOPRO_L.xpt",
+  "source_url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt",
+  "calcium_panel": {
+    "panel_name": "calcium",
+    "invariant_equation": "Corrected Calcium = Calcium + 0.8 * (4.0 - Albumin)",
+    "sample_size": 6362,
+    "convergence_pct": 100.0,
+    "converged_count": 6362,
+    "violation_count": 0,
+    "operating_tolerance": {
+      "relative_tolerance": 0.02,
+      "absolute_tolerance_mg_dl": 0.1
+    },
+    "absolute_residual_mg_dl": {
+      "count": 6362,
+      "mean": 0.0239,
+      "std": 0.0149,
+      "median": 0.02,
+      "p25": 0.02,
+      "p75": 0.04,
+      "p95": 0.04,
+      "min": 0.0,
+      "max": 0.04
+    },
+    "relative_residual": {
+      "count": 6362,
+      "mean": 0.0026,
+      "std": 0.0016,
+      "median": 0.0022,
+      "p25": 0.0021,
+      "p75": 0.0043,
+      "p95": 0.0044,
+      "min": 0.0,
+      "max": 0.0049
+    }
+  },
+  "bun_creatinine_ratio_advisory": {
+    "sample_size": 6323,
+    "normal_range": "10:1 to 20:1",
+    "normal_count": 4293,
+    "normal_pct": 67.89,
+    "prerenal_count": 1683,
+    "prerenal_pct": 26.62,
+    "intrarenal_count": 347,
+    "intrarenal_pct": 5.49,
+    "ratio_distribution": {
+      "count": 6323,
+      "mean": 17.2821,
+      "std": 5.4806,
+      "median": 16.4384,
+      "p25": 13.4146,
+      "p75": 20.4301,
+      "p95": 27.451,
+      "min": 3.4278,
+      "max": 51.9481
+    }
+  }
+}
