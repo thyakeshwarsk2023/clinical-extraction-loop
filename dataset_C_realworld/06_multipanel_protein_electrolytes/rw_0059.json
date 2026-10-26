@@ -1,0 +1,56 @@
+{
+  "doc_id": "rw_0059",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Electrolyte Panel: High Anion Gap Metabolic Acidosis (AG = 24.0 mEq/L)",
+  "panel_type": "electrolytes",
+  "unit": "mEq/L",
+  "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+  "ground_truth_clean": {
+    "sodium": 138.0,
+    "chloride": 98.0,
+    "bicarbonate": 16.0,
+    "potassium": 4.5,
+    "anion_gap": 24.0
+  },
+  "injected_display_data": {
+    "sodium": 138.0,
+    "chloride": 98.0,
+    "bicarbonate": 16.0,
+    "potassium": 4.5,
+    "anion_gap": 24.0
+  },
+  "bounding_boxes": {
+    "sodium": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "potassium": [
+      377,
+      163,
+      400,
+      182
+    ],
+    "chloride": [
+      377,
+      194,
+      407,
+      213
+    ],
+    "bicarbonate": [
+      377,
+      225,
+      407,
+      244
+    ],
+    "anion_gap": [
+      377,
+      256,
+      407,
+      275
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

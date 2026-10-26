@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0021",
+  "category": "decimal_scale_errors",
+  "error_scenario": "Missing Decimal Point (10x Error): Total Cholesterol 18.2 -> 182.0 mg/dL (clean mmol/L)",
+  "panel_type": "lipid",
+  "unit": "mmol/L",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 4.8,
+    "hdl": 1.2,
+    "ldl": 2.8,
+    "triglycerides": 1.8
+  },
+  "injected_display_data": {
+    "total_cholesterol": 48.0,
+    "hdl": 1.2,
+    "ldl": 2.8,
+    "triglycerides": 1.8
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      407,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      400,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      400,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      400,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "total_cholesterol"
+  ],
+  "expected_action": "CORRECT_K1"
+}

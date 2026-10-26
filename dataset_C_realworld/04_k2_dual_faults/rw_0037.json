@@ -1,0 +1,52 @@
+{
+  "doc_id": "rw_0037",
+  "category": "k2_dual_faults",
+  "error_scenario": "K=2 Dual Fault with Lateral Shadow affecting right column (LDL + TG)",
+  "has_extra_fields": false,
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "tc": 210.0,
+    "hdl": 45.0,
+    "ldl": 135.0,
+    "tg": 150.0
+  },
+  "injected_display_data": {
+    "tc": 210.0,
+    "hdl": 45.0,
+    "ldl": 115.0,
+    "tg": 220.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "ldl",
+    "triglycerides"
+  ],
+  "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+}

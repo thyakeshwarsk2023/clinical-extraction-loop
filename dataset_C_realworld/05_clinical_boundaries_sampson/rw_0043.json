@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0043",
+  "category": "clinical_boundaries_sampson",
+  "error_scenario": "High Triglycerides (TG=640 mg/dL): Smudge on TC (228 -> 268)",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 228.0,
+    "hdl": 34.0,
+    "ldl": 112.5,
+    "triglycerides": 640.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 268.0,
+    "hdl": 34.0,
+    "ldl": 112.5,
+    "triglycerides": 640.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "total_cholesterol"
+  ],
+  "expected_action": "SAMPSON_ROUTING_REPAIR"
+}

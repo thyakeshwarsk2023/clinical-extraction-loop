@@ -1,0 +1,42 @@
+{
+  "doc_id": "rw_0052",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Protein Panel: Albumin Digit Swap (4.2 -> 2.4 g/dL) with Paper Crease",
+  "panel_type": "protein",
+  "unit": "g/dL",
+  "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+  "ground_truth_clean": {
+    "total_protein": 7.4,
+    "albumin": 4.2,
+    "globulin": 3.2
+  },
+  "injected_display_data": {
+    "total_protein": 7.4,
+    "albumin": 2.4,
+    "globulin": 3.2
+  },
+  "bounding_boxes": {
+    "total_protein": [
+      377,
+      132,
+      400,
+      151
+    ],
+    "albumin": [
+      377,
+      168,
+      400,
+      187
+    ],
+    "globulin": [
+      377,
+      204,
+      400,
+      223
+    ]
+  },
+  "corrupted_fields": [
+    "albumin"
+  ],
+  "expected_action": "CORRECT_K1"
+}

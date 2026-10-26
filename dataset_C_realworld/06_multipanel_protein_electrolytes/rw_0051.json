@@ -1,0 +1,40 @@
+{
+  "doc_id": "rw_0051",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Protein Panel: Clean Normal Reference (TP = Alb + Glob)",
+  "panel_type": "protein",
+  "unit": "g/dL",
+  "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+  "ground_truth_clean": {
+    "total_protein": 7.2,
+    "albumin": 4.2,
+    "globulin": 3.0
+  },
+  "injected_display_data": {
+    "total_protein": 7.2,
+    "albumin": 4.2,
+    "globulin": 3.0
+  },
+  "bounding_boxes": {
+    "total_protein": [
+      377,
+      132,
+      400,
+      151
+    ],
+    "albumin": [
+      377,
+      168,
+      400,
+      187
+    ],
+    "globulin": [
+      377,
+      204,
+      400,
+      223
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

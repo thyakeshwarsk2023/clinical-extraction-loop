@@ -1,0 +1,49 @@
+{
+  "doc_id": "rw_0002",
+  "category": "optical_physical_artifacts",
+  "error_scenario": "Paper Crease/Fold bisecting HDL numeric field",
+  "artifact_applied": "crease",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 194.0,
+    "hdl": 52.0,
+    "ldl": 114.0,
+    "triglycerides": 140.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 194.0,
+    "hdl": 52.0,
+    "ldl": 114.0,
+    "triglycerides": 140.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

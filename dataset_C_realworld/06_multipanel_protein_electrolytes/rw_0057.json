@@ -1,0 +1,58 @@
+{
+  "doc_id": "rw_0057",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Electrolyte Panel: Decimal Shift on Potassium (4.2 -> 42.0 mEq/L)",
+  "panel_type": "electrolytes",
+  "unit": "mEq/L",
+  "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+  "ground_truth_clean": {
+    "sodium": 142.0,
+    "chloride": 104.0,
+    "bicarbonate": 25.0,
+    "potassium": 4.2,
+    "anion_gap": 13.0
+  },
+  "injected_display_data": {
+    "sodium": 142.0,
+    "chloride": 104.0,
+    "bicarbonate": 25.0,
+    "potassium": 42.0,
+    "anion_gap": 13.0
+  },
+  "bounding_boxes": {
+    "sodium": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "potassium": [
+      377,
+      163,
+      407,
+      182
+    ],
+    "chloride": [
+      377,
+      194,
+      414,
+      213
+    ],
+    "bicarbonate": [
+      377,
+      225,
+      407,
+      244
+    ],
+    "anion_gap": [
+      377,
+      256,
+      407,
+      275
+    ]
+  },
+  "corrupted_fields": [
+    "potassium"
+  ],
+  "expected_action": "CORRECT_K1"
+}

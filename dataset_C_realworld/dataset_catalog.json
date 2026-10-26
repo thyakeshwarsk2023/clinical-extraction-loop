@@ -1,0 +1,3069 @@
+{
+  "dataset_name": "dataset_C_realworld",
+  "total_samples": 60,
+  "description": "Advanced synthetic clinical benchmark modeling realistic optical degradations, OCR confusions, decimal shifts, dual faults, clinical boundaries, and multi-panel reports.",
+  "subsets": [
+    "01_optical_physical_artifacts",
+    "02_ocr_glyph_confusions",
+    "03_decimal_scale_errors",
+    "04_k2_dual_faults",
+    "05_clinical_boundaries_sampson",
+    "06_multipanel_protein_electrolytes"
+  ],
+  "samples": [
+    {
+      "doc_id": "rw_0001",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Smartphone Shadow Gradient across Total Cholesterol",
+      "artifact_applied": "shadow_gradient",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 218.4,
+        "hdl": 44.2,
+        "ldl": 142.0,
+        "triglycerides": 161.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 218.4,
+        "hdl": 44.2,
+        "ldl": 142.0,
+        "triglycerides": 161.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0002",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Paper Crease/Fold bisecting HDL numeric field",
+      "artifact_applied": "crease",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 194.0,
+        "hdl": 52.0,
+        "ldl": 114.0,
+        "triglycerides": 140.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 194.0,
+        "hdl": 52.0,
+        "ldl": 114.0,
+        "triglycerides": 140.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0003",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Photocopier Toner Speckle / Xerographic Dropout",
+      "artifact_applied": "toner_speckle",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 242.0,
+        "hdl": 48.0,
+        "ldl": 158.0,
+        "triglycerides": 180.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 242.0,
+        "hdl": 48.0,
+        "ldl": 158.0,
+        "triglycerides": 180.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0004",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Technician Red Pen Checkmark touching LDL stroke",
+      "artifact_applied": "pen_checkmark",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 206.0,
+        "hdl": 38.0,
+        "ldl": 136.0,
+        "triglycerides": 160.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 206.0,
+        "hdl": 38.0,
+        "ldl": 136.0,
+        "triglycerides": 160.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0005",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Rubber Clinic Stamp ('CRITICAL') over Triglycerides",
+      "artifact_applied": "clinic_stamp",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 230.0,
+        "hdl": 45.0,
+        "ldl": 135.0,
+        "triglycerides": 250.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 230.0,
+        "hdl": 45.0,
+        "ldl": 135.0,
+        "triglycerides": 250.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0006",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Handheld Perspective Skew (4 deg) with ambient vignetting",
+      "artifact_applied": "perspective_skew",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 188.0,
+        "hdl": 50.0,
+        "ldl": 110.0,
+        "triglycerides": 140.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 188.0,
+        "hdl": 50.0,
+        "ldl": 110.0,
+        "triglycerides": 140.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          371,
+          130,
+          409,
+          151
+        ],
+        "hdl": [
+          373,
+          166,
+          404,
+          187
+        ],
+        "ldl": [
+          376,
+          201,
+          414,
+          223
+        ],
+        "triglycerides": [
+          378,
+          237,
+          416,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0007",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Water Drop / Coffee Ring Stain over result table",
+      "artifact_applied": "water_stain",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 222.0,
+        "hdl": 46.0,
+        "ldl": 142.0,
+        "triglycerides": 170.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 222.0,
+        "hdl": 46.0,
+        "ldl": 142.0,
+        "triglycerides": 170.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0008",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Thermal Analyzer Printout with Faded Ink Contrast",
+      "artifact_applied": "faded_thermal",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 196.0,
+        "hdl": 54.0,
+        "ldl": 118.0,
+        "triglycerides": 120.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 196.0,
+        "hdl": 54.0,
+        "ldl": 118.0,
+        "triglycerides": 120.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0009",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Directional Motion Blur across patient row numbers",
+      "artifact_applied": "motion_blur",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 215.0,
+        "hdl": 41.0,
+        "ldl": 138.0,
+        "triglycerides": 180.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 215.0,
+        "hdl": 41.0,
+        "ldl": 138.0,
+        "triglycerides": 180.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0010",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Multi-Artifact: Crease + Blue Pen Underline on HDL",
+      "artifact_applied": "crease_and_pen",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 180.0,
+        "hdl": 40.0,
+        "ldl": 110.0,
+        "triglycerides": 150.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 180.0,
+        "hdl": 40.0,
+        "ldl": 110.0,
+        "triglycerides": 150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0011",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "3 <-> 8 Glyph Confusion on LDL (138.0 misread as 188.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 218.0,
+        "hdl": 42.0,
+        "ldl": 138.0,
+        "triglycerides": 190.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 218.0,
+        "hdl": 42.0,
+        "ldl": 188.0,
+        "triglycerides": 190.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0012",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "5 <-> 6 Glyph Confusion on Total Cholesterol (155.0 -> 165.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 155.0,
+        "hdl": 45.0,
+        "ldl": 86.0,
+        "triglycerides": 120.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 165.0,
+        "hdl": 45.0,
+        "ldl": 86.0,
+        "triglycerides": 120.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          407,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0013",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "1 <-> 7 Serif Confusion on HDL (41.0 misread as 47.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 195.0,
+        "hdl": 41.0,
+        "ldl": 124.0,
+        "triglycerides": 150.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 195.0,
+        "hdl": 47.0,
+        "ldl": 124.0,
+        "triglycerides": 150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0014",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "0 <-> 6 Loop Closure on Triglycerides (105.0 -> 165.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 191.0,
+        "hdl": 50.0,
+        "ldl": 120.0,
+        "triglycerides": 105.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 191.0,
+        "hdl": 50.0,
+        "ldl": 120.0,
+        "triglycerides": 165.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0015",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "4 <-> 9 Top Closure Confusion on LDL (142.0 -> 192.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 214.0,
+        "hdl": 40.0,
+        "ldl": 142.0,
+        "triglycerides": 160.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 214.0,
+        "hdl": 40.0,
+        "ldl": 192.0,
+        "triglycerides": 160.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0016",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Leading Digit Bounding Box Clipped (175.0 clipped to 75.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 245.0,
+        "hdl": 42.0,
+        "ldl": 175.0,
+        "triglycerides": 140.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 245.0,
+        "hdl": 42.0,
+        "ldl": 75.0,
+        "triglycerides": 140.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          407,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0017",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Reference Range Column Leak (Detector grabs '< 100' instead of 145.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 225.0,
+        "hdl": 50.0,
+        "ldl": 145.0,
+        "triglycerides": 150.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 225.0,
+        "hdl": 50.0,
+        "ldl": 100.0,
+        "triglycerides": 150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0018",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Faint Stroke Dropped: 8 read as 3 on HDL (48.0 -> 43.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 188.0,
+        "hdl": 48.0,
+        "ldl": 116.0,
+        "triglycerides": 120.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 188.0,
+        "hdl": 43.0,
+        "ldl": 116.0,
+        "triglycerides": 120.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0019",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Adjacent Transposition on Total Cholesterol (246.0 -> 264.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 246.0,
+        "hdl": 46.0,
+        "ldl": 166.0,
+        "triglycerides": 170.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 264.0,
+        "hdl": 46.0,
+        "ldl": 166.0,
+        "triglycerides": 170.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0020",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Confusable Pair 0 <-> 8 on TC (208.0 read as 288.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 208.0,
+        "hdl": 44.0,
+        "ldl": 132.0,
+        "triglycerides": 160.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 288.0,
+        "hdl": 44.0,
+        "ldl": 132.0,
+        "triglycerides": 160.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0021",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Missing Decimal Point (10x Error): Total Cholesterol 18.2 -> 182.0 mg/dL (clean mmol/L)",
+      "panel_type": "lipid",
+      "unit": "mmol/L",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 4.8,
+        "hdl": 1.2,
+        "ldl": 2.8,
+        "triglycerides": 1.8
+      },
+      "injected_display_data": {
+        "total_cholesterol": 48.0,
+        "hdl": 1.2,
+        "ldl": 2.8,
+        "triglycerides": 1.8
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          407,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          400,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          400,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0022",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Missing Decimal Point (10x Error): HDL Cholesterol 42.5 -> 425.0 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 210.0,
+        "hdl": 42.5,
+        "ldl": 135.5,
+        "triglycerides": 160.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 210.0,
+        "hdl": 425.0,
+        "ldl": 135.5,
+        "triglycerides": 160.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          414,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0023",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Premature Decimal Point (0.1x Error): LDL 140.0 -> 14.0 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 216.0,
+        "hdl": 46.0,
+        "ldl": 140.0,
+        "triglycerides": 150.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 216.0,
+        "hdl": 46.0,
+        "ldl": 14.0,
+        "triglycerides": 150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          407,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0024",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Premature Decimal Point (0.1x Error): Triglycerides 175.0 -> 17.5 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 205.0,
+        "hdl": 45.0,
+        "ldl": 125.0,
+        "triglycerides": 175.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 205.0,
+        "hdl": 45.0,
+        "ldl": 125.0,
+        "triglycerides": 17.5
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          407,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0025",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Trailing Zero Truncation: Total Cholesterol 210.0 -> 21.0 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 210.0,
+        "hdl": 50.0,
+        "ldl": 130.0,
+        "triglycerides": 150.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 21.0,
+        "hdl": 50.0,
+        "ldl": 130.0,
+        "triglycerides": 150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          407,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0026",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Trailing Zero Truncation: Triglycerides 160.0 -> 16.0 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 192.0,
+        "hdl": 42.0,
+        "ldl": 118.0,
+        "triglycerides": 160.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 192.0,
+        "hdl": 42.0,
+        "ldl": 118.0,
+        "triglycerides": 16.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          407,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0027",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Decimal Shift on TC (10x jump): 166.0 -> 1660.0 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 166.0,
+        "hdl": 42.0,
+        "ldl": 98.0,
+        "triglycerides": 130.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 1660.0,
+        "hdl": 42.0,
+        "ldl": 98.0,
+        "triglycerides": 130.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          421,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          407,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0028",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Decimal Shift on LDL (10x jump): 51.2 -> 512.0 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 181.2,
+        "hdl": 48.0,
+        "ldl": 51.2,
+        "triglycerides": 410.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 181.2,
+        "hdl": 48.0,
+        "ldl": 512.0,
+        "triglycerides": 410.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0029",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Premature Decimal on HDL (0.1x drop): 48.0 -> 4.8 mg/dL",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 190.0,
+        "hdl": 48.0,
+        "ldl": 116.0,
+        "triglycerides": 130.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 190.0,
+        "hdl": 4.8,
+        "ldl": 116.0,
+        "triglycerides": 130.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0030",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Unit Normalization Test: mmol/L values correctly recognized",
+      "panel_type": "lipid",
+      "unit": "mmol/L",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 5.2,
+        "hdl": 1.3,
+        "ldl": 3.1,
+        "triglycerides": 1.8
+      },
+      "injected_display_data": {
+        "total_cholesterol": 5.2,
+        "hdl": 1.3,
+        "ldl": 3.1,
+        "triglycerides": 1.8
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          400,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          400,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          400,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0031",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Extra Equations: Non-HDL & VLDL Present (2x2 Closed-Form)",
+      "has_extra_fields": true,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 220.0,
+        "hdl": 45.0,
+        "ldl": 143.0,
+        "tg": 160.0,
+        "non_hdl": 175.0,
+        "vldl": 32.0
+      },
+      "injected_display_data": {
+        "tc": 250.0,
+        "hdl": 45.0,
+        "ldl": 120.0,
+        "tg": 160.0,
+        "non_hdl": 175.0,
+        "vldl": 32.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          163,
+          407,
+          182
+        ],
+        "ldl": [
+          377,
+          194,
+          414,
+          213
+        ],
+        "triglycerides": [
+          377,
+          225,
+          414,
+          244
+        ],
+        "non_hdl_cholesterol": [
+          377,
+          256,
+          414,
+          275
+        ],
+        "vldl": [
+          377,
+          287,
+          407,
+          306
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol",
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K2_EXTRA_FIELD"
+    },
+    {
+      "doc_id": "rw_0032",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Extra Non-HDL: HDL and TG corrupted",
+      "has_extra_fields": true,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 204.0,
+        "hdl": 44.0,
+        "ldl": 132.0,
+        "tg": 140.0,
+        "non_hdl": 160.0,
+        "vldl": 28.0
+      },
+      "injected_display_data": {
+        "tc": 204.0,
+        "hdl": 64.0,
+        "ldl": 132.0,
+        "tg": 190.0,
+        "non_hdl": 160.0,
+        "vldl": 28.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          163,
+          407,
+          182
+        ],
+        "ldl": [
+          377,
+          194,
+          414,
+          213
+        ],
+        "triglycerides": [
+          377,
+          225,
+          414,
+          244
+        ],
+        "non_hdl_cholesterol": [
+          377,
+          256,
+          414,
+          275
+        ],
+        "vldl": [
+          377,
+          287,
+          407,
+          306
+        ]
+      },
+      "corrupted_fields": [
+        "hdl",
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K2_EXTRA_FIELD"
+    },
+    {
+      "doc_id": "rw_0033",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Extra VLDL: TC and TG corrupted",
+      "has_extra_fields": true,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 235.0,
+        "hdl": 42.0,
+        "ldl": 155.0,
+        "tg": 190.0,
+        "non_hdl": 193.0,
+        "vldl": 38.0
+      },
+      "injected_display_data": {
+        "tc": 285.0,
+        "hdl": 42.0,
+        "ldl": 155.0,
+        "tg": 240.0,
+        "non_hdl": 193.0,
+        "vldl": 38.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          163,
+          407,
+          182
+        ],
+        "ldl": [
+          377,
+          194,
+          414,
+          213
+        ],
+        "triglycerides": [
+          377,
+          225,
+          414,
+          244
+        ],
+        "non_hdl_cholesterol": [
+          377,
+          256,
+          414,
+          275
+        ],
+        "vldl": [
+          377,
+          287,
+          407,
+          306
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol",
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K2_EXTRA_FIELD"
+    },
+    {
+      "doc_id": "rw_0034",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault (No Extra Fields): HDL Decimal Shift + LDL Digit Swap",
+      "has_extra_fields": false,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 218.0,
+        "hdl": 42.0,
+        "ldl": 142.0,
+        "tg": 170.0
+      },
+      "injected_display_data": {
+        "tc": 218.0,
+        "hdl": 420.0,
+        "ldl": 124.0,
+        "tg": 170.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          414,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl",
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+    },
+    {
+      "doc_id": "rw_0035",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault (No Extra Fields): TC 3/8 confusion + TG smudge",
+      "has_extra_fields": false,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 186.0,
+        "hdl": 48.0,
+        "ldl": 110.0,
+        "tg": 140.0
+      },
+      "injected_display_data": {
+        "tc": 136.0,
+        "hdl": 48.0,
+        "ldl": 110.0,
+        "tg": 190.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol",
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+    },
+    {
+      "doc_id": "rw_0036",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Crease intersecting HDL & LDL rows",
+      "has_extra_fields": false,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 202.0,
+        "hdl": 40.0,
+        "ldl": 130.0,
+        "tg": 160.0
+      },
+      "injected_display_data": {
+        "tc": 202.0,
+        "hdl": 60.0,
+        "ldl": 110.0,
+        "tg": 160.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl",
+        "ldl"
+      ],
+      "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+    },
+    {
+      "doc_id": "rw_0037",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Lateral Shadow affecting right column (LDL + TG)",
+      "has_extra_fields": false,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 210.0,
+        "hdl": 45.0,
+        "ldl": 135.0,
+        "tg": 150.0
+      },
+      "injected_display_data": {
+        "tc": 210.0,
+        "hdl": 45.0,
+        "ldl": 115.0,
+        "tg": 220.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl",
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+    },
+    {
+      "doc_id": "rw_0038",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault: 5/6 swap on TC + Trailing Zero Drop on TG (180 -> 18)",
+      "has_extra_fields": false,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 215.0,
+        "hdl": 43.0,
+        "ldl": 136.0,
+        "tg": 180.0
+      },
+      "injected_display_data": {
+        "tc": 216.0,
+        "hdl": 43.0,
+        "ldl": 136.0,
+        "tg": 18.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          407,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol",
+        "triglycerides"
+      ],
+      "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+    },
+    {
+      "doc_id": "rw_0039",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Severely Degraded Ink: Safe Abstention (Algebraic Indeterminate)",
+      "has_extra_fields": false,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 198.0,
+        "hdl": 38.0,
+        "ldl": 128.0,
+        "tg": 160.0
+      },
+      "injected_display_data": {
+        "tc": 260.0,
+        "hdl": 18.0,
+        "ldl": 128.0,
+        "tg": 160.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol",
+        "hdl"
+      ],
+      "expected_action": "ABSTAIN_ALGEBRAIC_INDETERMINATE"
+    },
+    {
+      "doc_id": "rw_0040",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Transposition: TC (195 -> 159) + HDL (48 -> 84)",
+      "has_extra_fields": false,
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "tc": 195.0,
+        "hdl": 48.0,
+        "ldl": 117.0,
+        "tg": 150.0
+      },
+      "injected_display_data": {
+        "tc": 159.0,
+        "hdl": 84.0,
+        "ldl": 117.0,
+        "tg": 150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol",
+        "hdl"
+      ],
+      "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+    },
+    {
+      "doc_id": "rw_0041",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=485 mg/dL): Sampson Eq 2 Clean Routing",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 215.0,
+        "hdl": 38.0,
+        "ldl": 115.6,
+        "triglycerides": 485.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 215.0,
+        "hdl": 38.0,
+        "ldl": 115.6,
+        "triglycerides": 485.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "SAMPSON_ROUTING"
+    },
+    {
+      "doc_id": "rw_0042",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=560 mg/dL): Sampson LDL Digit Swap (102 -> 120)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 210.0,
+        "hdl": 35.0,
+        "ldl": 102.0,
+        "triglycerides": 560.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 210.0,
+        "hdl": 35.0,
+        "ldl": 120.0,
+        "triglycerides": 560.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "SAMPSON_ROUTING_REPAIR"
+    },
+    {
+      "doc_id": "rw_0043",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=640 mg/dL): Smudge on TC (228 -> 268)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 228.0,
+        "hdl": 34.0,
+        "ldl": 112.5,
+        "triglycerides": 640.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 268.0,
+        "hdl": 34.0,
+        "ldl": 112.5,
+        "triglycerides": 640.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "total_cholesterol"
+      ],
+      "expected_action": "SAMPSON_ROUTING_REPAIR"
+    },
+    {
+      "doc_id": "rw_0044",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=720 mg/dL): Sampson Decimal Shift on HDL (3.8 -> 38.0)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 220.0,
+        "hdl": 32.0,
+        "ldl": 103.8,
+        "triglycerides": 720.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 220.0,
+        "hdl": 3.2,
+        "ldl": 103.8,
+        "triglycerides": 720.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl"
+      ],
+      "expected_action": "SAMPSON_ROUTING_REPAIR"
+    },
+    {
+      "doc_id": "rw_0045",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Severe Hypertriglyceridemia (TG=920 mg/dL > 800): Safe Principled Abstention",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 250.0,
+        "hdl": 30.0,
+        "ldl": 80.0,
+        "triglycerides": 920.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 250.0,
+        "hdl": 30.0,
+        "ldl": 80.0,
+        "triglycerides": 920.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          407,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "ABSTAIN_TG800"
+    },
+    {
+      "doc_id": "rw_0046",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Severe Hypertriglyceridemia (TG=1150 mg/dL): Safe Principled Abstention with Stamp",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 280.0,
+        "hdl": 28.0,
+        "ldl": 75.0,
+        "triglycerides": 1150.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 280.0,
+        "hdl": 28.0,
+        "ldl": 75.0,
+        "triglycerides": 1150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          407,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          421,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "ABSTAIN_TG800"
+    },
+    {
+      "doc_id": "rw_0047",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Biological Bound Violation: HDL + LDL >= TC (HDL 65 + LDL 180 >= TC 210)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 210.0,
+        "hdl": 65.0,
+        "ldl": 180.0,
+        "triglycerides": 160.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 210.0,
+        "hdl": 65.0,
+        "ldl": 180.0,
+        "triglycerides": 160.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "ldl"
+      ],
+      "expected_action": "ABSTAIN_BOUNDS_VIOLATION"
+    },
+    {
+      "doc_id": "rw_0048",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Biological Bound Violation: HDL >= Total Cholesterol (HDL 195 >= TC 180)",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Friedewald Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 180.0,
+        "hdl": 195.0,
+        "ldl": 110.0,
+        "triglycerides": 150.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 180.0,
+        "hdl": 195.0,
+        "ldl": 110.0,
+        "triglycerides": 150.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          414,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [
+        "hdl"
+      ],
+      "expected_action": "ABSTAIN_BOUNDS_VIOLATION"
+    },
+    {
+      "doc_id": "rw_0049",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Martin-Hopkins Boundary: Low TG (< 50 mg/dL) Testing Divisor f=3.5",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Martin-Hopkins Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 165.0,
+        "hdl": 55.0,
+        "ldl": 97.1,
+        "triglycerides": 45.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 165.0,
+        "hdl": 55.0,
+        "ldl": 97.1,
+        "triglycerides": 45.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          407,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          407,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "MARTIN_HOPKINS_ROUTING"
+    },
+    {
+      "doc_id": "rw_0050",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Martin-Hopkins Boundary: TG=380 mg/dL, Non-HDL=190 mg/dL, Divisor f=6.0",
+      "panel_type": "lipid",
+      "unit": "mg/dL",
+      "method_text": "Method: Calculated by Martin-Hopkins Equation",
+      "ground_truth_clean": {
+        "total_cholesterol": 235.0,
+        "hdl": 45.0,
+        "ldl": 126.7,
+        "triglycerides": 380.0
+      },
+      "injected_display_data": {
+        "total_cholesterol": 235.0,
+        "hdl": 45.0,
+        "ldl": 126.7,
+        "triglycerides": 380.0
+      },
+      "bounding_boxes": {
+        "total_cholesterol": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "hdl": [
+          377,
+          168,
+          407,
+          187
+        ],
+        "ldl": [
+          377,
+          204,
+          414,
+          223
+        ],
+        "triglycerides": [
+          377,
+          240,
+          414,
+          259
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "MARTIN_HOPKINS_ROUTING"
+    },
+    {
+      "doc_id": "rw_0051",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Clean Normal Reference (TP = Alb + Glob)",
+      "panel_type": "protein",
+      "unit": "g/dL",
+      "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+      "ground_truth_clean": {
+        "total_protein": 7.2,
+        "albumin": 4.2,
+        "globulin": 3.0
+      },
+      "injected_display_data": {
+        "total_protein": 7.2,
+        "albumin": 4.2,
+        "globulin": 3.0
+      },
+      "bounding_boxes": {
+        "total_protein": [
+          377,
+          132,
+          400,
+          151
+        ],
+        "albumin": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "globulin": [
+          377,
+          204,
+          400,
+          223
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0052",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Albumin Digit Swap (4.2 -> 2.4 g/dL) with Paper Crease",
+      "panel_type": "protein",
+      "unit": "g/dL",
+      "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+      "ground_truth_clean": {
+        "total_protein": 7.4,
+        "albumin": 4.2,
+        "globulin": 3.2
+      },
+      "injected_display_data": {
+        "total_protein": 7.4,
+        "albumin": 2.4,
+        "globulin": 3.2
+      },
+      "bounding_boxes": {
+        "total_protein": [
+          377,
+          132,
+          400,
+          151
+        ],
+        "albumin": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "globulin": [
+          377,
+          204,
+          400,
+          223
+        ]
+      },
+      "corrupted_fields": [
+        "albumin"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0053",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Decimal Shift on Total Protein (7.1 -> 71.0 g/dL)",
+      "panel_type": "protein",
+      "unit": "g/dL",
+      "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+      "ground_truth_clean": {
+        "total_protein": 7.1,
+        "albumin": 4.0,
+        "globulin": 3.1
+      },
+      "injected_display_data": {
+        "total_protein": 71.0,
+        "albumin": 4.0,
+        "globulin": 3.1
+      },
+      "bounding_boxes": {
+        "total_protein": [
+          377,
+          132,
+          407,
+          151
+        ],
+        "albumin": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "globulin": [
+          377,
+          204,
+          400,
+          223
+        ]
+      },
+      "corrupted_fields": [
+        "total_protein"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0054",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Bound Violation (Albumin 7.5 >= Total Protein 7.0 g/dL)",
+      "panel_type": "protein",
+      "unit": "g/dL",
+      "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+      "ground_truth_clean": {
+        "total_protein": 7.0,
+        "albumin": 4.1,
+        "globulin": 2.9
+      },
+      "injected_display_data": {
+        "total_protein": 7.0,
+        "albumin": 7.5,
+        "globulin": 2.9
+      },
+      "bounding_boxes": {
+        "total_protein": [
+          377,
+          132,
+          400,
+          151
+        ],
+        "albumin": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "globulin": [
+          377,
+          204,
+          400,
+          223
+        ]
+      },
+      "corrupted_fields": [
+        "albumin"
+      ],
+      "expected_action": "ABSTAIN_BOUNDS_VIOLATION"
+    },
+    {
+      "doc_id": "rw_0055",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: 3 <-> 8 Confusion on Globulin (3.3 -> 3.8 g/dL)",
+      "panel_type": "protein",
+      "unit": "g/dL",
+      "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+      "ground_truth_clean": {
+        "total_protein": 7.5,
+        "albumin": 4.2,
+        "globulin": 3.3
+      },
+      "injected_display_data": {
+        "total_protein": 7.5,
+        "albumin": 4.2,
+        "globulin": 3.8
+      },
+      "bounding_boxes": {
+        "total_protein": [
+          377,
+          132,
+          400,
+          151
+        ],
+        "albumin": [
+          377,
+          168,
+          400,
+          187
+        ],
+        "globulin": [
+          377,
+          204,
+          400,
+          223
+        ]
+      },
+      "corrupted_fields": [
+        "globulin"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0056",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Clean Normal Anion Gap (140 - (102 + 24) = 14 mEq/L)",
+      "panel_type": "electrolytes",
+      "unit": "mEq/L",
+      "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+      "ground_truth_clean": {
+        "sodium": 140.0,
+        "chloride": 102.0,
+        "bicarbonate": 24.0,
+        "potassium": 4.2,
+        "anion_gap": 14.0
+      },
+      "injected_display_data": {
+        "sodium": 140.0,
+        "chloride": 102.0,
+        "bicarbonate": 24.0,
+        "potassium": 4.2,
+        "anion_gap": 14.0
+      },
+      "bounding_boxes": {
+        "sodium": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "potassium": [
+          377,
+          163,
+          400,
+          182
+        ],
+        "chloride": [
+          377,
+          194,
+          414,
+          213
+        ],
+        "bicarbonate": [
+          377,
+          225,
+          407,
+          244
+        ],
+        "anion_gap": [
+          377,
+          256,
+          407,
+          275
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0057",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Decimal Shift on Potassium (4.2 -> 42.0 mEq/L)",
+      "panel_type": "electrolytes",
+      "unit": "mEq/L",
+      "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+      "ground_truth_clean": {
+        "sodium": 142.0,
+        "chloride": 104.0,
+        "bicarbonate": 25.0,
+        "potassium": 4.2,
+        "anion_gap": 13.0
+      },
+      "injected_display_data": {
+        "sodium": 142.0,
+        "chloride": 104.0,
+        "bicarbonate": 25.0,
+        "potassium": 42.0,
+        "anion_gap": 13.0
+      },
+      "bounding_boxes": {
+        "sodium": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "potassium": [
+          377,
+          163,
+          407,
+          182
+        ],
+        "chloride": [
+          377,
+          194,
+          414,
+          213
+        ],
+        "bicarbonate": [
+          377,
+          225,
+          407,
+          244
+        ],
+        "anion_gap": [
+          377,
+          256,
+          407,
+          275
+        ]
+      },
+      "corrupted_fields": [
+        "potassium"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0058",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Digit Swap on Sodium (142 -> 124 mEq/L)",
+      "panel_type": "electrolytes",
+      "unit": "mEq/L",
+      "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+      "ground_truth_clean": {
+        "sodium": 142.0,
+        "chloride": 103.0,
+        "bicarbonate": 24.0,
+        "potassium": 4.1,
+        "anion_gap": 15.0
+      },
+      "injected_display_data": {
+        "sodium": 124.0,
+        "chloride": 103.0,
+        "bicarbonate": 24.0,
+        "potassium": 4.1,
+        "anion_gap": 15.0
+      },
+      "bounding_boxes": {
+        "sodium": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "potassium": [
+          377,
+          163,
+          400,
+          182
+        ],
+        "chloride": [
+          377,
+          194,
+          414,
+          213
+        ],
+        "bicarbonate": [
+          377,
+          225,
+          407,
+          244
+        ],
+        "anion_gap": [
+          377,
+          256,
+          407,
+          275
+        ]
+      },
+      "corrupted_fields": [
+        "sodium"
+      ],
+      "expected_action": "CORRECT_K1"
+    },
+    {
+      "doc_id": "rw_0059",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: High Anion Gap Metabolic Acidosis (AG = 24.0 mEq/L)",
+      "panel_type": "electrolytes",
+      "unit": "mEq/L",
+      "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+      "ground_truth_clean": {
+        "sodium": 138.0,
+        "chloride": 98.0,
+        "bicarbonate": 16.0,
+        "potassium": 4.5,
+        "anion_gap": 24.0
+      },
+      "injected_display_data": {
+        "sodium": 138.0,
+        "chloride": 98.0,
+        "bicarbonate": 16.0,
+        "potassium": 4.5,
+        "anion_gap": 24.0
+      },
+      "bounding_boxes": {
+        "sodium": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "potassium": [
+          377,
+          163,
+          400,
+          182
+        ],
+        "chloride": [
+          377,
+          194,
+          407,
+          213
+        ],
+        "bicarbonate": [
+          377,
+          225,
+          407,
+          244
+        ],
+        "anion_gap": [
+          377,
+          256,
+          407,
+          275
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "VERIFIED_CLEAN"
+    },
+    {
+      "doc_id": "rw_0060",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Osmolar Gap Advisory Alert (Measured 315 vs Calc 290)",
+      "panel_type": "electrolytes",
+      "unit": "mEq/L",
+      "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+      "ground_truth_clean": {
+        "sodium": 140.0,
+        "chloride": 102.0,
+        "bicarbonate": 24.0,
+        "glucose": 95.0,
+        "bun": 14.0,
+        "measured_osmolality": 315.0,
+        "anion_gap": 14.0
+      },
+      "injected_display_data": {
+        "sodium": 140.0,
+        "chloride": 102.0,
+        "bicarbonate": 24.0,
+        "glucose": 95.0,
+        "bun": 14.0,
+        "measured_osmolality": 315.0,
+        "anion_gap": 14.0
+      },
+      "bounding_boxes": {
+        "sodium": [
+          377,
+          132,
+          414,
+          151
+        ],
+        "chloride": [
+          377,
+          163,
+          414,
+          182
+        ],
+        "bicarbonate": [
+          377,
+          194,
+          407,
+          213
+        ],
+        "anion_gap": [
+          377,
+          225,
+          407,
+          244
+        ],
+        "glucose": [
+          377,
+          256,
+          407,
+          275
+        ],
+        "bun": [
+          377,
+          287,
+          407,
+          306
+        ],
+        "measured_osmolality": [
+          377,
+          318,
+          414,
+          337
+        ]
+      },
+      "corrupted_fields": [],
+      "expected_action": "OSMOLAR_GAP_ADVISORY"
+    }
+  ]
+}

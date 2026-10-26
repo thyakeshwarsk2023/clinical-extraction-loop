@@ -1,0 +1,49 @@
+{
+  "doc_id": "rw_0007",
+  "category": "optical_physical_artifacts",
+  "error_scenario": "Water Drop / Coffee Ring Stain over result table",
+  "artifact_applied": "water_stain",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 222.0,
+    "hdl": 46.0,
+    "ldl": 142.0,
+    "triglycerides": 170.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 222.0,
+    "hdl": 46.0,
+    "ldl": 142.0,
+    "triglycerides": 170.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

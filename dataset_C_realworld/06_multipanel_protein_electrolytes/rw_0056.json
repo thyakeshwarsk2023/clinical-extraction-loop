@@ -1,0 +1,56 @@
+{
+  "doc_id": "rw_0056",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Electrolyte Panel: Clean Normal Anion Gap (140 - (102 + 24) = 14 mEq/L)",
+  "panel_type": "electrolytes",
+  "unit": "mEq/L",
+  "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+  "ground_truth_clean": {
+    "sodium": 140.0,
+    "chloride": 102.0,
+    "bicarbonate": 24.0,
+    "potassium": 4.2,
+    "anion_gap": 14.0
+  },
+  "injected_display_data": {
+    "sodium": 140.0,
+    "chloride": 102.0,
+    "bicarbonate": 24.0,
+    "potassium": 4.2,
+    "anion_gap": 14.0
+  },
+  "bounding_boxes": {
+    "sodium": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "potassium": [
+      377,
+      163,
+      400,
+      182
+    ],
+    "chloride": [
+      377,
+      194,
+      414,
+      213
+    ],
+    "bicarbonate": [
+      377,
+      225,
+      407,
+      244
+    ],
+    "anion_gap": [
+      377,
+      256,
+      407,
+      275
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

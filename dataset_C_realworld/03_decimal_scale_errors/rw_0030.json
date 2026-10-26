@@ -1,0 +1,48 @@
+{
+  "doc_id": "rw_0030",
+  "category": "decimal_scale_errors",
+  "error_scenario": "Unit Normalization Test: mmol/L values correctly recognized",
+  "panel_type": "lipid",
+  "unit": "mmol/L",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 5.2,
+    "hdl": 1.3,
+    "ldl": 3.1,
+    "triglycerides": 1.8
+  },
+  "injected_display_data": {
+    "total_cholesterol": 5.2,
+    "hdl": 1.3,
+    "ldl": 3.1,
+    "triglycerides": 1.8
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      400,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      400,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      400,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      400,
+      259
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

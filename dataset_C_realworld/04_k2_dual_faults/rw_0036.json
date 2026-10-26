@@ -1,0 +1,52 @@
+{
+  "doc_id": "rw_0036",
+  "category": "k2_dual_faults",
+  "error_scenario": "K=2 Dual Fault with Crease intersecting HDL & LDL rows",
+  "has_extra_fields": false,
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "tc": 202.0,
+    "hdl": 40.0,
+    "ldl": 130.0,
+    "tg": 160.0
+  },
+  "injected_display_data": {
+    "tc": 202.0,
+    "hdl": 60.0,
+    "ldl": 110.0,
+    "tg": 160.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "hdl",
+    "ldl"
+  ],
+  "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+}

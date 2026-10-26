@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0017",
+  "category": "ocr_glyph_confusions",
+  "error_scenario": "Reference Range Column Leak (Detector grabs '< 100' instead of 145.0)",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 225.0,
+    "hdl": 50.0,
+    "ldl": 145.0,
+    "triglycerides": 150.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 225.0,
+    "hdl": 50.0,
+    "ldl": 100.0,
+    "triglycerides": 150.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "ldl"
+  ],
+  "expected_action": "CORRECT_K1"
+}

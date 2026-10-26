@@ -1,0 +1,49 @@
+{
+  "doc_id": "rw_0001",
+  "category": "optical_physical_artifacts",
+  "error_scenario": "Smartphone Shadow Gradient across Total Cholesterol",
+  "artifact_applied": "shadow_gradient",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 218.4,
+    "hdl": 44.2,
+    "ldl": 142.0,
+    "triglycerides": 161.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 218.4,
+    "hdl": 44.2,
+    "ldl": 142.0,
+    "triglycerides": 161.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

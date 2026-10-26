@@ -1,0 +1,52 @@
+{
+  "doc_id": "rw_0039",
+  "category": "k2_dual_faults",
+  "error_scenario": "K=2 Severely Degraded Ink: Safe Abstention (Algebraic Indeterminate)",
+  "has_extra_fields": false,
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "tc": 198.0,
+    "hdl": 38.0,
+    "ldl": 128.0,
+    "tg": 160.0
+  },
+  "injected_display_data": {
+    "tc": 260.0,
+    "hdl": 18.0,
+    "ldl": 128.0,
+    "tg": 160.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "total_cholesterol",
+    "hdl"
+  ],
+  "expected_action": "ABSTAIN_ALGEBRAIC_INDETERMINATE"
+}

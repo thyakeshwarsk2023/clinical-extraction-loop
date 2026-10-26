@@ -1,0 +1,52 @@
+{
+  "doc_id": "rw_0034",
+  "category": "k2_dual_faults",
+  "error_scenario": "K=2 Dual Fault (No Extra Fields): HDL Decimal Shift + LDL Digit Swap",
+  "has_extra_fields": false,
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "tc": 218.0,
+    "hdl": 42.0,
+    "ldl": 142.0,
+    "tg": 170.0
+  },
+  "injected_display_data": {
+    "tc": 218.0,
+    "hdl": 420.0,
+    "ldl": 124.0,
+    "tg": 170.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      414,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "hdl",
+    "ldl"
+  ],
+  "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+}

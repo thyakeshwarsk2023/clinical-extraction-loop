@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0042",
+  "category": "clinical_boundaries_sampson",
+  "error_scenario": "High Triglycerides (TG=560 mg/dL): Sampson LDL Digit Swap (102 -> 120)",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by NIH Sampson 2020 Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 210.0,
+    "hdl": 35.0,
+    "ldl": 102.0,
+    "triglycerides": 560.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 210.0,
+    "hdl": 35.0,
+    "ldl": 120.0,
+    "triglycerides": 560.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "ldl"
+  ],
+  "expected_action": "SAMPSON_ROUTING_REPAIR"
+}

@@ -1,0 +1,68 @@
+{
+  "doc_id": "rw_0031",
+  "category": "k2_dual_faults",
+  "error_scenario": "K=2 Dual Fault with Extra Equations: Non-HDL & VLDL Present (2x2 Closed-Form)",
+  "has_extra_fields": true,
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "tc": 220.0,
+    "hdl": 45.0,
+    "ldl": 143.0,
+    "tg": 160.0,
+    "non_hdl": 175.0,
+    "vldl": 32.0
+  },
+  "injected_display_data": {
+    "tc": 250.0,
+    "hdl": 45.0,
+    "ldl": 120.0,
+    "tg": 160.0,
+    "non_hdl": 175.0,
+    "vldl": 32.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      163,
+      407,
+      182
+    ],
+    "ldl": [
+      377,
+      194,
+      414,
+      213
+    ],
+    "triglycerides": [
+      377,
+      225,
+      414,
+      244
+    ],
+    "non_hdl_cholesterol": [
+      377,
+      256,
+      414,
+      275
+    ],
+    "vldl": [
+      377,
+      287,
+      407,
+      306
+    ]
+  },
+  "corrupted_fields": [
+    "total_cholesterol",
+    "ldl"
+  ],
+  "expected_action": "CORRECT_K2_EXTRA_FIELD"
+}

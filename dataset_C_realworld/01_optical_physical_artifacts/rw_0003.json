@@ -1,0 +1,49 @@
+{
+  "doc_id": "rw_0003",
+  "category": "optical_physical_artifacts",
+  "error_scenario": "Photocopier Toner Speckle / Xerographic Dropout",
+  "artifact_applied": "toner_speckle",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 242.0,
+    "hdl": 48.0,
+    "ldl": 158.0,
+    "triglycerides": 180.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 242.0,
+    "hdl": 48.0,
+    "ldl": 158.0,
+    "triglycerides": 180.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

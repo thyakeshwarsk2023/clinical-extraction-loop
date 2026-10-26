@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0025",
+  "category": "decimal_scale_errors",
+  "error_scenario": "Trailing Zero Truncation: Total Cholesterol 210.0 -> 21.0 mg/dL",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 210.0,
+    "hdl": 50.0,
+    "ldl": 130.0,
+    "triglycerides": 150.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 21.0,
+    "hdl": 50.0,
+    "ldl": 130.0,
+    "triglycerides": 150.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      407,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "total_cholesterol"
+  ],
+  "expected_action": "CORRECT_K1"
+}

@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0012",
+  "category": "ocr_glyph_confusions",
+  "error_scenario": "5 <-> 6 Glyph Confusion on Total Cholesterol (155.0 -> 165.0)",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 155.0,
+    "hdl": 45.0,
+    "ldl": 86.0,
+    "triglycerides": 120.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 165.0,
+    "hdl": 45.0,
+    "ldl": 86.0,
+    "triglycerides": 120.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      407,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "total_cholesterol"
+  ],
+  "expected_action": "CORRECT_K1"
+}

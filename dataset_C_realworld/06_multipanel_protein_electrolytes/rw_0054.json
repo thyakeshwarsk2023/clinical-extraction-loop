@@ -1,0 +1,42 @@
+{
+  "doc_id": "rw_0054",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Protein Panel: Bound Violation (Albumin 7.5 >= Total Protein 7.0 g/dL)",
+  "panel_type": "protein",
+  "unit": "g/dL",
+  "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+  "ground_truth_clean": {
+    "total_protein": 7.0,
+    "albumin": 4.1,
+    "globulin": 2.9
+  },
+  "injected_display_data": {
+    "total_protein": 7.0,
+    "albumin": 7.5,
+    "globulin": 2.9
+  },
+  "bounding_boxes": {
+    "total_protein": [
+      377,
+      132,
+      400,
+      151
+    ],
+    "albumin": [
+      377,
+      168,
+      400,
+      187
+    ],
+    "globulin": [
+      377,
+      204,
+      400,
+      223
+    ]
+  },
+  "corrupted_fields": [
+    "albumin"
+  ],
+  "expected_action": "ABSTAIN_BOUNDS_VIOLATION"
+}

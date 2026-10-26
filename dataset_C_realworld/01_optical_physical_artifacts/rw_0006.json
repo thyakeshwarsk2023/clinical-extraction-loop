@@ -1,0 +1,49 @@
+{
+  "doc_id": "rw_0006",
+  "category": "optical_physical_artifacts",
+  "error_scenario": "Handheld Perspective Skew (4 deg) with ambient vignetting",
+  "artifact_applied": "perspective_skew",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 188.0,
+    "hdl": 50.0,
+    "ldl": 110.0,
+    "triglycerides": 140.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 188.0,
+    "hdl": 50.0,
+    "ldl": 110.0,
+    "triglycerides": 140.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      371,
+      130,
+      409,
+      151
+    ],
+    "hdl": [
+      373,
+      166,
+      404,
+      187
+    ],
+    "ldl": [
+      376,
+      201,
+      414,
+      223
+    ],
+    "triglycerides": [
+      378,
+      237,
+      416,
+      259
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "VERIFIED_CLEAN"
+}

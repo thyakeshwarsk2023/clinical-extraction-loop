@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0029",
+  "category": "decimal_scale_errors",
+  "error_scenario": "Premature Decimal on HDL (0.1x drop): 48.0 -> 4.8 mg/dL",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 190.0,
+    "hdl": 48.0,
+    "ldl": 116.0,
+    "triglycerides": 130.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 190.0,
+    "hdl": 4.8,
+    "ldl": 116.0,
+    "triglycerides": 130.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      400,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "hdl"
+  ],
+  "expected_action": "CORRECT_K1"
+}

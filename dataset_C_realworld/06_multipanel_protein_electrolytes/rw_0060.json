@@ -1,0 +1,72 @@
+{
+  "doc_id": "rw_0060",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Electrolyte Panel: Osmolar Gap Advisory Alert (Measured 315 vs Calc 290)",
+  "panel_type": "electrolytes",
+  "unit": "mEq/L",
+  "method_text": "Method: Indirect Ion-Selective Electrode (ISE)",
+  "ground_truth_clean": {
+    "sodium": 140.0,
+    "chloride": 102.0,
+    "bicarbonate": 24.0,
+    "glucose": 95.0,
+    "bun": 14.0,
+    "measured_osmolality": 315.0,
+    "anion_gap": 14.0
+  },
+  "injected_display_data": {
+    "sodium": 140.0,
+    "chloride": 102.0,
+    "bicarbonate": 24.0,
+    "glucose": 95.0,
+    "bun": 14.0,
+    "measured_osmolality": 315.0,
+    "anion_gap": 14.0
+  },
+  "bounding_boxes": {
+    "sodium": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "chloride": [
+      377,
+      163,
+      414,
+      182
+    ],
+    "bicarbonate": [
+      377,
+      194,
+      407,
+      213
+    ],
+    "anion_gap": [
+      377,
+      225,
+      407,
+      244
+    ],
+    "glucose": [
+      377,
+      256,
+      407,
+      275
+    ],
+    "bun": [
+      377,
+      287,
+      407,
+      306
+    ],
+    "measured_osmolality": [
+      377,
+      318,
+      414,
+      337
+    ]
+  },
+  "corrupted_fields": [],
+  "expected_action": "OSMOLAR_GAP_ADVISORY"
+}

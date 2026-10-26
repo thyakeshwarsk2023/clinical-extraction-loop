@@ -1,0 +1,61 @@
+doc_id,category,description,clean_f1,clean_f2,clean_f3,clean_f4,disp_f1,disp_f2,disp_f3,disp_f4,unit,expected_action
+rw_0001,01_optical_physical_artifacts,Smartphone Shadow Gradient across Total Cholesterol,218.4,44.2,142.0,161.0,218.4,44.2,142.0,161.0,mg/dL,VERIFIED_CLEAN
+rw_0002,01_optical_physical_artifacts,Paper Crease/Fold bisecting HDL numeric field,194.0,52.0,114.0,140.0,194.0,52.0,114.0,140.0,mg/dL,VERIFIED_CLEAN
+rw_0003,01_optical_physical_artifacts,Photocopier Toner Speckle / Xerographic Dropout,242.0,48.0,158.0,180.0,242.0,48.0,158.0,180.0,mg/dL,VERIFIED_CLEAN
+rw_0004,01_optical_physical_artifacts,Technician Red Pen Checkmark touching LDL stroke,206.0,38.0,136.0,160.0,206.0,38.0,136.0,160.0,mg/dL,VERIFIED_CLEAN
+rw_0005,01_optical_physical_artifacts,Rubber Clinic Stamp ('CRITICAL') over Triglycerides,230.0,45.0,135.0,250.0,230.0,45.0,135.0,250.0,mg/dL,VERIFIED_CLEAN
+rw_0006,01_optical_physical_artifacts,Handheld Perspective Skew (4 deg) with ambient vignetting,188.0,50.0,110.0,140.0,188.0,50.0,110.0,140.0,mg/dL,VERIFIED_CLEAN
+rw_0007,01_optical_physical_artifacts,Water Drop / Coffee Ring Stain over result table,222.0,46.0,142.0,170.0,222.0,46.0,142.0,170.0,mg/dL,VERIFIED_CLEAN
+rw_0008,01_optical_physical_artifacts,Thermal Analyzer Printout with Faded Ink Contrast,196.0,54.0,118.0,120.0,196.0,54.0,118.0,120.0,mg/dL,VERIFIED_CLEAN
+rw_0009,01_optical_physical_artifacts,Directional Motion Blur across patient row numbers,215.0,41.0,138.0,180.0,215.0,41.0,138.0,180.0,mg/dL,VERIFIED_CLEAN
+rw_0010,01_optical_physical_artifacts,Multi-Artifact: Crease + Blue Pen Underline on HDL,180.0,40.0,110.0,150.0,180.0,40.0,110.0,150.0,mg/dL,VERIFIED_CLEAN
+rw_0011,02_ocr_glyph_confusions,3 <-> 8 Glyph Confusion on LDL (138.0 misread as 188.0),218.0,42.0,138.0,190.0,218.0,42.0,188.0,190.0,mg/dL,CORRECT_K1
+rw_0012,02_ocr_glyph_confusions,5 <-> 6 Glyph Confusion on Total Cholesterol (155.0 -> 165.0),155.0,45.0,86.0,120.0,165.0,45.0,86.0,120.0,mg/dL,CORRECT_K1
+rw_0013,02_ocr_glyph_confusions,1 <-> 7 Serif Confusion on HDL (41.0 misread as 47.0),195.0,41.0,124.0,150.0,195.0,47.0,124.0,150.0,mg/dL,CORRECT_K1
+rw_0014,02_ocr_glyph_confusions,0 <-> 6 Loop Closure on Triglycerides (105.0 -> 165.0),191.0,50.0,120.0,105.0,191.0,50.0,120.0,165.0,mg/dL,CORRECT_K1
+rw_0015,02_ocr_glyph_confusions,4 <-> 9 Top Closure Confusion on LDL (142.0 -> 192.0),214.0,40.0,142.0,160.0,214.0,40.0,192.0,160.0,mg/dL,CORRECT_K1
+rw_0016,02_ocr_glyph_confusions,Leading Digit Bounding Box Clipped (175.0 clipped to 75.0),245.0,42.0,175.0,140.0,245.0,42.0,75.0,140.0,mg/dL,CORRECT_K1
+rw_0017,02_ocr_glyph_confusions,Reference Range Column Leak (Detector grabs '< 100' instead of 145.0),225.0,50.0,145.0,150.0,225.0,50.0,100.0,150.0,mg/dL,CORRECT_K1
+rw_0018,02_ocr_glyph_confusions,Faint Stroke Dropped: 8 read as 3 on HDL (48.0 -> 43.0),188.0,48.0,116.0,120.0,188.0,43.0,116.0,120.0,mg/dL,CORRECT_K1
+rw_0019,02_ocr_glyph_confusions,Adjacent Transposition on Total Cholesterol (246.0 -> 264.0),246.0,46.0,166.0,170.0,264.0,46.0,166.0,170.0,mg/dL,CORRECT_K1
+rw_0020,02_ocr_glyph_confusions,Confusable Pair 0 <-> 8 on TC (208.0 read as 288.0),208.0,44.0,132.0,160.0,288.0,44.0,132.0,160.0,mg/dL,CORRECT_K1
+rw_0021,03_decimal_scale_errors,Missing Decimal Point (10x Error): Total Cholesterol 18.2 -> 182.0 mg/dL (clean mmol/L),4.8,1.2,2.8,1.8,48.0,1.2,2.8,1.8,mmol/L,CORRECT_K1
+rw_0022,03_decimal_scale_errors,Missing Decimal Point (10x Error): HDL Cholesterol 42.5 -> 425.0 mg/dL,210.0,42.5,135.5,160.0,210.0,425.0,135.5,160.0,mg/dL,CORRECT_K1
+rw_0023,03_decimal_scale_errors,Premature Decimal Point (0.1x Error): LDL 140.0 -> 14.0 mg/dL,216.0,46.0,140.0,150.0,216.0,46.0,14.0,150.0,mg/dL,CORRECT_K1
+rw_0024,03_decimal_scale_errors,Premature Decimal Point (0.1x Error): Triglycerides 175.0 -> 17.5 mg/dL,205.0,45.0,125.0,175.0,205.0,45.0,125.0,17.5,mg/dL,CORRECT_K1
+rw_0025,03_decimal_scale_errors,Trailing Zero Truncation: Total Cholesterol 210.0 -> 21.0 mg/dL,210.0,50.0,130.0,150.0,21.0,50.0,130.0,150.0,mg/dL,CORRECT_K1
+rw_0026,03_decimal_scale_errors,Trailing Zero Truncation: Triglycerides 160.0 -> 16.0 mg/dL,192.0,42.0,118.0,160.0,192.0,42.0,118.0,16.0,mg/dL,CORRECT_K1
+rw_0027,03_decimal_scale_errors,Decimal Shift on TC (10x jump): 166.0 -> 1660.0 mg/dL,166.0,42.0,98.0,130.0,1660.0,42.0,98.0,130.0,mg/dL,CORRECT_K1
+rw_0028,03_decimal_scale_errors,Decimal Shift on LDL (10x jump): 51.2 -> 512.0 mg/dL,181.2,48.0,51.2,410.0,181.2,48.0,512.0,410.0,mg/dL,CORRECT_K1
+rw_0029,03_decimal_scale_errors,Premature Decimal on HDL (0.1x drop): 48.0 -> 4.8 mg/dL,190.0,48.0,116.0,130.0,190.0,4.8,116.0,130.0,mg/dL,CORRECT_K1
+rw_0030,03_decimal_scale_errors,Unit Normalization Test: mmol/L values correctly recognized,5.2,1.3,3.1,1.8,5.2,1.3,3.1,1.8,mmol/L,VERIFIED_CLEAN
+rw_0031,04_k2_dual_faults,K=2 Dual Fault with Extra Equations: Non-HDL & VLDL Present (2x2 Closed-Form),220.0,45.0,143.0,160.0,250.0,45.0,120.0,160.0,mg/dL,CORRECT_K2_EXTRA_FIELD
+rw_0032,04_k2_dual_faults,K=2 Dual Fault with Extra Non-HDL: HDL and TG corrupted,204.0,44.0,132.0,140.0,204.0,64.0,132.0,190.0,mg/dL,CORRECT_K2_EXTRA_FIELD
+rw_0033,04_k2_dual_faults,K=2 Dual Fault with Extra VLDL: TC and TG corrupted,235.0,42.0,155.0,190.0,285.0,42.0,155.0,240.0,mg/dL,CORRECT_K2_EXTRA_FIELD
+rw_0034,04_k2_dual_faults,K=2 Dual Fault (No Extra Fields): HDL Decimal Shift + LDL Digit Swap,218.0,42.0,142.0,170.0,218.0,420.0,124.0,170.0,mg/dL,CORRECT_K2_DUAL_BLIND_REREAD
+rw_0035,04_k2_dual_faults,K=2 Dual Fault (No Extra Fields): TC 3/8 confusion + TG smudge,186.0,48.0,110.0,140.0,136.0,48.0,110.0,190.0,mg/dL,CORRECT_K2_DUAL_BLIND_REREAD
+rw_0036,04_k2_dual_faults,K=2 Dual Fault with Crease intersecting HDL & LDL rows,202.0,40.0,130.0,160.0,202.0,60.0,110.0,160.0,mg/dL,CORRECT_K2_DUAL_BLIND_REREAD
+rw_0037,04_k2_dual_faults,K=2 Dual Fault with Lateral Shadow affecting right column (LDL + TG),210.0,45.0,135.0,150.0,210.0,45.0,115.0,220.0,mg/dL,CORRECT_K2_DUAL_BLIND_REREAD
+rw_0038,04_k2_dual_faults,K=2 Dual Fault: 5/6 swap on TC + Trailing Zero Drop on TG (180 -> 18),215.0,43.0,136.0,180.0,216.0,43.0,136.0,18.0,mg/dL,CORRECT_K2_DUAL_BLIND_REREAD
+rw_0039,04_k2_dual_faults,K=2 Severely Degraded Ink: Safe Abstention (Algebraic Indeterminate),198.0,38.0,128.0,160.0,260.0,18.0,128.0,160.0,mg/dL,ABSTAIN_ALGEBRAIC_INDETERMINATE
+rw_0040,04_k2_dual_faults,K=2 Dual Transposition: TC (195 -> 159) + HDL (48 -> 84),195.0,48.0,117.0,150.0,159.0,84.0,117.0,150.0,mg/dL,CORRECT_K2_DUAL_BLIND_REREAD
+rw_0041,05_clinical_boundaries_sampson,High Triglycerides (TG=485 mg/dL): Sampson Eq 2 Clean Routing,215.0,38.0,115.6,485.0,215.0,38.0,115.6,485.0,mg/dL,SAMPSON_ROUTING
+rw_0042,05_clinical_boundaries_sampson,High Triglycerides (TG=560 mg/dL): Sampson LDL Digit Swap (102 -> 120),210.0,35.0,102.0,560.0,210.0,35.0,120.0,560.0,mg/dL,SAMPSON_ROUTING_REPAIR
+rw_0043,05_clinical_boundaries_sampson,High Triglycerides (TG=640 mg/dL): Smudge on TC (228 -> 268),228.0,34.0,112.5,640.0,268.0,34.0,112.5,640.0,mg/dL,SAMPSON_ROUTING_REPAIR
+rw_0044,05_clinical_boundaries_sampson,High Triglycerides (TG=720 mg/dL): Sampson Decimal Shift on HDL (3.8 -> 38.0),220.0,32.0,103.8,720.0,220.0,3.2,103.8,720.0,mg/dL,SAMPSON_ROUTING_REPAIR
+rw_0045,05_clinical_boundaries_sampson,Severe Hypertriglyceridemia (TG=920 mg/dL > 800): Safe Principled Abstention,250.0,30.0,80.0,920.0,250.0,30.0,80.0,920.0,mg/dL,ABSTAIN_TG800
+rw_0046,05_clinical_boundaries_sampson,Severe Hypertriglyceridemia (TG=1150 mg/dL): Safe Principled Abstention with Stamp,280.0,28.0,75.0,1150.0,280.0,28.0,75.0,1150.0,mg/dL,ABSTAIN_TG800
+rw_0047,05_clinical_boundaries_sampson,Biological Bound Violation: HDL + LDL >= TC (HDL 65 + LDL 180 >= TC 210),210.0,65.0,180.0,160.0,210.0,65.0,180.0,160.0,mg/dL,ABSTAIN_BOUNDS_VIOLATION
+rw_0048,05_clinical_boundaries_sampson,Biological Bound Violation: HDL >= Total Cholesterol (HDL 195 >= TC 180),180.0,195.0,110.0,150.0,180.0,195.0,110.0,150.0,mg/dL,ABSTAIN_BOUNDS_VIOLATION
+rw_0049,05_clinical_boundaries_sampson,Martin-Hopkins Boundary: Low TG (< 50 mg/dL) Testing Divisor f=3.5,165.0,55.0,97.1,45.0,165.0,55.0,97.1,45.0,mg/dL,MARTIN_HOPKINS_ROUTING
+rw_0050,05_clinical_boundaries_sampson,"Martin-Hopkins Boundary: TG=380 mg/dL, Non-HDL=190 mg/dL, Divisor f=6.0",235.0,45.0,126.7,380.0,235.0,45.0,126.7,380.0,mg/dL,MARTIN_HOPKINS_ROUTING
+rw_0051,06_multipanel_protein_electrolytes,Protein Panel: Clean Normal Reference (TP = Alb + Glob),7.2,4.2,3.0,0.0,7.2,4.2,3.0,0.0,g/dL,VERIFIED_CLEAN
+rw_0052,06_multipanel_protein_electrolytes,Protein Panel: Albumin Digit Swap (4.2 -> 2.4 g/dL) with Paper Crease,7.4,4.2,3.2,0.0,7.4,2.4,3.2,0.0,g/dL,CORRECT_K1
+rw_0053,06_multipanel_protein_electrolytes,Protein Panel: Decimal Shift on Total Protein (7.1 -> 71.0 g/dL),7.1,4.0,3.1,0.0,71.0,4.0,3.1,0.0,g/dL,CORRECT_K1
+rw_0054,06_multipanel_protein_electrolytes,Protein Panel: Bound Violation (Albumin 7.5 >= Total Protein 7.0 g/dL),7.0,4.1,2.9,0.0,7.0,7.5,2.9,0.0,g/dL,ABSTAIN_BOUNDS_VIOLATION
+rw_0055,06_multipanel_protein_electrolytes,Protein Panel: 3 <-> 8 Confusion on Globulin (3.3 -> 3.8 g/dL),7.5,4.2,3.3,0.0,7.5,4.2,3.8,0.0,g/dL,CORRECT_K1
+rw_0056,06_multipanel_protein_electrolytes,Electrolyte Panel: Clean Normal Anion Gap (140 - (102 + 24) = 14 mEq/L),140.0,102.0,24.0,14.0,140.0,102.0,24.0,14.0,mEq/L,VERIFIED_CLEAN
+rw_0057,06_multipanel_protein_electrolytes,Electrolyte Panel: Decimal Shift on Potassium (4.2 -> 42.0 mEq/L),142.0,104.0,25.0,13.0,142.0,104.0,25.0,13.0,mEq/L,CORRECT_K1
+rw_0058,06_multipanel_protein_electrolytes,Electrolyte Panel: Digit Swap on Sodium (142 -> 124 mEq/L),142.0,103.0,24.0,15.0,124.0,103.0,24.0,15.0,mEq/L,CORRECT_K1
+rw_0059,06_multipanel_protein_electrolytes,Electrolyte Panel: High Anion Gap Metabolic Acidosis (AG = 24.0 mEq/L),138.0,98.0,16.0,24.0,138.0,98.0,16.0,24.0,mEq/L,VERIFIED_CLEAN
+rw_0060,06_multipanel_protein_electrolytes,Electrolyte Panel: Osmolar Gap Advisory Alert (Measured 315 vs Calc 290),140.0,102.0,24.0,14.0,140.0,102.0,24.0,14.0,mEq/L,OSMOLAR_GAP_ADVISORY

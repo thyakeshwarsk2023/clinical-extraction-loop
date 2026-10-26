@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0024",
+  "category": "decimal_scale_errors",
+  "error_scenario": "Premature Decimal Point (0.1x Error): Triglycerides 175.0 -> 17.5 mg/dL",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 205.0,
+    "hdl": 45.0,
+    "ldl": 125.0,
+    "triglycerides": 175.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 205.0,
+    "hdl": 45.0,
+    "ldl": 125.0,
+    "triglycerides": 17.5
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      407,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "triglycerides"
+  ],
+  "expected_action": "CORRECT_K1"
+}

@@ -1,0 +1,50 @@
+{
+  "doc_id": "rw_0023",
+  "category": "decimal_scale_errors",
+  "error_scenario": "Premature Decimal Point (0.1x Error): LDL 140.0 -> 14.0 mg/dL",
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "total_cholesterol": 216.0,
+    "hdl": 46.0,
+    "ldl": 140.0,
+    "triglycerides": 150.0
+  },
+  "injected_display_data": {
+    "total_cholesterol": 216.0,
+    "hdl": 46.0,
+    "ldl": 14.0,
+    "triglycerides": 150.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      407,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "ldl"
+  ],
+  "expected_action": "CORRECT_K1"
+}

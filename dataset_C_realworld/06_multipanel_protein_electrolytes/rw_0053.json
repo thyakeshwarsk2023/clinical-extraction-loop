@@ -1,0 +1,42 @@
+{
+  "doc_id": "rw_0053",
+  "category": "multipanel_protein_electrolytes",
+  "error_scenario": "Protein Panel: Decimal Shift on Total Protein (7.1 -> 71.0 g/dL)",
+  "panel_type": "protein",
+  "unit": "g/dL",
+  "method_text": "Method: Photometric Absorbance (Biuret / BCG)",
+  "ground_truth_clean": {
+    "total_protein": 7.1,
+    "albumin": 4.0,
+    "globulin": 3.1
+  },
+  "injected_display_data": {
+    "total_protein": 71.0,
+    "albumin": 4.0,
+    "globulin": 3.1
+  },
+  "bounding_boxes": {
+    "total_protein": [
+      377,
+      132,
+      407,
+      151
+    ],
+    "albumin": [
+      377,
+      168,
+      400,
+      187
+    ],
+    "globulin": [
+      377,
+      204,
+      400,
+      223
+    ]
+  },
+  "corrupted_fields": [
+    "total_protein"
+  ],
+  "expected_action": "CORRECT_K1"
+}

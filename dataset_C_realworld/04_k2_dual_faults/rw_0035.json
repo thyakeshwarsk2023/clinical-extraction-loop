@@ -1,0 +1,52 @@
+{
+  "doc_id": "rw_0035",
+  "category": "k2_dual_faults",
+  "error_scenario": "K=2 Dual Fault (No Extra Fields): TC 3/8 confusion + TG smudge",
+  "has_extra_fields": false,
+  "panel_type": "lipid",
+  "unit": "mg/dL",
+  "method_text": "Method: Calculated by Friedewald Equation",
+  "ground_truth_clean": {
+    "tc": 186.0,
+    "hdl": 48.0,
+    "ldl": 110.0,
+    "tg": 140.0
+  },
+  "injected_display_data": {
+    "tc": 136.0,
+    "hdl": 48.0,
+    "ldl": 110.0,
+    "tg": 190.0
+  },
+  "bounding_boxes": {
+    "total_cholesterol": [
+      377,
+      132,
+      414,
+      151
+    ],
+    "hdl": [
+      377,
+      168,
+      407,
+      187
+    ],
+    "ldl": [
+      377,
+      204,
+      414,
+      223
+    ],
+    "triglycerides": [
+      377,
+      240,
+      414,
+      259
+    ]
+  },
+  "corrupted_fields": [
+    "total_cholesterol",
+    "triglycerides"
+  ],
+  "expected_action": "CORRECT_K2_DUAL_BLIND_REREAD"
+}
