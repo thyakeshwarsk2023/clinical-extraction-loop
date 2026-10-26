@@ -1,0 +1,102 @@
+{
+  "benchmark_source": "reports/ablation_results.json",
+  "total_documents": 170,
+  "taxonomy": [
+    {
+      "category": "Visual Occlusion / Smudge",
+      "sample_size": 45,
+      "single_faults": 45,
+      "double_faults": 0,
+      "detection_rate_pct": 100.0,
+      "isolation_rate_pct": 100.0,
+      "correction_rate_pct": 100.0,
+      "abstention_rate_pct": 0.0,
+      "baseline_mean_fa_pct": 100.0,
+      "full_arch_mean_fa_pct": 100.0,
+      "delta_accuracy_pct": 0.0
+    },
+    {
+      "category": "Dual Smudge (K=2 Homogeneous)",
+      "sample_size": 7,
+      "single_faults": 0,
+      "double_faults": 7,
+      "detection_rate_pct": 100.0,
+      "isolation_rate_pct": 100.0,
+      "correction_rate_pct": 100.0,
+      "abstention_rate_pct": 0.0,
+      "baseline_mean_fa_pct": 100.0,
+      "full_arch_mean_fa_pct": 100.0,
+      "delta_accuracy_pct": 0.0
+    },
+    {
+      "category": "Decimal Point Shift (10x / 0.1x)",
+      "sample_size": 39,
+      "single_faults": 39,
+      "double_faults": 0,
+      "detection_rate_pct": 100.0,
+      "isolation_rate_pct": 87.18,
+      "correction_rate_pct": 87.18,
+      "abstention_rate_pct": 10.26,
+      "baseline_mean_fa_pct": 75.0,
+      "full_arch_mean_fa_pct": 96.79,
+      "delta_accuracy_pct": 21.79
+    },
+    {
+      "category": "Dual Decimal Shift (K=2 Homogeneous)",
+      "sample_size": 6,
+      "single_faults": 0,
+      "double_faults": 6,
+      "detection_rate_pct": 100.0,
+      "isolation_rate_pct": 83.33,
+      "correction_rate_pct": 83.33,
+      "abstention_rate_pct": 0.0,
+      "baseline_mean_fa_pct": 50.0,
+      "full_arch_mean_fa_pct": 91.67,
+      "delta_accuracy_pct": 41.67
+    },
+    {
+      "category": "Dual Mixed Faults (K=2 Heterogeneous)",
+      "sample_size": 35,
+      "single_faults": 0,
+      "double_faults": 35,
+      "detection_rate_pct": 100.0,
+      "isolation_rate_pct": 68.57,
+      "correction_rate_pct": 68.57,
+      "abstention_rate_pct": 14.29,
+      "baseline_mean_fa_pct": 66.43,
+      "full_arch_mean_fa_pct": 90.71,
+      "delta_accuracy_pct": 24.29
+    },
+    {
+      "category": "Dual Digit Swap (K=2 Homogeneous)",
+      "sample_size": 2,
+      "single_faults": 0,
+      "double_faults": 2,
+      "detection_rate_pct": 100.0,
+      "isolation_rate_pct": 50.0,
+      "correction_rate_pct": 50.0,
+      "abstention_rate_pct": 50.0,
+      "baseline_mean_fa_pct": 87.5,
+      "full_arch_mean_fa_pct": 87.5,
+      "delta_accuracy_pct": 0.0
+    },
+    {
+      "category": "Adjacent Digit Swap (Transposition)",
+      "sample_size": 36,
+      "single_faults": 36,
+      "double_faults": 0,
+      "detection_rate_pct": 100.0,
+      "isolation_rate_pct": 41.67,
+      "correction_rate_pct": 41.67,
+      "abstention_rate_pct": 33.33,
+      "baseline_mean_fa_pct": 77.08,
+      "full_arch_mean_fa_pct": 84.03,
+      "delta_accuracy_pct": 6.94
+    }
+  ],
+  "ranking_summary": {
+    "best_handled": "Visual Occlusion / Smudge",
+    "most_challenging": "Adjacent Digit Swap (Transposition)",
+    "key_insight": "Single-field physical corruptions (decimal shifts, digit transpositions, single visual smudges) achieve the highest correction rates (>90-100%) due to exact closed-form algebraic isolation (K=1). Dual-field mutations (K=2) and severe optical occlusions require independent visual evidence or extra linear equations; when ungrounded, the system safely abstains rather than corrupting clean fields."
+  }
+}

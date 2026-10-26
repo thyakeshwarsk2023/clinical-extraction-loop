@@ -53,3 +53,12 @@ hierarchical_search:
     decimal_shift_bonus: 0.30
     transposition_bonus: 0.25
     k2_pair_bonus: 0.50
+
+criticality_weights:
+  test_date: 1
+  patient_name: 1
+  hdl: 2
+  total_cholesterol: 2
+  triglycerides: 3
+  ldl: 4
+  potassium: 5
