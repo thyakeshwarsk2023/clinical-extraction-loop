@@ -212,13 +212,33 @@ clinical-extraction-loop/
 
 ## 5. Quickstart Guide
 
-### 1. Environment Setup
+### 1. Environment Setup (Cold-Clone Checklist)
 
-Activate the Python virtual environment:
-```powershell
-# Windows PowerShell
-.\venv\Scripts\Activate.ps1
-```
+1. **Clone the repository:**
+   ```bash
+   git clone <repo-url>
+   cd clinical-extraction-loop
+   ```
+
+2. **Create and activate a virtual environment (Python 3.10 or 3.11):**
+   ```bash
+   python -m venv venv
+   # On Windows PowerShell:
+   .\venv\Scripts\Activate.ps1
+   # On Linux / macOS:
+   source venv/bin/activate
+   ```
+
+3. **Install project dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Download and verify super-resolution model weights:**
+   ```bash
+   python scripts/download_sr_weights.py
+   ```
+   *(Downloads `models/RealESRGAN_x4plus.pth` and validates SHA-256 seal `4fa0d389...`)*
 
 ### 2. Run Automated Verification Test Suite
 
