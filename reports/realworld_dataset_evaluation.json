@@ -1,0 +1,1257 @@
+{
+  "benchmark": "BioTrace Advanced Real-World Synthetic Benchmark (dataset_C_realworld)",
+  "sample_size": 60,
+  "overall_metrics": {
+    "baseline_mean_fa": 80.86,
+    "symbolic_mean_fa": 80.78,
+    "full_arch_mean_fa": 83.28,
+    "improvement_vs_baseline_pct": 2.41,
+    "mean_latency_ms": 1446.5
+  },
+  "per_category_metrics": {
+    "optical_physical_artifacts": {
+      "sample_count": 10,
+      "baseline_mean_fa": 100.0,
+      "symbolic_mean_fa": 100.0,
+      "full_arch_mean_fa": 100.0,
+      "mean_latency_ms": 0.15
+    },
+    "ocr_glyph_confusions": {
+      "sample_count": 10,
+      "baseline_mean_fa": 75.0,
+      "symbolic_mean_fa": 67.5,
+      "full_arch_mean_fa": 77.5,
+      "mean_latency_ms": 7714.15
+    },
+    "decimal_scale_errors": {
+      "sample_count": 10,
+      "baseline_mean_fa": 77.5,
+      "symbolic_mean_fa": 97.5,
+      "full_arch_mean_fa": 92.5,
+      "mean_latency_ms": 2.59
+    },
+    "k2_dual_faults": {
+      "sample_count": 10,
+      "baseline_mean_fa": 57.51,
+      "symbolic_mean_fa": 57.51,
+      "full_arch_mean_fa": 57.51,
+      "mean_latency_ms": 0.01
+    },
+    "clinical_boundaries_sampson": {
+      "sample_count": 10,
+      "baseline_mean_fa": 92.5,
+      "symbolic_mean_fa": 77.5,
+      "full_arch_mean_fa": 87.5,
+      "mean_latency_ms": 962.05
+    },
+    "multipanel_protein_electrolytes": {
+      "sample_count": 10,
+      "baseline_mean_fa": 82.68,
+      "symbolic_mean_fa": 84.66,
+      "full_arch_mean_fa": 84.66,
+      "mean_latency_ms": 0.04
+    }
+  },
+  "document_results": [
+    {
+      "doc_id": "rw_0001",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Smartphone Shadow Gradient across Total Cholesterol",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0002",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Paper Crease/Fold bisecting HDL numeric field",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.03
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 1.11
+      }
+    },
+    {
+      "doc_id": "rw_0003",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Photocopier Toner Speckle / Xerographic Dropout",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0004",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Technician Red Pen Checkmark touching LDL stroke",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.06
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.07
+      }
+    },
+    {
+      "doc_id": "rw_0005",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Rubber Clinic Stamp ('CRITICAL') over Triglycerides",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0006",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Handheld Perspective Skew (4 deg) with ambient vignetting",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.04
+      }
+    },
+    {
+      "doc_id": "rw_0007",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Water Drop / Coffee Ring Stain over result table",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0008",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Thermal Analyzer Printout with Faded Ink Contrast",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.01
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0009",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Directional Motion Blur across patient row numbers",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0010",
+      "category": "optical_physical_artifacts",
+      "error_scenario": "Multi-Artifact: Crease + Blue Pen Underline on HDL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.06
+      }
+    },
+    {
+      "doc_id": "rw_0011",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "3 <-> 8 Glyph Confusion on LDL (138.0 misread as 188.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.52
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0012",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "5 <-> 6 Glyph Confusion on Total Cholesterol (155.0 -> 165.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0013",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "1 <-> 7 Serif Confusion on HDL (41.0 misread as 47.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 1.36
+      }
+    },
+    {
+      "doc_id": "rw_0014",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "0 <-> 6 Loop Closure on Triglycerides (105.0 -> 165.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.34
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0015",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "4 <-> 9 Top Closure Confusion on LDL (142.0 -> 192.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.58
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0016",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Leading Digit Bounding Box Clipped (175.0 clipped to 75.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.76
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_VISION_CORRECTED_K1",
+        "latency_ms": 24670.03
+      }
+    },
+    {
+      "doc_id": "rw_0017",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Reference Range Column Leak (Detector grabs '< 100' instead of 145.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.67
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_VISION_CORRECTED_K1",
+        "latency_ms": 15828.93
+      }
+    },
+    {
+      "doc_id": "rw_0018",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Faint Stroke Dropped: 8 read as 3 on HDL (48.0 -> 43.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.02
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.05
+      }
+    },
+    {
+      "doc_id": "rw_0019",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Adjacent Transposition on Total Cholesterol (246.0 -> 264.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0020",
+      "category": "ocr_glyph_confusions",
+      "error_scenario": "Confusable Pair 0 <-> 8 on TC (208.0 read as 288.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.57
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_VISION_CORRECTED_K1",
+        "latency_ms": 36641.02
+      }
+    },
+    {
+      "doc_id": "rw_0021",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Missing Decimal Point (10x Error): Total Cholesterol 18.2 -> 182.0 mg/dL (clean mmol/L)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.01
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.59
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_FAST_PATH_K1",
+        "latency_ms": 1.24
+      }
+    },
+    {
+      "doc_id": "rw_0022",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Missing Decimal Point (10x Error): HDL Cholesterol 42.5 -> 425.0 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.41
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0023",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Premature Decimal Point (0.1x Error): LDL 140.0 -> 14.0 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.01
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.6
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_FAST_PATH_K1",
+        "latency_ms": 0.86
+      }
+    },
+    {
+      "doc_id": "rw_0024",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Premature Decimal Point (0.1x Error): Triglycerides 175.0 -> 17.5 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.55
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_FAST_PATH_K1",
+        "latency_ms": 20.66
+      }
+    },
+    {
+      "doc_id": "rw_0025",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Trailing Zero Truncation: Total Cholesterol 210.0 -> 21.0 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.2
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0026",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Trailing Zero Truncation: Triglycerides 160.0 -> 16.0 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.3
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_FAST_PATH_K1",
+        "latency_ms": 0.69
+      }
+    },
+    {
+      "doc_id": "rw_0027",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Decimal Shift on TC (10x jump): 166.0 -> 1660.0 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 1.68
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_FAST_PATH_K1",
+        "latency_ms": 1.28
+      }
+    },
+    {
+      "doc_id": "rw_0028",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Decimal Shift on LDL (10x jump): 51.2 -> 512.0 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_CORRECTED_K2",
+        "latency_ms": 165.95
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0029",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Premature Decimal on HDL (0.1x drop): 48.0 -> 4.8 mg/dL",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 23.71
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_FAST_PATH_K1",
+        "latency_ms": 1.11
+      }
+    },
+    {
+      "doc_id": "rw_0030",
+      "category": "decimal_scale_errors",
+      "error_scenario": "Unit Normalization Test: mmol/L values correctly recognized",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.01
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0031",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Extra Equations: Non-HDL & VLDL Present (2x2 Closed-Form)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 66.7,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 66.7,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 18.15
+      },
+      "full_arch": {
+        "fa": 66.7,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0032",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Extra Non-HDL: HDL and TG corrupted",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 66.7,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 66.7,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.06
+      },
+      "full_arch": {
+        "fa": 66.7,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0033",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Extra VLDL: TC and TG corrupted",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 66.7,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 66.7,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 66.7,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0034",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault (No Extra Fields): HDL Decimal Shift + LDL Digit Swap",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 50.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 50.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0035",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault (No Extra Fields): TC 3/8 confusion + TG smudge",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 50.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.04
+      },
+      "full_arch": {
+        "fa": 50.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0036",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Crease intersecting HDL & LDL rows",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 50.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.06
+      },
+      "full_arch": {
+        "fa": 50.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0037",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault with Lateral Shadow affecting right column (LDL + TG)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 50.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 50.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0038",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Fault: 5/6 swap on TC + Trailing Zero Drop on TG (180 -> 18)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.02
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.0
+      }
+    },
+    {
+      "doc_id": "rw_0039",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Severely Degraded Ink: Safe Abstention (Algebraic Indeterminate)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 50.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.02
+      },
+      "full_arch": {
+        "fa": 50.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.0
+      }
+    },
+    {
+      "doc_id": "rw_0040",
+      "category": "k2_dual_faults",
+      "error_scenario": "K=2 Dual Transposition: TC (195 -> 159) + HDL (48 -> 84)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 50.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_ABSTAIN_MISSING_ANALYTE",
+        "latency_ms": 0.35
+      },
+      "full_arch": {
+        "fa": 50.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0041",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=485 mg/dL): Sampson Eq 2 Clean Routing",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_CORRECTED_K2",
+        "latency_ms": 182.8
+      },
+      "full_arch": {
+        "fa": 50.0,
+        "status": "FULL_CORRECTED_K2_EXTRA_FIELDS",
+        "latency_ms": 131.7
+      }
+    },
+    {
+      "doc_id": "rw_0042",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=560 mg/dL): Sampson LDL Digit Swap (102 -> 120)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 0.51
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_VISION_CORRECTED_K1",
+        "latency_ms": 9488.66
+      }
+    },
+    {
+      "doc_id": "rw_0043",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=640 mg/dL): Smudge on TC (228 -> 268)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0044",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "High Triglycerides (TG=720 mg/dL): Sampson Decimal Shift on HDL (3.8 -> 38.0)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 75.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 75.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0045",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Severe Hypertriglyceridemia (TG=920 mg/dL > 800): Safe Principled Abstention",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_ABSTAIN_TG800",
+        "latency_ms": 0.02
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "ABSTAIN_TG800",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0046",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Severe Hypertriglyceridemia (TG=1150 mg/dL): Safe Principled Abstention with Stamp",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_ABSTAIN_TG800",
+        "latency_ms": 0.02
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "ABSTAIN_TG800",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0047",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Biological Bound Violation: HDL + LDL >= TC (HDL 65 + LDL 180 >= TC 210)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 75.0,
+        "status": "SYMBOLIC_CORRECTED_K1",
+        "latency_ms": 5.05
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.01
+      }
+    },
+    {
+      "doc_id": "rw_0048",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Biological Bound Violation: HDL >= Total Cholesterol (HDL 195 >= TC 180)",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 50.0,
+        "status": "SYMBOLIC_CORRECTED_K2",
+        "latency_ms": 31.15
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "ABSTAIN_BOUNDS_VIOLATION",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0049",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Martin-Hopkins Boundary: Low TG (< 50 mg/dL) Testing Divisor f=3.5",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.04
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0050",
+      "category": "clinical_boundaries_sampson",
+      "error_scenario": "Martin-Hopkins Boundary: TG=380 mg/dL, Non-HDL=190 mg/dL, Divisor f=6.0",
+      "panel_type": "lipid",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PASSTHROUGH",
+        "latency_ms": 0.03
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_CONVERGED",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0051",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Clean Normal Reference (TP = Alb + Glob)",
+      "panel_type": "protein",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PROTEIN_CONVERGED",
+        "latency_ms": 0.07
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_PROTEIN_CONVERGED",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0052",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Albumin Digit Swap (4.2 -> 2.4 g/dL) with Paper Crease",
+      "panel_type": "protein",
+      "baseline": {
+        "fa": 66.7,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 33.3,
+        "status": "SYMBOLIC_PROTEIN_CORRECTED",
+        "latency_ms": 0.07
+      },
+      "full_arch": {
+        "fa": 33.3,
+        "status": "FULL_PROTEIN_REPAIRED",
+        "latency_ms": 0.02
+      }
+    },
+    {
+      "doc_id": "rw_0053",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Decimal Shift on Total Protein (7.1 -> 71.0 g/dL)",
+      "panel_type": "protein",
+      "baseline": {
+        "fa": 66.7,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PROTEIN_CORRECTED",
+        "latency_ms": 0.09
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_PROTEIN_REPAIRED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0054",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: Bound Violation (Albumin 7.5 >= Total Protein 7.0 g/dL)",
+      "panel_type": "protein",
+      "baseline": {
+        "fa": 66.7,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_PROTEIN_CORRECTED",
+        "latency_ms": 0.07
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_PROTEIN_REPAIRED",
+        "latency_ms": 0.04
+      }
+    },
+    {
+      "doc_id": "rw_0055",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Protein Panel: 3 <-> 8 Confusion on Globulin (3.3 -> 3.8 g/dL)",
+      "panel_type": "protein",
+      "baseline": {
+        "fa": 66.7,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 33.3,
+        "status": "SYMBOLIC_PROTEIN_CORRECTED",
+        "latency_ms": 0.07
+      },
+      "full_arch": {
+        "fa": 33.3,
+        "status": "FULL_PROTEIN_REPAIRED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0056",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Clean Normal Anion Gap (140 - (102 + 24) = 14 mEq/L)",
+      "panel_type": "electrolytes",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_ELECTROLYTES_CONVERGED",
+        "latency_ms": 0.09
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_ELECTROLYTES_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0057",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Decimal Shift on Potassium (4.2 -> 42.0 mEq/L)",
+      "panel_type": "electrolytes",
+      "baseline": {
+        "fa": 80.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 80.0,
+        "status": "SYMBOLIC_ELECTROLYTES_VIOLATION",
+        "latency_ms": 5.11
+      },
+      "full_arch": {
+        "fa": 80.0,
+        "status": "FULL_ELECTROLYTES_VIOLATION",
+        "latency_ms": 0.1
+      }
+    },
+    {
+      "doc_id": "rw_0058",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Digit Swap on Sodium (142 -> 124 mEq/L)",
+      "panel_type": "electrolytes",
+      "baseline": {
+        "fa": 80.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_ELECTROLYTES_CORRECTED",
+        "latency_ms": 0.08
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_ELECTROLYTES_REPAIRED",
+        "latency_ms": 0.04
+      }
+    },
+    {
+      "doc_id": "rw_0059",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: High Anion Gap Metabolic Acidosis (AG = 24.0 mEq/L)",
+      "panel_type": "electrolytes",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_ELECTROLYTES_CONVERGED",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_ELECTROLYTES_CONVERGED",
+        "latency_ms": 0.03
+      }
+    },
+    {
+      "doc_id": "rw_0060",
+      "category": "multipanel_protein_electrolytes",
+      "error_scenario": "Electrolyte Panel: Osmolar Gap Advisory Alert (Measured 315 vs Calc 290)",
+      "panel_type": "electrolytes",
+      "baseline": {
+        "fa": 100.0,
+        "latency_ms": 0.0
+      },
+      "symbolic": {
+        "fa": 100.0,
+        "status": "SYMBOLIC_ELECTROLYTES_CONVERGED",
+        "latency_ms": 0.05
+      },
+      "full_arch": {
+        "fa": 100.0,
+        "status": "FULL_ELECTROLYTES_CONVERGED",
+        "latency_ms": 0.1
+      }
+    }
+  ]
+}
