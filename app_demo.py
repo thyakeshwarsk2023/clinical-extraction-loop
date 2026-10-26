@@ -844,8 +844,8 @@ with tab_xai:
         """
         **Clinical Invariant Specifications:**
         - **Friedewald Invariant (TG <= 400 mg/dL):** `TC = HDL + LDL + (TG / 5.0)`
-        - **Martin-Hopkins Invariant (Personalized Divisor):** `LDL = TC - HDL - (TG / f)`, where dynamic divisor `f` is stratified across 180 strata based on Triglycerides and non-HDL cholesterol.
-        - **Sampson Invariant (400 < TG <= 800 mg/dL):** `LDL = TC/1.19 + HDL/1.1 - TG/3.98 - (TG * (TC - HDL))/8.2 - 0.17`
+        - **Martin-Hopkins Invariant (Personalized Divisor):** `LDL = TC - HDL - (TG / f)`, where dynamic divisor `f` is stratified across clinical strata (f in [3.5, 6.5], condensed 6-branch approximation) based on Triglycerides and non-HDL cholesterol.
+        - **Sampson Invariant (400 < TG <= 800 mg/dL):** `LDL = (TC / 0.948) - (HDL / 0.971) - (TG / 8.56 + (TG * (TC - HDL)) / 2140.0 - (TG**2) / 16100.0) - 9.44` (NIH Sampson 2020 Equation 2)
         - **Principled Abstention Boundary (TG > 800 mg/dL):** `ABSTAIN_TG800`
         """
     )

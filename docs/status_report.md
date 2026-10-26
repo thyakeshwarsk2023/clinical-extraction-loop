@@ -1,6 +1,6 @@
 # BioTrace Automated Status & Fulfilment Report
 
-> **Generated at Git Commit:** `7a00be5813c38bc38f7a6fc2ab534b000eba3a8d`
+> **Generated at Git Commit:** `96afa1ae29b86ce8413e25317dbbfcd3d8121acf`
 > **Stage 1 Extractor Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)`
 > **Full-Page Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 > **Super-Resolution Backend:** `realesrgan` (Weights Present on Disk: `True`)
@@ -11,10 +11,16 @@
 ## 1. Verified Benchmark Metrics (Read Directly from JSON)
 
 ### A. 20-Document Targeted Benchmark (`reports/twenty_test_cases_evaluation.json`)
-- **Baseline Pass-through Accuracy:** `76.25%`
-- **Symbolic Only (Stage 2) Accuracy:** `86.25%`
-- **Full Architecture Accuracy:** `95.00%`
-- **Mean Pipeline Execution Latency:** `1359.23 ms`
+- **Mode 1: `oracle_sidecar` Engine (Controlled Input Ground Truth):**
+  - Baseline Pass-through Accuracy:   `76.25%`
+  - Symbolic Only (Stage 2) Accuracy: `86.25%`
+  - Full Architecture Accuracy:       `95.00%`
+  - Mean Pipeline Execution Latency:  `1359.23 ms`
+- **Mode 2: `rapidocr` Engine (Live OCR End-to-End):**
+  - Baseline Pass-through Accuracy:   `72.92%`
+  - Symbolic Only (Stage 2) Accuracy: `77.92%`
+  - Full Architecture Accuracy:       `87.92%`
+  - Mean Pipeline Execution Latency:  `1289.89 ms`
 
 ### B. 170-Document 3-Way Ablation Suite (`reports/ablation_results.json`)
 - **Arm 0 (Baseline Feed-Forward):** `80.59%` Field Accuracy

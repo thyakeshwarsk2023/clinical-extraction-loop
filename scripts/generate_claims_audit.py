@@ -281,7 +281,7 @@ def main():
     with open(md_path, "w", encoding="utf-8") as f:
         f.write("# BioTrace Claims-vs-Code Truth Table & Audit Report\n\n")
         f.write("> **Global Compliance Rule:** No claim is marked \"Fulfilled\" without an executable test or eval path.\n")
-        f.write(f"> **Baseline Engine:** `{details['stage1_engine']}` | **VLM 750ms Latency:** `{details['vlm_reference_status']}`\n\n")
+        f.write(f"> **Baseline Engine:** `{details['stage1_engine']}` | **Baseline Latency Reference:** `{details['vlm_reference_status']}`\n\n")
 
         f.write("## 1. Deep Verification Items\n\n")
         f.write(f"### a) Real-ESRGAN Weight File & Backend Share\n")

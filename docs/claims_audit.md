@@ -1,7 +1,7 @@
 # BioTrace Claims-vs-Code Truth Table & Audit Report
 
 > **Global Compliance Rule:** No claim is marked "Fulfilled" without an executable test or eval path.
-> **Baseline Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)` | **VLM 750ms Latency:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
+> **Baseline Engine:** `oracle_sidecar and rapidocr (dual-mode supported in src/ocr_engine.py)` | **Baseline Latency Reference:** `1696.8 ms (Measured full-page RapidOCR baseline; no real VLM baseline measured due to 4GB VRAM constraint)`
 
 ## 1. Deep Verification Items
 

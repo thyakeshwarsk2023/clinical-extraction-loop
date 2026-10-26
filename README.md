@@ -4,7 +4,7 @@
 [![Status](https://img.shields.io/badge/Milestone-Review%203%20Final%20Production-green.svg)]()
 [![Field Accuracy](https://img.shields.io/badge/Field%20Accuracy-95.0%25-brightgreen.svg)]()
 [![K=2 Solver Speedup](https://img.shields.io/badge/K%3D2%20Speedup-11.36x-blue.svg)]()
-[![Tests](https://img.shields.io/badge/Tests-56%2F56%20Passing-success.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-93%2F93%20Passing-success.svg)]()
 [![Interoperability](https://img.shields.io/badge/HL7%20FHIR-R4%20Standard-orange.svg)]()
 
 > **B.Tech Capstone Project — Review 3 Deliverable**  
@@ -47,7 +47,7 @@ Clinical diagnostic document extraction (e.g., lipid panels, comprehensive metab
                │ - Dynamic Invariant Selection:               │
                │   • Friedewald (TG <= 400 mg/dL)             │
                │   • Sampson 2020 (400 < TG <= 800 mg/dL)     │
-               │   • Martin-Hopkins 180-Cell Strata Divisor f │
+               │   • Martin-Hopkins Strata Divisor f          │
                │   • Principled Abstention (TG > 800 mg/dL)   │
                └──────────────┬──────────────────┬────────────┘
                Residual <= tol│                  │Residual > tol (Violation)
@@ -92,12 +92,12 @@ Clinical diagnostic document extraction (e.g., lipid panels, comprehensive metab
 1. **Stage 0 — Dynamic Assay-Method Routing (`src/stage0_classifier.py`):**  
    Classifies clinical document headers. Direct homogeneous assays bypass arithmetic equality checks (preventing false mutations when LDL is directly measured). Calculated panels route dynamically to the appropriate equation based on methodology and triglyceride saturation.
 2. **Stage 1 — Multimodal State Extraction (`src/stage1_extract.py`):**  
-   Extracts token values, spatial bounding boxes $[x_0, y_0, x_1, y_1]$, and extraction confidence logits.
+   Extracts token values, spatial bounding boxes $[x_0, y_0, x_1, y_1]$, and extraction confidence logits. Supports dual Stage 1 input modes: `oracle_sidecar` and live `rapidocr` OCR tabular parsing.
 3. **Stage 2 — Multi-Invariant Physiological Engine (`src/stage2_constraints.py`):**  
    Normalizes international units ($mmol/L \to mg/dL$) and evaluates domain invariants:
    - **Friedewald Invariant ($TG \le 400\text{ mg/dL}$):** $TC = HDL + LDL + \frac{TG}{5.0}$
-   - **Sampson Invariant ($400 < TG \le 800\text{ mg/dL}$):** $LDL = \frac{TC}{1.19} + \frac{HDL}{1.1} - \frac{TG}{3.98} - \frac{TG \cdot (TC - HDL)}{8.2} - 0.17$
-   - **Martin-Hopkins Invariant:** $LDL = TC - HDL - \frac{TG}{f(TG, \text{non-HDL})}$, where dynamic divisor $f$ is stratified across multi-tiered clinical strata ($f \in [3.5, 6.5]$).
+   - **Sampson Invariant ($400 < TG \le 800\text{ mg/dL}$):** $LDL = \frac{TC}{0.948} - \frac{HDL}{0.971} - \left(\frac{TG}{8.56} + \frac{TG \cdot (TC - HDL)}{2140} - \frac{TG^2}{16100}\right) - 9.44$ (NIH Sampson 2020 Equation 2).
+   - **Martin-Hopkins Invariant:** $LDL = TC - HDL - \frac{TG}{f(TG, \text{non-HDL})}$, where dynamic divisor $f \in [3.5, 6.5]$ is stratified across clinical strata (condensed 6-branch approximation).
    - **Principled Abstention ($TG > 800\text{ mg/dL}$):** Emits `ABSTAIN_TG800` to prevent ungrounded extrapolations.
 4. **Stage 2.5 — Damerau-Levenshtein Counterfactual XAI (`src/stage2_isolation.py`):**  
    - **$k=1$ Algebraic Inversions:** Computes closed-form counterfactual targets ($TC^*, HDL^*, LDL^*, TG^*$) and ranks candidates via calibrated composite loss:
@@ -118,14 +118,15 @@ Clinical diagnostic document extraction (e.g., lipid panels, comprehensive metab
 
 ### A. 20-Case Verification Benchmark (`evals/eval_twenty_test_cases.py`)
 
-| Metric | Baseline (oracle_sidecar) | Symbolic Only | Full Architecture | Improvement vs Baseline | Target Criterion |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Field Accuracy (FA)** | 76.25% | 86.25% | **95.00%** | **+18.75%** | $\ge 95.0\%$ |
-| **Mean Pipeline Latency** | 0.014 ms | 0.902 ms | **32.49 ms** | Real-time interactive | $< 100\text{ ms}$ |
-| **K=2 Solver Latency** | 0.750 ms (2D search) | N/A | **0.066 ms (1D-to-alg)** | **11.36x speedup** | $O(N)$ vs $O(N^2)$ |
-| **Repair vs Baseline Re-read** | Baseline not measured | N/A | Local SR gated repair | Tier-2 engine not deployed | Baseline not measured |
-| **False-Trigger Rate (Clean)** | 0.0% | 0.0% | **0.0% (Zero Harm)** | Guaranteed non-maleficence | $0.0\%$ |
-| **Sampson High-TG Routing** | N/A (Failed) | N/A | **100% Correct Routing** | Resolves TG > 400 limitation | Yes |
+| Metric | Baseline Pass-through | Symbolic Only (Stage 2) | Full Architecture (Stage 4) | Improvement vs Baseline |
+| :--- | :---: | :---: | :---: | :---: |
+| **Field Accuracy (oracle_sidecar)** | 76.25% | 86.25% | **95.00%** | **+18.75%** |
+| **Field Accuracy (rapidocr)** | 72.92% | 77.92% | **87.92%** | **+15.00%** |
+| **Mean Pipeline Latency (oracle)** | 0.012 ms | 2.27 ms | **1359.23 ms** | Interactive visual repair |
+| **Mean Pipeline Latency (rapidocr)**| 0.005 ms | 0.92 ms | **1289.89 ms** | End-to-end OCR visual repair |
+| **K=2 Solver Latency** | 0.774 ms (2D search) | N/A | **0.060 ms (1D-to-alg)** | **12.9x speedup** |
+| **False-Trigger Rate (Clean)** | 0.0% | 0.0% | **0.0% (Zero Harm)** | Guaranteed non-maleficence |
+| **Sampson High-TG Routing** | N/A | N/A | **100% Correct Routing** | Resolves TG > 400 limitation |
 
 *Note: No real VLM baseline measured on local hardware due to 4GB VRAM constraint (see docs/future_work_vlm_baseline.md). Full-page RapidOCR re-read latency measured on local hardware across 20 clinical reports (1696.8 ms warm mean, 2110.4 ms cold read; reports/baseline_latency_benchmark.json) serves as the empirical full-page hardware baseline. Active Stage 1 engines: oracle_sidecar and rapidocr (dual-mode supported).*
 
@@ -141,11 +142,29 @@ Clinical diagnostic document extraction (e.g., lipid panels, comprehensive metab
 
 ### C. Automated Test Suite Verification
 
-**56 out of 56 unit tests passing (100% pass rate in 1.3s):**
+**93 out of 93 unit tests passing (100% pass rate in ~29s):**
 1. `tests/test_candidate_scoring.py`: 16 tests (Damerau-Levenshtein scoring, decimal bonuses, transposition bonuses, algebraic indeterminate abstention).
-2. `tests/test_vision_gate.py`: 9 tests (GrabCut segmentation, micro-crop padding, Tenengrad focus energy, Real-ESRGAN $4\times$).
+2. `tests/test_vision_gate.py`: 10 tests (GrabCut segmentation, micro-crop padding, Tenengrad focus energy, Real-ESRGAN $4\times$ non-Kaiming weight verification).
 3. `tests/test_sampson_routing.py`: 21 tests (Sampson LDL calculation, $O(1)$ closed-form inversions, TG decimal-shift hypotheses, CBC hard identities & soft Hct rule).
-4. `tests/test_clinical_features.py`: 16 tests (Martin-Hopkins divisor strata, Counterfactual XAI, Adversarial injection, Clinical Risk Flip, HL7 FHIR R4 export, SHA-256 seal integrity).
+4. `tests/test_clinical_features.py`: 17 tests (Martin-Hopkins divisor strata, Counterfactual XAI, Adversarial injection, Clinical Risk Flip, HL7 FHIR R4 export, SHA-256 seal integrity).
+5. `tests/test_ocr_engine.py`: 5 tests (RapidOCR tabular parsing, bounding box extraction, and blind re-read).
+6. `tests/test_protein_panel.py`: 5 tests (Protein panel registry, Total Protein = Albumin + Globulin, closed-form inversions).
+7. `tests/test_electrolytes_panel.py`: 10 tests (Electrolyte panel, Anion Gap identity, Osmolar Gap soft advisory check).
+8. `tests/test_k2_augmented_isolation.py`: 4 tests (Extra-field equation augmentation for Non-HDL and VLDL).
+9. `tests/test_dual_blind_reread.py`: 5 tests (Independent dual blind re-read consensus gate for K=2 faults).
+
+### D. Multi-Panel Expansion & NHANES Real-Patient Validation
+
+- **Lipid Panel (NIH Sampson 2020 Equation 2):**
+  - Empirically validated on CDC Continuous NHANES 2021-2023 lipid cohort ($N = 3,517$ complete records, `reports/nhanes_validation.json`).
+  - Achieves **100.0% convergence** across all evaluated patients in the $400 < TG \le 800\text{ mg/dL}$ stratum ($N = 33$).
+- **Protein Panel ($\text{Total Protein} = \text{Albumin} + \text{Globulin}$):**
+  - Empirically validated on CDC Continuous NHANES 2021-2023 cohort ($N = 6,364$ records, `reports/nhanes_protein_electrolytes_validation.json`).
+  - Achieves **100.0% convergence** at operational tolerance $\le 2.0\%$ (or $\le 0.10\text{ g/dL}$).
+- **Electrolyte Panel ($\text{Anion Gap} = \text{Na} - (\text{Cl} + \text{HCO}_3)$):**
+  - Empirically validated on CDC Continuous NHANES 2021-2023 cohort ($N = 6,325$ records).
+  - Normal reference distribution $[8, 16]\text{ mEq/L}$: **91.35%** (5,778 patients); broad physiological bounds $[5, 18]\text{ mEq/L}$: **97.31%**; biological bounds satisfaction: **99.98%**.
+  - **Osmolar Gap Advisory:** Evaluates calculated osmolality ($2\cdot\text{Na} + \text{Glucose}/18 + \text{BUN}/2.8$) against measured osmolality as a non-repairing **soft advisory flag**.
 
 ---
 
@@ -203,7 +222,7 @@ Activate the Python virtual environment:
 
 ### 2. Run Automated Verification Test Suite
 
-Execute all 53 unit tests across candidate scoring, vision gate, Sampson routing, and clinical integration modules:
+Execute all 93 unit tests across candidate scoring, vision gate, Sampson routing, clinical integration, OCR, multi-panel (protein, electrolytes), and K=2 modules:
 ```powershell
 .\venv\Scripts\python.exe -m unittest discover tests
 ```
@@ -243,9 +262,14 @@ Open **[http://localhost:8501](http://localhost:8501)** in your web browser.
 ## 6. Limitations Consistency & Solvability Boundaries
 
 1. **Underdetermined Identity Inversions:** A single scalar clinical identity (such as the Friedewald or Sampson equation) contains multiple variables and **cannot uniquely identify even one corrupted field** purely by algebra. Localization is achieved strictly through the **composite candidate cost model** (a heuristic combining Damerau-Levenshtein edit distance, OCR token confidence penalties, and decimal/transposition bonuses) coupled with **physical visual evidence**.
-2. **K=2 Dual-Field Policy:** Dual-field corruptions ($K=2$) represent an underdetermined system with infinitely many mathematical pairs. Candidates are ranked by the cost model, but a final commit **requires independent evidence** (blind re-read agreement on at least one of the two candidate fields or an external prior). In the absence of independent evidence, the system safely and explicitly returns **`ABSTAIN_ALGEBRAIC_INDETERMINATE`**.
+2. **K=2 Dual-Field Policy & Resolution Breakdown:** Dual-field corruptions ($K=2$) represent an underdetermined system. Across the 50 `corrupted_double` benchmark documents (`reports/k2_ablation_evaluation.json`), independent evidence mechanisms resolve **86.0% (43/50)** of cases:
+   - **Extra-field equations (Non-HDL / VLDL):** Resolves 2.0% (1/50).
+   - **Independent dual blind re-read:** Resolves 84.0% (42/50).
+   - **Safely abstained:** 10.0% (5/50, includes `ABSTAIN_POSSIBLE_TG_DECIMAL_SHIFT`).
+   - **Pre-existing equation coincidence miss:** 4.0% (2/50, `doc_0044` and `doc_0035` satisfied Friedewald by coincidence before isolation; 0 risk flips).
+   - **Committed wrong by new mechanisms:** **0 of 50 (0.0%)**.
 3. **Severe Hypertriglyceridemia ($TG > 800\text{ mg/dL}$):** Triglycerides exceeding 800 mg/dL invalidate mathematical estimation due to chylomicrons. The system tests for decimal-shift hypotheses (e.g. TG 900 -> 90) before safely emitting **`ABSTAIN_TG800`**.
-4. **Super-Resolution Gating & Hallucination Prevention:** Real-ESRGAN runs in compact architecture mode (pretrained `.pth` weights are absent from repository; blended with bicubic interpolation). To prevent hallucination on ambiguous glyphs (e.g., confusing 3/8, 5/6, 1/7, 0/6, 4/9), an SR-enhanced candidate is **committed only if the blind OCR read agrees with the counterfactual candidate AND is correct-or-neutral on the bicubic version**; otherwise, the system abstains. Sharpness metrics (Tenengrad) serve as logged diagnostics, not proof of correctness.
+4. **Super-Resolution Gating & Hallucination Prevention:** Official Real-ESRGAN $4\times$ plus weights are managed on disk via `scripts/download_sr_weights.py` (`models/RealESRGAN_x4plus.pth`). To prevent hallucination on ambiguous glyphs (e.g., confusing 3/8, 5/6, 1/7, 0/6, 4/9), an SR-enhanced candidate is **committed only if the blind OCR read agrees with the counterfactual candidate AND is correct-or-neutral on the bicubic version**; otherwise, the system abstains. Sharpness metrics (Tenengrad) serve as logged diagnostics, not proof of correctness.
 5. **Physical Ink Ablation Limit:** As measured on the empirical ink ablation curve (`reports/ink_ablation_curve.json`), when ink strokes are progressively destroyed from 10% to 100%, the system transitions from repair to safe abstention, reaching **100% safe abstention at complete ink obliteration** (0% committed-wrong).
 
 ---
