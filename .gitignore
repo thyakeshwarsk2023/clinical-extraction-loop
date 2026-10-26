@@ -9,3 +9,6 @@ __pycache__/
 nhanes_raw/
 models/*.pth
 models/*.onnx
+~$*
+.DS_Store
+
