@@ -58,8 +58,8 @@ class SidecarEngine:
             meta = json.load(f)
 
         raw_image = cv2.imread(image_path)
-        if raw_image is None:
-            raise ValueError(f"Unable to load document image at: {image_path}")
+        from src.image_preflight import inspect_image_quality
+        preflight = inspect_image_quality(raw_image)
 
         display_data = meta.get("injected_display_data", {}).copy()
         bboxes = meta.get("bounding_boxes", {}).copy()
@@ -86,6 +86,7 @@ class SidecarEngine:
             "assay_ground_truth": meta.get("assay_ground_truth", "FRIEDEWALD"),
             "extractor_engine": self.engine_name,
             "missing_fields": [],
+            "image_preflight": preflight,
         }
 
 
@@ -102,13 +103,13 @@ ANALYTE_PATTERNS = {
     "hdl": [
         re.compile(r"hdl\s*cholesterol", re.IGNORECASE),
         re.compile(r"cholesterol[,\s]+hdl", re.IGNORECASE),
-        re.compile(r"\bhdl-c\b", re.IGNORECASE),
+        re.compile(r"\bhdl\s*[-–—]?\s*c\b", re.IGNORECASE),
         re.compile(r"\bhdl\b", re.IGNORECASE),
     ],
     "ldl": [
         re.compile(r"ldl\s*cholesterol", re.IGNORECASE),
         re.compile(r"cholesterol[,\s]+ldl", re.IGNORECASE),
-        re.compile(r"\bldl-c\b", re.IGNORECASE),
+        re.compile(r"\bldl\s*[-–—]?\s*c\b", re.IGNORECASE),
         re.compile(r"\bldl\b", re.IGNORECASE),
     ],
     "triglycerides": [
@@ -129,14 +130,20 @@ METHOD_PATTERNS = [
 def is_reference_range(text: str) -> bool:
     """Detects whether a token represents a reference interval rather than patient result."""
     t = text.strip()
-    if re.search(r"[-–—]", t) and not t.startswith("-"):
+    # 1. Numerical range intervals: e.g. "20-40", "3.5–5.5", "10 - 20", "0.5 — 2.0"
+    if re.search(r"(?:^|[^\w])\d+(?:\.\d+)?\s*[-–—]\s*\d+(?:\.\d+)?", t):
         return True
+    # 2. Inequalities / relational operators: e.g. "<100", ">=40", "> 200"
     if re.search(r"[<>]=?\s*\d+", t):
         return True
-    if t.startswith("[") or t.startswith("(") or t.endswith("]") or t.endswith(")"):
-        return True
+    # 3. Explicit reference / normal keywords: e.g. "Ref Interval", "Normal", "Range"
     if re.search(r"\b(ref|range|interval|normal)\b", t, re.IGNORECASE):
         return True
+    # 4. Bracketed reference intervals: e.g. "[100-200]", "(<50)"
+    if (t.startswith("[") and t.endswith("]")) or (t.startswith("(") and t.endswith(")")):
+        inner = t[1:-1].strip()
+        if re.search(r"\d", inner) and (re.search(r"[-–—<>]", inner) or re.search(r"\b(ref|range|interval|normal)\b", inner, re.IGNORECASE)):
+            return True
     return False
 
 
@@ -181,8 +188,24 @@ class RapidOCREngine:
 
     def extract(self, image_path: str, json_path: Optional[str] = None) -> Dict[str, Any]:
         raw_image = cv2.imread(image_path)
-        if raw_image is None:
-            raise ValueError(f"Unable to load document image at: {image_path}")
+        from src.image_preflight import inspect_image_quality
+        preflight = inspect_image_quality(raw_image)
+
+        # Early exit without OCR if image input is invalid or degenerate
+        if not preflight["input_valid"]:
+            return {
+                "image_path": image_path,
+                "image_bgr": raw_image,
+                "method_text": "",
+                "unit": "mg/dL",
+                "extracted_values": {},
+                "bounding_boxes": {},
+                "confidences": {},
+                "extractor_engine": self.engine_name,
+                "missing_fields": ["total_cholesterol", "hdl", "ldl", "triglycerides"],
+                "raw_ocr_tokens": [],
+                "image_preflight": preflight,
+            }
 
         # Execute RapidOCR
         raw_results, _ = self._ocr(image_path)
@@ -233,11 +256,17 @@ class RapidOCREngine:
         for analyte, patterns in ANALYTE_PATTERNS.items():
             label_token = None
             for t in tokens:
+                t_low = t["text"].lower()
+                # Exclude particle size, count, or subfractions from being chosen as cholesterol labels
+                if analyte in ("ldl", "hdl"):
+                    if "size" in t_low or "particle" in t_low or re.search(r"\b[lh]dl[- ]?p\b", t_low):
+                        continue
+
                 # Match label, ensuring it's not a reference range or header
                 for p in patterns:
                     if p.search(t["text"]) and not is_reference_range(t["text"]):
                         # Avoid 'Calculated by Friedewald' being mistaken for LDL label
-                        if analyte == "ldl" and "calculated" in t["text"].lower() and "friedewald" in t["text"].lower():
+                        if analyte == "ldl" and "calculated" in t_low and "friedewald" in t_low:
                             continue
                         label_token = t
                         break
@@ -288,20 +317,6 @@ class RapidOCREngine:
             if not val_found:
                 missing_fields.append(analyte)
 
-        # Ingest ground truth from sidecar if available for benchmarking
-        gt_clean = extracted_values.copy()
-        assay_gt = "FRIEDEWALD"
-        if json_path is None:
-            json_path = os.path.splitext(image_path)[0] + ".json"
-        if os.path.exists(json_path):
-            try:
-                with open(json_path, "r", encoding="utf-8") as f:
-                    meta = json.load(f)
-                    gt_clean = meta.get("ground_truth_clean", gt_clean)
-                    assay_gt = meta.get("assay_ground_truth", assay_gt)
-            except Exception:
-                pass
-
         return {
             "image_path": image_path,
             "image_bgr": raw_image,
@@ -310,16 +325,15 @@ class RapidOCREngine:
             "extracted_values": extracted_values,
             "bounding_boxes": bounding_boxes,
             "confidences": confidences,
-            "ground_truth_clean": gt_clean,
-            "assay_ground_truth": assay_gt,
             "extractor_engine": self.engine_name,
             "missing_fields": missing_fields,
             "raw_ocr_tokens": tokens,
+            "image_preflight": preflight,
         }
 
 
+
 def get_ocr_engine(engine_name: str = "oracle_sidecar") -> OCREngine:
-    """Factory creating an OCR engine instance by name."""
     if engine_name == "rapidocr":
         return RapidOCREngine()
     elif engine_name == "oracle_sidecar":

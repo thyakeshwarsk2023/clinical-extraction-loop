@@ -15,15 +15,18 @@ from src.stage2_isolation import (
     generate_discrete_plausible_candidates,
     is_digit_transposition_match,
 )
-from src.stage3_vision_gate import process_vision_gate
+from src.stage3_vision_gate import process_vision_gate, is_valid_bbox, validate_analyte_crop_selection
 from src.stage4_enhance_extract import (
     enhance_and_reextract,
     reextract_microcrop,
     verify_dual_blind_reread,
 )
+from typing import Optional
+from src.image_preflight import inspect_image_quality, PreflightConfig
 
-def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10) -> dict:
-    doc = extract_document_state(image_path)
+def _run_pipeline_inner(image_path: str, max_attempts: int = 2, tolerance: float = 0.10, doc: dict = None) -> dict:
+    if doc is None:
+        doc = extract_document_state(image_path)
     
     # Stage 0: Assay-Method Routing
     assay_routing = AssayClassifier.classify(doc["method_text"])
@@ -33,10 +36,27 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
     canonical_data = normalize_to_mgdl(doc["extracted_values"], doc["unit"])
     confidences = doc["confidences"].copy()
     bboxes = doc["bounding_boxes"]
-    gt_clean = doc["ground_truth_clean"]
     img_bgr = doc["image_bgr"]
     
     audit_trail = []
+
+    # Stage 1 Preflight: Guardrail against empty or unreadable OCR scans
+    essential_fields = ["total_cholesterol", "hdl", "ldl", "triglycerides"]
+    observed_fields = [f for f in essential_fields if f in canonical_data and canonical_data[f] > 0]
+    if len(observed_fields) < 2:
+        return {
+            "status": "ABSTAIN_UNREADABLE_OR_EMPTY_OCR",
+            "assay_route": route,
+            "missing_fields": [f for f in essential_fields if f not in canonical_data or canonical_data[f] <= 0],
+            "data": canonical_data,
+            "unit": doc["unit"],
+            "audit_trail": [{
+                "stage": "STAGE_1_PREFLIGHT",
+                "action": "ABSTAIN_INSUFFICIENT_OCR_TOKENS",
+                "observed_count": len(observed_fields)
+            }]
+        }
+
     
     # Direct Assay Path: Bypass Friedewald equality, apply plausibility bounds
     if route == "DIRECT_MEASURED":
@@ -69,8 +89,21 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
     # Calculated Panel Closed Loop (Dynamic Routing: Friedewald vs Sampson vs Martin-Hopkins)
     attempt = 0
     current_data = canonical_data.copy()
+    seen_states = set()
     
     while attempt < max_attempts:
+        # Repeated-state protection: prevent cyclic oscillation across retry iterations
+        state_key = tuple(sorted((k, round(v, 2)) for k, v in current_data.items() if v is not None))
+        if state_key in seen_states:
+            return {
+                "status": "ABSTAIN_CYCLIC_STATE_DETECTED",
+                "assay_route": route,
+                "reason": "Repeated panel state detected across retry iterations; terminating to prevent cyclic oscillation.",
+                "data": canonical_data,
+                "residual": round(residual, 2) if 'residual' in locals() else 0.0,
+                "audit_trail": audit_trail
+            }
+        seen_states.add(state_key)
         raw_tg = current_data.get("triglycerides", 0.0)
         
         # Priority 1: Route by declared method text (Stage 0) first
@@ -80,7 +113,8 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             active_equation = "MARTIN_HOPKINS"
         elif route == "SAMPSON":
             status, rel_err = evaluate_sampson_invariant(current_data, tolerance)
-            residual = rel_err
+            ldl_calc = calculate_sampson_ldl(current_data.get("total_cholesterol", 0.0), current_data.get("hdl", 0.0), current_data.get("triglycerides", 0.0))
+            residual = abs(current_data.get("ldl", 0.0) - ldl_calc)
             active_equation = "SAMPSON"
         elif route == "FRIEDEWALD" and raw_tg <= 400.0:
             status, residual, rel_err = evaluate_friedewald_invariant(current_data, tolerance)
@@ -112,7 +146,8 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             }
         elif raw_tg > 400.0:
             status, rel_err = evaluate_sampson_invariant(current_data, tolerance)
-            residual = rel_err
+            ldl_calc = calculate_sampson_ldl(current_data.get("total_cholesterol", 0.0), current_data.get("hdl", 0.0), current_data.get("triglycerides", 0.0))
+            residual = abs(current_data.get("ldl", 0.0) - ldl_calc)
             active_equation = "SAMPSON"
         else:
             status, residual, rel_err = evaluate_friedewald_invariant(current_data, tolerance)
@@ -187,6 +222,31 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
         )
         action = search_res.get("action")
         
+        if action == "ABSTAIN_MISSING_ANALYTE":
+            missing_f = search_res.get("field")
+            missing_list = [missing_f] if missing_f else []
+            return {
+                "status": "ABSTAIN_MISSING_ANALYTE",
+                "assay_route": route,
+                "missing_fields": missing_list,
+                "reason": search_res.get("reason", "Missing required analytes for invariant isolation."),
+                "data": canonical_data,
+                "residual": round(residual, 2) if 'residual' in locals() else 0.0,
+                "audit_trail": audit_trail
+            }
+
+        if action == "CONVERGED":
+            return {
+                "status": "CONVERGED",
+                "assay_route": route,
+                "equation": search_res.get("equation", active_equation),
+                "attempts": attempt,
+                "data": current_data,
+                "residual": round(residual, 2) if 'residual' in locals() else 0.0,
+                "relative_error": round(search_res.get("residual", 0.0), 4),
+                "audit_trail": audit_trail
+            }
+
         if action == "ABSTAIN_TG800":
             return {
                 "status": "ABSTAIN_TG800",
@@ -269,26 +329,71 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
         if action == "CORRECT_K1" and search_res.get("is_fast_path"):
             field = search_res["field"]
             old_val = current_data[field]
-            bb = bboxes.get(field, [0, 0, 10, 10])
-            has_content = False
-            if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
-                crop_test = img_bgr[bb[1]:bb[3], bb[0]:bb[2]]
-                if crop_test.size > 0 and crop_test.std() >= 5.0:
-                    has_content = True
+            bb = bboxes.get(field)
+            if img_bgr is None or not is_valid_bbox(bb, img_bgr):
+                return {
+                    "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                    "assay_route": route,
+                    "field": field,
+                    "target_val": search_res["target_val"],
+                    "data": canonical_data,
+                    "residual": round(residual, 2),
+                    "audit_trail": audit_trail
+                }
 
-            if has_content:
-                raw_c, seg_c, sr_c = process_vision_gate(img_bgr, bb)
-                new_val, new_c, delta_c, _, qm = enhance_and_reextract(
-                    seg_c if seg_c is not None else raw_c,
-                    gt_clean.get(field, search_res["target_val"]),
-                    confidences.get(field, 0.8)
-                )
+            crop_test = img_bgr[int(bb[1]):int(bb[3]), int(bb[0]):int(bb[2])]
+            if crop_test.size == 0 or crop_test.std() < 5.0:
+                return {
+                    "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                    "assay_route": route,
+                    "field": field,
+                    "target_val": search_res["target_val"],
+                    "data": canonical_data,
+                    "residual": round(residual, 2),
+                    "audit_trail": audit_trail
+                }
+
+            is_crop_valid, raw_c, crop_reason, crop_meta = validate_analyte_crop_selection(
+                img_bgr, bboxes, field, pad=4
+            )
+            if not is_crop_valid or raw_c is None:
+                return {
+                    "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                    "assay_route": route,
+                    "field": field,
+                    "target_val": search_res["target_val"],
+                    "data": canonical_data,
+                    "residual": round(residual, 2),
+                    "reason": crop_reason,
+                    "audit_trail": audit_trail
+                }
+
+            new_val, new_c, delta_c, _, qm = enhance_and_reextract(
+                raw_c,
+                candidate_target_val=search_res["target_val"],
+                current_conf=confidences.get(field, 0.8),
+                field=field,
+                unit=doc.get("unit", "mg/dL")
+            )
+            if new_val is not None:
                 current_data[field] = new_val
                 confidences[field] = new_c
             else:
-                new_val = search_res["target_val"]
-                current_data[field] = new_val
-                confidences[field] = 0.99
+                blind_val = qm.get("blind_reread_val_mgdl") if qm else None
+                is_corroborated = (blind_val is not None and abs(blind_val - current_data[field]) <= 1.0)
+                status_label = "FLAG_REVIEW_STOICHIOMETRIC_DISCREPANCY" if is_corroborated else "ABSTAIN_VISUAL_DISAGREEMENT"
+                return {
+                    "status": status_label,
+                    "assay_route": route,
+                    "field": field,
+                    "target_val": search_res["target_val"],
+                    "blind_reread_val": blind_val,
+                    "is_printed_corroborated": is_corroborated,
+                    "data": canonical_data,
+                    "residual": round(residual, 2),
+                    "audit_trail": audit_trail
+                }
+
 
             audit_trail.append({
                 "attempt": attempt + 1,
@@ -328,9 +433,14 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
                     cand_values = []
                     if has_rem_vision and crop_rem is not None:
                         corr_val, _, _, _, _ = enhance_and_reextract(
-                            crop_rem, gt_clean.get(f_rem, current_data[f_rem]), confidences[f_rem]
+                            crop_rem,
+                            candidate_target_val=current_data[f_rem],
+                            current_conf=confidences[f_rem],
+                            field=f_rem,
+                            unit=doc.get("unit", "mg/dL")
                         )
-                        cand_values.append(corr_val)
+                        if corr_val is not None:
+                            cand_values.append(corr_val)
                     for c_val in cands:
                         if is_digit_transposition_match(current_data[f_rem], c_val, f_rem):
                             cand_values.append(c_val)
@@ -365,86 +475,141 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
             chosen_cand = None
             for cand in ranked:
                 cand_field = cand["field"]
-                bb = bboxes.get(cand_field, [0, 0, 10, 10])
-                if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
-                    crop_test = img_bgr[bb[1]:bb[3], bb[0]:bb[2]]
+                bb = bboxes.get(cand_field)
+                if img_bgr is not None and is_valid_bbox(bb, img_bgr):
+                    crop_test = img_bgr[int(bb[1]):int(bb[3]), int(bb[0]):int(bb[2])]
                     if crop_test.size > 0 and crop_test.std() >= 5.0:
                         chosen_cand = cand
                         break
 
             if chosen_cand is None:
-                chosen_cand = ranked[0]
+                field = ranked[0]["field"] if ranked else "unknown"
+                target_val = ranked[0]["target_val"] if ranked else 0.0
+                return {
+                    "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                    "assay_route": route,
+                    "field": field,
+                    "target_val": target_val,
+                    "data": canonical_data,
+                    "residual": round(residual, 2),
+                    "audit_trail": audit_trail
+                }
 
             field = chosen_cand["field"]
-            raw_c, seg_c, sr_c = process_vision_gate(img_bgr, bboxes.get(field, [0, 0, 10, 10]))
+            bb = bboxes.get(field)
+            if img_bgr is None or not is_valid_bbox(bb, img_bgr):
+                return {
+                    "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                    "assay_route": route,
+                    "field": field,
+                    "target_val": chosen_cand["target_val"],
+                    "data": canonical_data,
+                    "residual": round(residual, 2),
+                    "audit_trail": audit_trail
+                }
+
+            is_crop_valid, raw_c, crop_reason, crop_meta = validate_analyte_crop_selection(
+                img_bgr, bboxes, field, pad=4
+            )
+            if not is_crop_valid or raw_c is None:
+                return {
+                    "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                    "assay_route": route,
+                    "field": field,
+                    "target_val": chosen_cand["target_val"],
+                    "data": canonical_data,
+                    "residual": round(residual, 2),
+                    "reason": crop_reason,
+                    "audit_trail": audit_trail
+                }
+
             corrected_val, new_conf, delta_c, sr_4x, quality_metrics = enhance_and_reextract(
-                seg_c if seg_c is not None else raw_c,
-                gt_clean.get(field, chosen_cand["target_val"]),
-                confidences.get(field, 0.8)
+                raw_c,
+                candidate_target_val=chosen_cand["target_val"],
+                current_conf=confidences.get(field, 0.8),
+                field=field,
+                unit=doc.get("unit", "mg/dL")
             )
             
-            old_val = current_data[field]
-            current_data[field] = corrected_val
-            confidences[field] = new_conf
-            
-            audit_trail.append({
-                "attempt": attempt + 1,
-                "stage": "STAGE_3_4_VISION_GATE",
-                "field": field,
-                "old_val": old_val,
-                "new_val": corrected_val,
-                "delta_conf": f"+{delta_c:.2f}",
-                "vision_metrics": quality_metrics,
-                "crops": ("raw_padded", "graphcut_segmented", "real_esrgan_4x") if raw_c is not None else (None, None, None)
-            })
-            attempt += 1
-            continue
+            if corrected_val is not None:
+                old_val = current_data[field]
+                current_data[field] = corrected_val
+                confidences[field] = new_conf
+                
+                audit_trail.append({
+                    "attempt": attempt + 1,
+                    "stage": "STAGE_3_4_VISION_GATE",
+                    "field": field,
+                    "old_val": old_val,
+                    "new_val": corrected_val,
+                    "delta_conf": f"+{delta_c:.2f}",
+                    "vision_metrics": quality_metrics,
+                    "crops": ("raw_padded", "graphcut_segmented", "real_esrgan_4x") if raw_c is not None else (None, None, None)
+                })
+                attempt += 1
+                continue
+            else:
+                blind_val = quality_metrics.get("blind_reread_val_mgdl") if quality_metrics else None
+                curr_val = current_data.get(field, 0.0)
+                if blind_val is not None and abs(blind_val - curr_val) <= max(1.0, 0.05 * curr_val):
+                    audit_trail.append({
+                        "attempt": attempt + 1,
+                        "stage": "STAGE_3_4_VISION_GATE",
+                        "field": field,
+                        "action": "FLAG_REVIEW_STOICHIOMETRIC_DISCREPANCY",
+                        "printed_val": curr_val,
+                        "blind_reread": blind_val,
+                        "candidate_target": chosen_cand["target_val"],
+                        "residual": round(residual, 2),
+                        "rationale": f"Image confirms printed value {curr_val} mg/dL. Mathematical constraint discrepancy of {residual:.1f} mg/dL flagged for clinical review."
+                    })
+                    return {
+                        "status": "FLAG_REVIEW_STOICHIOMETRIC_DISCREPANCY",
+                        "assay_route": route,
+                        "flagged_field": field,
+                        "target_val": chosen_cand["target_val"],
+                        "printed_val": curr_val,
+                        "residual": round(residual, 2),
+                        "data": canonical_data,
+                        "audit_trail": audit_trail
+                    }
+                else:
+                    return {
+                        "status": "ABSTAIN_VISUAL_DISAGREEMENT",
+                        "assay_route": route,
+                        "field": field,
+                        "target_val": chosen_cand["target_val"],
+                        "data": canonical_data,
+                        "residual": round(residual, 2),
+                        "audit_trail": audit_trail
+                    }
             
         # Dual Field Permutation (k=2): Discrete Pair Correction with Non-Maleficence Guardrail
         if action == "CORRECT_K2":
             if search_res.get("resolution_mechanism") == "extra_field_equation":
-                corrections = search_res["corrections"]
-                step_record = {
-                    "attempt": attempt + 1,
-                    "stage": "STAGE_2.5_K2_EXTRA_FIELD_EQUATION",
-                    "resolution_mechanism": "extra_field_equation",
-                    "equations_used": search_res.get("equations_used", []),
-                    "modifications": []
-                }
-                for f_name, c_val in corrections.items():
-                    old_val = current_data[f_name]
-                    current_data[f_name] = c_val
-                    confidences[f_name] = 0.98
-                    step_record["modifications"].append({
-                        "field": f_name,
-                        "old_val": old_val,
-                        "new_val": c_val
-                    })
-                audit_trail.append(step_record)
-                attempt += 1
-                continue
-
-            ranked_pairs = search_res.get("ranked_pairs", [search_res])
-            chosen_pair = None
-            
-            for pair in ranked_pairs:
-                if current_data.get("triglycerides", 0.0) > 800.0 or any(c_val > 800.0 for f_name, c_val in pair["corrections"].items() if f_name == "triglycerides"):
-                    continue
-                # Non-maleficence: do not mutate clean fields without visual degradation evidence
-                collateral_clean_mutation = False
-                for f_name, c_val in pair["corrections"].items():
-                    bb = bboxes.get(f_name, [0, 0, 10, 10])
-                    is_clean_crop = True
-                    if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
-                        crop_test = img_bgr[bb[1]:bb[3], bb[0]:bb[2]]
-                        if crop_test.size > 0 and crop_test.std() >= 5.0:
-                            is_clean_crop = False
-                    if is_clean_crop:
-                        collateral_clean_mutation = True
+                chosen_pair = search_res
+            else:
+                ranked_pairs = search_res.get("ranked_pairs", [search_res])
+                chosen_pair = None
+                
+                for pair in ranked_pairs:
+                    if current_data.get("triglycerides", 0.0) > 800.0 or any(c_val > 800.0 for f_name, c_val in pair["corrections"].items() if f_name == "triglycerides"):
+                        continue
+                    # Non-maleficence: do not mutate clean fields without visual degradation evidence
+                    collateral_clean_mutation = False
+                    for f_name, c_val in pair["corrections"].items():
+                        bb = bboxes.get(f_name)
+                        is_clean_crop = True
+                        if img_bgr is not None and is_valid_bbox(bb, img_bgr):
+                            crop_test = img_bgr[int(bb[1]):int(bb[3]), int(bb[0]):int(bb[2])]
+                            if crop_test.size > 0 and crop_test.std() >= 5.0:
+                                is_clean_crop = False
+                        if is_clean_crop:
+                            collateral_clean_mutation = True
+                            break
+                    if not collateral_clean_mutation:
+                        chosen_pair = pair
                         break
-                if not collateral_clean_mutation:
-                    chosen_pair = pair
-                    break
 
             if chosen_pair is None:
                 audit_trail.append({
@@ -461,7 +626,6 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
                     "audit_trail": audit_trail
                 }
 
-
             corrections = chosen_pair["corrections"]
             step_record = {
                 "attempt": attempt + 1,
@@ -469,30 +633,101 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
                 "modifications": []
             }
             
+            # Atomic verification: verify all candidate fields visually before committing any changes
+            staged_updates = {}
             for f_name, c_val in corrections.items():
-                bb = bboxes.get(f_name, [0, 0, 10, 10])
-                if img_bgr is not None and bb != [0, 0, 10, 10] and len(bb) == 4:
-                    raw_c, seg_c, _ = process_vision_gate(img_bgr, bb)
-                    crop = seg_c if seg_c is not None else raw_c
-                    corrected_val, new_conf, _, _, _ = enhance_and_reextract(
-                        crop, gt_clean.get(f_name, c_val), confidences[f_name]
-                    )
-                    old_val = current_data[f_name]
-                    current_data[f_name] = corrected_val
-                    confidences[f_name] = new_conf
+                bb = bboxes.get(f_name)
+                if img_bgr is None or not is_valid_bbox(bb, img_bgr):
+                    return {
+                        "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                        "assay_route": route,
+                        "field": f_name,
+                        "target_val": c_val,
+                        "data": canonical_data,
+                        "residual": round(residual, 2),
+                        "audit_trail": audit_trail
+                    }
+
+                raw_c, seg_c, _ = process_vision_gate(img_bgr, bb)
+                crop = seg_c if seg_c is not None else raw_c
+                if crop is None or crop.size == 0:
+                    return {
+                        "status": "ABSTAIN_VISUAL_EVIDENCE_MISSING",
+                        "assay_route": route,
+                        "field": f_name,
+                        "target_val": c_val,
+                        "data": canonical_data,
+                        "residual": round(residual, 2),
+                        "audit_trail": audit_trail
+                    }
+
+                corrected_val, new_conf, delta_c, _, qm = enhance_and_reextract(
+                    crop,
+                    candidate_target_val=c_val,
+                    current_conf=confidences.get(f_name, 0.8),
+                    field=f_name,
+                    unit=doc.get("unit", "mg/dL")
+                )
+                if corrected_val is not None:
+                    staged_updates[f_name] = (corrected_val, new_conf)
                 else:
-                    old_val = current_data[f_name]
-                    current_data[f_name] = c_val
-                    confidences[f_name] = 0.95
+                    blind_val = qm.get("blind_reread_val_mgdl") if qm else None
+                    curr_val = current_data.get(f_name, 0.0)
+                    if blind_val is not None and abs(blind_val - curr_val) <= max(1.0, 0.05 * curr_val):
+                        audit_trail.append({
+                            "attempt": attempt + 1,
+                            "stage": "STAGE_2.5_K2_DISCRETE_PAIR",
+                            "action": "FLAG_REVIEW_STOICHIOMETRIC_DISCREPANCY",
+                            "field": f_name,
+                            "printed_val": curr_val,
+                            "target_val": c_val,
+                            "residual": round(residual, 2)
+                        })
+                        return {
+                            "status": "FLAG_REVIEW_STOICHIOMETRIC_DISCREPANCY",
+                            "assay_route": route,
+                            "flagged_field": f_name,
+                            "target_val": c_val,
+                            "printed_val": curr_val,
+                            "residual": round(residual, 2),
+                            "data": canonical_data,
+                            "audit_trail": audit_trail
+                        }
+                    return {
+                        "status": "ABSTAIN_VISUAL_DISAGREEMENT",
+                        "assay_route": route,
+                        "field": f_name,
+                        "target_val": c_val,
+                        "data": canonical_data,
+                        "residual": round(residual, 2),
+                        "audit_trail": audit_trail
+                    }
+
+            # Commit all verified updates atomically
+            for f_name, (corr_val, n_conf) in staged_updates.items():
+                old_val = current_data[f_name]
+                current_data[f_name] = corr_val
+                confidences[f_name] = n_conf
                 step_record["modifications"].append({
                     "field": f_name,
                     "old_val": old_val,
-                    "new_val": current_data[f_name]
+                    "new_val": corr_val
                 })
                 
             audit_trail.append(step_record)
             attempt += 1
             continue
+
+        # Fallback for unrecognized, unexpected, or unhandled actions
+        return {
+            "status": f"ABSTAIN_UNRECOGNIZED_ACTION_{action}" if action else "ABSTAIN_UNRECOGNIZED_ACTION",
+            "assay_route": route,
+            "action": action,
+            "reason": search_res.get("reason", f"Unhandled or unrecognized isolation action: {action}"),
+            "data": canonical_data,
+            "residual": round(residual, 2) if 'residual' in locals() else 0.0,
+            "audit_trail": audit_trail
+        }
 
     return {
         "status": "ABSTAIN_PATHOLOGIST_REVIEW",
@@ -502,3 +737,120 @@ def run_pipeline(image_path: str, max_attempts: int = 2, tolerance: float = 0.10
         "residual": round(residual, 2),
         "audit_trail": audit_trail
     }
+
+
+def run_pipeline(image_path: str,
+                 max_attempts: int = 2,
+                 tolerance: float = 0.10,
+                 doc: dict = None,
+                 preflight_config: Optional[PreflightConfig] = None) -> dict:
+    """
+    Main BioTrace Pipeline Entrypoint with integrated Stage 0 Image-Quality Preflight.
+
+    Execution Flow:
+      1. Performs non-destructive image quality preflight on the decoded canvas before OCR.
+      2. If input is invalid or empty, safely aborts with ABSTAIN_INVALID_OR_EMPTY_IMAGE.
+      3. For borderline or quality-flagged images, logs warnings and sets retake_recommended=True,
+         while continuing processing so readable fields are never discarded prematurely.
+      4. Dispatches to downstream closed-loop stages (Stages 0-4).
+      5. Enriches result with distinct image_preflight diagnostics and audit trail records.
+    """
+    # 1. Resolve image preflight assessment
+    preflight = None
+    if doc is not None:
+        preflight = doc.get("image_preflight")
+        if preflight is None:
+            img = doc.get("image_bgr")
+            if img is not None:
+                preflight = inspect_image_quality(img, config=preflight_config)
+            else:
+                preflight = {
+                    "input_valid": True,
+                    "width": None,
+                    "height": None,
+                    "resolution_status": "NOT_ASSESSED",
+                    "blur_score": None,
+                    "blur_status": "NOT_ASSESSED",
+                    "exposure_status": "NOT_ASSESSED",
+                    "possible_glare": False,
+                    "quality_status": "PASS",
+                    "warnings": []
+                }
+    else:
+        # Check input validity if image_path is None or missing
+        if image_path is None:
+            preflight = inspect_image_quality(None, config=preflight_config)
+            return {
+                "status": "ABSTAIN_INVALID_OR_EMPTY_IMAGE",
+                "assay_route": "UNKNOWN",
+                "data": {},
+                "unit": "mg/dL",
+                "image_preflight": preflight,
+                "image_quality_status": preflight["quality_status"],
+                "retake_recommended": True,
+                "quality_warnings": list(preflight["warnings"]),
+                "audit_trail": [{
+                    "stage": "STAGE_0_IMAGE_PREFLIGHT",
+                    "action": "ABSTAIN_INVALID_INPUT",
+                    "quality_status": preflight["quality_status"],
+                    "warnings": preflight["warnings"],
+                }]
+            }
+
+        doc = extract_document_state(image_path)
+        preflight = doc.get("image_preflight")
+        if preflight is None and doc.get("image_bgr") is not None:
+            preflight = inspect_image_quality(doc["image_bgr"], config=preflight_config)
+
+    # 2. Input failure guardrail (empty or invalid image array)
+    if preflight is not None and not preflight.get("input_valid", True):
+        return {
+            "status": "ABSTAIN_INVALID_OR_EMPTY_IMAGE",
+            "assay_route": "UNKNOWN",
+            "data": {},
+            "unit": doc.get("unit", "mg/dL") if doc else "mg/dL",
+            "image_preflight": preflight,
+            "image_quality_status": preflight.get("quality_status", "REJECT_INVALID_INPUT"),
+            "retake_recommended": True,
+            "quality_warnings": list(preflight.get("warnings", [])),
+            "audit_trail": [{
+                "stage": "STAGE_0_IMAGE_PREFLIGHT",
+                "action": "ABSTAIN_INVALID_INPUT",
+                "quality_status": preflight.get("quality_status", "REJECT_INVALID_INPUT"),
+                "warnings": preflight.get("warnings", []),
+            }]
+        }
+
+    # 3. Execute downstream closed-loop pipeline
+    res = _run_pipeline_inner(image_path, max_attempts=max_attempts, tolerance=tolerance, doc=doc)
+
+    # 4. Integrate preflight audit record into audit_trail at index 0
+    if preflight is not None and preflight.get("quality_status") != "NOT_ASSESSED":
+        audit_trail = res.get("audit_trail", [])
+        has_preflight_record = any(
+            isinstance(item, dict) and item.get("stage") == "STAGE_0_IMAGE_PREFLIGHT"
+            for item in audit_trail
+        )
+        if not has_preflight_record:
+            preflight_record = {
+                "stage": "STAGE_0_IMAGE_PREFLIGHT",
+                "quality_status": preflight.get("quality_status", "PASS"),
+                "resolution_status": preflight.get("resolution_status", "NOT_ASSESSED"),
+                "blur_status": preflight.get("blur_status", "NOT_ASSESSED"),
+                "exposure_status": preflight.get("exposure_status", "NOT_ASSESSED"),
+                "possible_glare": preflight.get("possible_glare", False),
+                "warnings": preflight.get("warnings", []),
+            }
+            res["audit_trail"] = [preflight_record] + audit_trail
+
+    # 5. Enrich result dictionary with distinct preflight attributes
+    if preflight is not None:
+        res["image_preflight"] = preflight
+        res["image_quality_status"] = preflight.get("quality_status", "PASS")
+        res["retake_recommended"] = preflight.get("quality_status") in (
+            "REJECT_LOW_RESOLUTION", "REJECT_SEVERELY_BLURRED", "REJECT_EXTREME_EXPOSURE",
+            "REJECT_INVALID_INPUT", "REJECT_DEGENERATE"
+        )
+        res["quality_warnings"] = list(preflight.get("warnings", []))
+
+    return res

@@ -45,7 +45,6 @@ def generate_discrete_edit_candidates(val: float, max_edits: int = 1) -> list:
     candidates.add(round(val * 0.01, 1))
     candidates.add(round(val * 100.0, 1))
     
-    # 2. Local Digit Mutations / Swaps / Drops
     digits = "0123456789"
     for i, ch in enumerate(val_str):
         if ch == '.': 
@@ -579,7 +578,8 @@ def hierarchical_isolation_search(
         }
         
     # Step 1: Check Invariant (Dynamic Equation Routing)
-    is_sampson = (400.0 < tg <= 800.0) and not is_martin
+    is_sampson = (method == "SAMPSON" or (400.0 < tg <= 800.0)) and not is_martin
+
     if is_martin:
         status, rel_err = evaluate_martin_hopkins_invariant(panel, tol)
         if status == "CONVERGED":
@@ -615,16 +615,9 @@ def hierarchical_isolation_search(
             continue
         if field == "triglycerides" and target > 800.0 and not is_martin:
             continue
-        if field == "triglycerides" and not is_sampson and not is_martin and target > 400.0 and panel["triglycerides"] <= 400.0:
-            denom_tg = -(1.0 / 3.98) - ((tc - hdl) / 8.2)
-            if abs(denom_tg) > 1e-6:
-                target_s = (ldl - (tc / 1.19) - (hdl / 1.1) + 0.17) / denom_tg
-                if 400.0 < target_s <= 800.0:
-                    target = target_s
-                else:
-                    continue
-            else:
-                continue
+        # Note: solve_field_closed_form already handles dynamic Sampson routing
+        # and exact quadratic inversion when target TG > 400 mg/dL.
+
 
         test_panel = panel.copy()
         test_panel[field] = target

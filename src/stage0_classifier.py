@@ -20,7 +20,14 @@ class AssayClassifier:
     MARTIN_PATTERNS = [
         r"\bmartin[- ]hopkins\b",
         r"\badjustable\s+factor\b",
-        r"\bnovel\s+ldl\b"
+        r"\bnovel\s+ldl\b",
+    ]
+    
+    SAMPSON_PATTERNS = [
+        r"\bsampson\b",
+        r"\bnih\s*2020\b",
+        r"\bsampson[- ]?eq\b",
+        r"\bnih\s*equation\s*2\b",
     ]
 
     @classmethod
@@ -46,6 +53,16 @@ class AssayClassifier:
                     "confidence": 1.0,
                     "apply_equality_invariant": True
                 }
+
+        # Check Sampson (NIH 2020 Equation)
+        for pattern in cls.SAMPSON_PATTERNS:
+            if re.search(pattern, text):
+                return {
+                    "route": "SAMPSON",
+                    "matched_pattern": pattern,
+                    "confidence": 1.0,
+                    "apply_equality_invariant": True
+                }
                 
         # Check Friedewald
         for pattern in cls.CALCULATED_PATTERNS:
@@ -56,6 +73,7 @@ class AssayClassifier:
                     "confidence": 1.0,
                     "apply_equality_invariant": True
                 }
+
                 
         # First-class ambiguous outcome
         return {
