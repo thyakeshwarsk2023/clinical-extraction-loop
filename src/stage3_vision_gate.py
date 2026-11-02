@@ -12,6 +12,11 @@ import cv2
 import numpy as np
 
 
+# Fast-path cache for repeated GrabCut segmentations on identical micro-crops
+_GRABCUT_CACHE = {}
+_MAX_GRABCUT_CACHE = 128
+
+
 def apply_graphcut_segmentation(crop_bgr: np.ndarray, border_margin: int = 2) -> tuple:
     """
     Executes formal GrabCut (Gaussian Mixture Model pixel graph cut) on the micro-crop.
@@ -27,6 +32,10 @@ def apply_graphcut_segmentation(crop_bgr: np.ndarray, border_margin: int = 2) ->
         return None, None, 0.0
 
     h, w = crop_bgr.shape[:2]
+    crop_key = (h, w, border_margin, crop_bgr.tobytes()[:128] if crop_bgr.size >= 128 else crop_bgr.tobytes())
+    if crop_key in _GRABCUT_CACHE:
+        c_seg, c_mask, c_q = _GRABCUT_CACHE[crop_key]
+        return c_seg.copy(), c_mask.copy(), c_q
     if h < 6 or w < 6:
         # Fallback for degenerate crops
         gray = cv2.cvtColor(crop_bgr, cv2.COLOR_BGR2GRAY)
@@ -112,6 +121,9 @@ def apply_graphcut_segmentation(crop_bgr: np.ndarray, border_margin: int = 2) ->
     else:
         quality_score = 0.70
 
+    if len(_GRABCUT_CACHE) >= _MAX_GRABCUT_CACHE:
+        _GRABCUT_CACHE.pop(next(iter(_GRABCUT_CACHE)))
+    _GRABCUT_CACHE[crop_key] = (seg_bgr.copy(), fg_cleaned.copy(), quality_score)
     return seg_bgr, fg_cleaned, quality_score
 
 
